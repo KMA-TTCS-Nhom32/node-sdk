@@ -1,5 +1,9 @@
 {
   "name": "@ahomeplace-hotel/node-sdk",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KMA-TTCS-Nhom32/node-sdk.git"
+  },
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
