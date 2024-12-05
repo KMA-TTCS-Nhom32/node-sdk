@@ -285,6 +285,19 @@ export interface ImageUploadResponseDto {
 /**
  * 
  * @export
+ * @interface InitiateForgotPasswordEmailDto
+ */
+export interface InitiateForgotPasswordEmailDto {
+    /**
+     * Email address of the user who forgot their password
+     * @type {string}
+     * @memberof InitiateForgotPasswordEmailDto
+     */
+    'email': string;
+}
+/**
+ * 
+ * @export
  * @interface LocationDto
  */
 export interface LocationDto {
@@ -327,23 +340,36 @@ export interface LoginDto {
  */
 export interface LoginResponseDto {
     /**
-     * 
+     * New access token
      * @type {string}
      * @memberof LoginResponseDto
      */
     'accessToken': string;
     /**
-     * 
+     * Timestamp when the access token expires
      * @type {number}
      * @memberof LoginResponseDto
      */
     'accessTokenExpires': number;
     /**
-     * 
+     * New refresh token
      * @type {string}
      * @memberof LoginResponseDto
      */
     'refreshToken': string;
+}
+/**
+ * 
+ * @export
+ * @interface LogoutResponseDto
+ */
+export interface LogoutResponseDto {
+    /**
+     * Success message
+     * @type {string}
+     * @memberof LogoutResponseDto
+     */
+    'message': string;
 }
 /**
  * 
@@ -410,6 +436,44 @@ export interface ProvincePaginationResultDto {
 /**
  * 
  * @export
+ * @interface RefreshTokenDto
+ */
+export interface RefreshTokenDto {
+    /**
+     * The refresh token to renew access
+     * @type {string}
+     * @memberof RefreshTokenDto
+     */
+    'refreshToken': string;
+}
+/**
+ * 
+ * @export
+ * @interface RefreshTokenResponseDto
+ */
+export interface RefreshTokenResponseDto {
+    /**
+     * New access token
+     * @type {string}
+     * @memberof RefreshTokenResponseDto
+     */
+    'accessToken': string;
+    /**
+     * Timestamp when the access token expires
+     * @type {number}
+     * @memberof RefreshTokenResponseDto
+     */
+    'accessTokenExpires': number;
+    /**
+     * New refresh token
+     * @type {string}
+     * @memberof RefreshTokenResponseDto
+     */
+    'refreshToken': string;
+}
+/**
+ * 
+ * @export
  * @interface RegisterResponseDto
  */
 export interface RegisterResponseDto {
@@ -440,6 +504,57 @@ export const RegisterResponseDtoIdentifierTypeEnum = {
 
 export type RegisterResponseDtoIdentifierTypeEnum = typeof RegisterResponseDtoIdentifierTypeEnum[keyof typeof RegisterResponseDtoIdentifierTypeEnum];
 
+/**
+ * 
+ * @export
+ * @interface ResetPasswordWithOTPEmailDto
+ */
+export interface ResetPasswordWithOTPEmailDto {
+    /**
+     * Email address of the user
+     * @type {string}
+     * @memberof ResetPasswordWithOTPEmailDto
+     */
+    'email': string;
+    /**
+     * Six digit verification code sent to email
+     * @type {string}
+     * @memberof ResetPasswordWithOTPEmailDto
+     */
+    'code': string;
+    /**
+     * New password to set
+     * @type {string}
+     * @memberof ResetPasswordWithOTPEmailDto
+     */
+    'newPassword': string;
+}
+/**
+ * 
+ * @export
+ * @interface RevokeSessionResponseDto
+ */
+export interface RevokeSessionResponseDto {
+    /**
+     * Success message
+     * @type {string}
+     * @memberof RevokeSessionResponseDto
+     */
+    'message': string;
+}
+/**
+ * 
+ * @export
+ * @interface SessionResponseDto
+ */
+export interface SessionResponseDto {
+    /**
+     * List of active user sessions
+     * @type {Array<string>}
+     * @memberof SessionResponseDto
+     */
+    'sessions': Array<string>;
+}
 /**
  * 
  * @export
@@ -582,6 +697,12 @@ export interface User {
     'verified_phone': boolean;
     /**
      * 
+     * @type {string}
+     * @memberof User
+     */
+    'identifier_type': UserIdentifierTypeEnum;
+    /**
+     * 
      * @type {boolean}
      * @memberof User
      */
@@ -600,6 +721,12 @@ export interface User {
     'role': UserRoleEnum;
 }
 
+export const UserIdentifierTypeEnum = {
+    Email: 'EMAIL',
+    Phone: 'PHONE'
+} as const;
+
+export type UserIdentifierTypeEnum = typeof UserIdentifierTypeEnum[keyof typeof UserIdentifierTypeEnum];
 export const UserRoleEnum = {
     User: 'USER',
     Staff: 'STAFF',
@@ -1349,7 +1476,8 @@ export class AppApi extends BaseAPI {
 export const AuthApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Retrieve all active sessions for the current user
+         * @summary Get active sessions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1378,7 +1506,8 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * Get analytics data for user sessions. Requires ADMIN role.
+         * @summary Get session analytics
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1414,7 +1543,8 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * Get suspicious activities for a specific user. Requires ADMIN role.
+         * @summary Get suspicious activities
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1449,13 +1579,13 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * 
          * @summary Initiate forgot password process
-         * @param {object} body 
+         * @param {InitiateForgotPasswordEmailDto} initiateForgotPasswordEmailDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authControllerInitiateForgotPassword: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'body' is not null or undefined
-            assertParamExists('authControllerInitiateForgotPassword', 'body', body)
+        authControllerInitiateForgotPassword: async (initiateForgotPasswordEmailDto: InitiateForgotPasswordEmailDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'initiateForgotPasswordEmailDto' is not null or undefined
+            assertParamExists('authControllerInitiateForgotPassword', 'initiateForgotPasswordEmailDto', initiateForgotPasswordEmailDto)
             const localVarPath = `/api/auth/forgot-password/email/initiate`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1475,7 +1605,7 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(initiateForgotPasswordEmailDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1524,7 +1654,8 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * Revoke the current refresh token, effectively logging out the user
+         * @summary Logout user
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1553,11 +1684,15 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * Exchange a valid refresh token for a new access token and refresh token pair
+         * @summary Refresh access token
+         * @param {RefreshTokenDto} refreshTokenDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authControllerRefreshTokens: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        authControllerRefreshTokens: async (refreshTokenDto: RefreshTokenDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'refreshTokenDto' is not null or undefined
+            assertParamExists('authControllerRefreshTokens', 'refreshTokenDto', refreshTokenDto)
             const localVarPath = `/api/auth/refresh`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1572,9 +1707,12 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(refreshTokenDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1619,13 +1757,13 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * 
          * @summary Reset password using OTP
-         * @param {object} body 
+         * @param {ResetPasswordWithOTPEmailDto} resetPasswordWithOTPEmailDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authControllerResetPasswordWithOTP: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'body' is not null or undefined
-            assertParamExists('authControllerResetPasswordWithOTP', 'body', body)
+        authControllerResetPasswordWithOTP: async (resetPasswordWithOTPEmailDto: ResetPasswordWithOTPEmailDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'resetPasswordWithOTPEmailDto' is not null or undefined
+            assertParamExists('authControllerResetPasswordWithOTP', 'resetPasswordWithOTPEmailDto', resetPasswordWithOTPEmailDto)
             const localVarPath = `/api/auth/forgot-password/email/reset`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1645,7 +1783,7 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(resetPasswordWithOTPEmailDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1653,7 +1791,8 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * Revoke a specific session by its ID
+         * @summary Revoke specific session
          * @param {string} sessionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1732,18 +1871,20 @@ export const AuthApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AuthApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Retrieve all active sessions for the current user
+         * @summary Get active sessions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authControllerGetActiveSessions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async authControllerGetActiveSessions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SessionResponseDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerGetActiveSessions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthApi.authControllerGetActiveSessions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Get analytics data for user sessions. Requires ADMIN role.
+         * @summary Get session analytics
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1755,7 +1896,8 @@ export const AuthApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Get suspicious activities for a specific user. Requires ADMIN role.
+         * @summary Get suspicious activities
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1769,12 +1911,12 @@ export const AuthApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Initiate forgot password process
-         * @param {object} body 
+         * @param {InitiateForgotPasswordEmailDto} initiateForgotPasswordEmailDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authControllerInitiateForgotPassword(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerInitiateForgotPassword(body, options);
+        async authControllerInitiateForgotPassword(initiateForgotPasswordEmailDto: InitiateForgotPasswordEmailDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerInitiateForgotPassword(initiateForgotPasswordEmailDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthApi.authControllerInitiateForgotPassword']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1793,23 +1935,26 @@ export const AuthApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Revoke the current refresh token, effectively logging out the user
+         * @summary Logout user
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authControllerLogout(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async authControllerLogout(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LogoutResponseDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerLogout(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthApi.authControllerLogout']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Exchange a valid refresh token for a new access token and refresh token pair
+         * @summary Refresh access token
+         * @param {RefreshTokenDto} refreshTokenDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authControllerRefreshTokens(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerRefreshTokens(options);
+        async authControllerRefreshTokens(refreshTokenDto: RefreshTokenDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RefreshTokenResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerRefreshTokens(refreshTokenDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthApi.authControllerRefreshTokens']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1829,23 +1974,24 @@ export const AuthApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Reset password using OTP
-         * @param {object} body 
+         * @param {ResetPasswordWithOTPEmailDto} resetPasswordWithOTPEmailDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authControllerResetPasswordWithOTP(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerResetPasswordWithOTP(body, options);
+        async authControllerResetPasswordWithOTP(resetPasswordWithOTPEmailDto: ResetPasswordWithOTPEmailDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerResetPasswordWithOTP(resetPasswordWithOTPEmailDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthApi.authControllerResetPasswordWithOTP']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Revoke a specific session by its ID
+         * @summary Revoke specific session
          * @param {string} sessionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authControllerRevokeSession(sessionId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async authControllerRevokeSession(sessionId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RevokeSessionResponseDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerRevokeSession(sessionId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthApi.authControllerRevokeSession']?.[localVarOperationServerIndex]?.url;
@@ -1875,15 +2021,17 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
     const localVarFp = AuthApiFp(configuration)
     return {
         /**
-         * 
+         * Retrieve all active sessions for the current user
+         * @summary Get active sessions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authControllerGetActiveSessions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        authControllerGetActiveSessions(options?: RawAxiosRequestConfig): AxiosPromise<SessionResponseDto> {
             return localVarFp.authControllerGetActiveSessions(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Get analytics data for user sessions. Requires ADMIN role.
+         * @summary Get session analytics
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1892,7 +2040,8 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.authControllerGetSessionAnalytics(userId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Get suspicious activities for a specific user. Requires ADMIN role.
+         * @summary Get suspicious activities
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1903,12 +2052,12 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
         /**
          * 
          * @summary Initiate forgot password process
-         * @param {object} body 
+         * @param {InitiateForgotPasswordEmailDto} initiateForgotPasswordEmailDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authControllerInitiateForgotPassword(body: object, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.authControllerInitiateForgotPassword(body, options).then((request) => request(axios, basePath));
+        authControllerInitiateForgotPassword(initiateForgotPasswordEmailDto: InitiateForgotPasswordEmailDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.authControllerInitiateForgotPassword(initiateForgotPasswordEmailDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1921,20 +2070,23 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.authControllerLogin(userAgent, loginDto, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Revoke the current refresh token, effectively logging out the user
+         * @summary Logout user
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authControllerLogout(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        authControllerLogout(options?: RawAxiosRequestConfig): AxiosPromise<LogoutResponseDto> {
             return localVarFp.authControllerLogout(options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Exchange a valid refresh token for a new access token and refresh token pair
+         * @summary Refresh access token
+         * @param {RefreshTokenDto} refreshTokenDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authControllerRefreshTokens(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.authControllerRefreshTokens(options).then((request) => request(axios, basePath));
+        authControllerRefreshTokens(refreshTokenDto: RefreshTokenDto, options?: RawAxiosRequestConfig): AxiosPromise<RefreshTokenResponseDto> {
+            return localVarFp.authControllerRefreshTokens(refreshTokenDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1948,20 +2100,21 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
         /**
          * 
          * @summary Reset password using OTP
-         * @param {object} body 
+         * @param {ResetPasswordWithOTPEmailDto} resetPasswordWithOTPEmailDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authControllerResetPasswordWithOTP(body: object, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.authControllerResetPasswordWithOTP(body, options).then((request) => request(axios, basePath));
+        authControllerResetPasswordWithOTP(resetPasswordWithOTPEmailDto: ResetPasswordWithOTPEmailDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.authControllerResetPasswordWithOTP(resetPasswordWithOTPEmailDto, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Revoke a specific session by its ID
+         * @summary Revoke specific session
          * @param {string} sessionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authControllerRevokeSession(sessionId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        authControllerRevokeSession(sessionId: string, options?: RawAxiosRequestConfig): AxiosPromise<RevokeSessionResponseDto> {
             return localVarFp.authControllerRevokeSession(sessionId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1985,7 +2138,8 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
  */
 export class AuthApi extends BaseAPI {
     /**
-     * 
+     * Retrieve all active sessions for the current user
+     * @summary Get active sessions
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthApi
@@ -1995,7 +2149,8 @@ export class AuthApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Get analytics data for user sessions. Requires ADMIN role.
+     * @summary Get session analytics
      * @param {string} userId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2006,7 +2161,8 @@ export class AuthApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Get suspicious activities for a specific user. Requires ADMIN role.
+     * @summary Get suspicious activities
      * @param {string} userId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2019,13 +2175,13 @@ export class AuthApi extends BaseAPI {
     /**
      * 
      * @summary Initiate forgot password process
-     * @param {object} body 
+     * @param {InitiateForgotPasswordEmailDto} initiateForgotPasswordEmailDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthApi
      */
-    public authControllerInitiateForgotPassword(body: object, options?: RawAxiosRequestConfig) {
-        return AuthApiFp(this.configuration).authControllerInitiateForgotPassword(body, options).then((request) => request(this.axios, this.basePath));
+    public authControllerInitiateForgotPassword(initiateForgotPasswordEmailDto: InitiateForgotPasswordEmailDto, options?: RawAxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authControllerInitiateForgotPassword(initiateForgotPasswordEmailDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2041,7 +2197,8 @@ export class AuthApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Revoke the current refresh token, effectively logging out the user
+     * @summary Logout user
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthApi
@@ -2051,13 +2208,15 @@ export class AuthApi extends BaseAPI {
     }
 
     /**
-     * 
+     * Exchange a valid refresh token for a new access token and refresh token pair
+     * @summary Refresh access token
+     * @param {RefreshTokenDto} refreshTokenDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthApi
      */
-    public authControllerRefreshTokens(options?: RawAxiosRequestConfig) {
-        return AuthApiFp(this.configuration).authControllerRefreshTokens(options).then((request) => request(this.axios, this.basePath));
+    public authControllerRefreshTokens(refreshTokenDto: RefreshTokenDto, options?: RawAxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authControllerRefreshTokens(refreshTokenDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2074,17 +2233,18 @@ export class AuthApi extends BaseAPI {
     /**
      * 
      * @summary Reset password using OTP
-     * @param {object} body 
+     * @param {ResetPasswordWithOTPEmailDto} resetPasswordWithOTPEmailDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthApi
      */
-    public authControllerResetPasswordWithOTP(body: object, options?: RawAxiosRequestConfig) {
-        return AuthApiFp(this.configuration).authControllerResetPasswordWithOTP(body, options).then((request) => request(this.axios, this.basePath));
+    public authControllerResetPasswordWithOTP(resetPasswordWithOTPEmailDto: ResetPasswordWithOTPEmailDto, options?: RawAxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authControllerResetPasswordWithOTP(resetPasswordWithOTPEmailDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
+     * Revoke a specific session by its ID
+     * @summary Revoke specific session
      * @param {string} sessionId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
