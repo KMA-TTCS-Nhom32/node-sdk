@@ -224,13 +224,13 @@ export interface CreateUserDto {
      * @type {string}
      * @memberof CreateUserDto
      */
-    'email': string;
+    'email'?: string;
     /**
      * The user\'s phone number.
      * @type {string}
      * @memberof CreateUserDto
      */
-    'phone': string;
+    'phone'?: string;
     /**
      * The user\'s password.
      * @type {string}
