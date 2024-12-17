@@ -474,6 +474,33 @@ export interface RefreshTokenResponseDto {
 /**
  * 
  * @export
+ * @interface RegisterDto
+ */
+export interface RegisterDto {
+    /**
+     * 
+     * @type {CreateUserDto}
+     * @memberof RegisterDto
+     */
+    'data': CreateUserDto;
+    /**
+     * 
+     * @type {string}
+     * @memberof RegisterDto
+     */
+    'accountIdentifier': RegisterDtoAccountIdentifierEnum;
+}
+
+export const RegisterDtoAccountIdentifierEnum = {
+    Email: 'EMAIL',
+    Phone: 'PHONE'
+} as const;
+
+export type RegisterDtoAccountIdentifierEnum = typeof RegisterDtoAccountIdentifierEnum[keyof typeof RegisterDtoAccountIdentifierEnum];
+
+/**
+ * 
+ * @export
  * @interface RegisterResponseDto
  */
 export interface RegisterResponseDto {
@@ -1506,6 +1533,36 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * 
+         * @summary Get current user profile
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerGetProfile: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/auth/profile`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Get analytics data for user sessions. Requires ADMIN role.
          * @summary Get session analytics
          * @param {string} userId 
@@ -1721,13 +1778,13 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @param {CreateUserDto} createUserDto 
+         * @param {RegisterDto} registerDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authControllerRegister: async (createUserDto: CreateUserDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'createUserDto' is not null or undefined
-            assertParamExists('authControllerRegister', 'createUserDto', createUserDto)
+        authControllerRegister: async (registerDto: RegisterDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'registerDto' is not null or undefined
+            assertParamExists('authControllerRegister', 'registerDto', registerDto)
             const localVarPath = `/api/auth/register`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1747,7 +1804,7 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(createUserDto, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(registerDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1883,6 +1940,18 @@ export const AuthApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * 
+         * @summary Get current user profile
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authControllerGetProfile(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerGetProfile(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AuthApi.authControllerGetProfile']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Get analytics data for user sessions. Requires ADMIN role.
          * @summary Get session analytics
          * @param {string} userId 
@@ -1961,12 +2030,12 @@ export const AuthApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {CreateUserDto} createUserDto 
+         * @param {RegisterDto} registerDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authControllerRegister(createUserDto: CreateUserDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegisterResponseDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerRegister(createUserDto, options);
+        async authControllerRegister(registerDto: RegisterDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegisterResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerRegister(registerDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthApi.authControllerRegister']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2030,6 +2099,15 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.authControllerGetActiveSessions(options).then((request) => request(axios, basePath));
         },
         /**
+         * 
+         * @summary Get current user profile
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerGetProfile(options?: RawAxiosRequestConfig): AxiosPromise<User> {
+            return localVarFp.authControllerGetProfile(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Get analytics data for user sessions. Requires ADMIN role.
          * @summary Get session analytics
          * @param {string} userId 
@@ -2090,12 +2168,12 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
-         * @param {CreateUserDto} createUserDto 
+         * @param {RegisterDto} registerDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authControllerRegister(createUserDto: CreateUserDto, options?: RawAxiosRequestConfig): AxiosPromise<RegisterResponseDto> {
-            return localVarFp.authControllerRegister(createUserDto, options).then((request) => request(axios, basePath));
+        authControllerRegister(registerDto: RegisterDto, options?: RawAxiosRequestConfig): AxiosPromise<RegisterResponseDto> {
+            return localVarFp.authControllerRegister(registerDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2146,6 +2224,17 @@ export class AuthApi extends BaseAPI {
      */
     public authControllerGetActiveSessions(options?: RawAxiosRequestConfig) {
         return AuthApiFp(this.configuration).authControllerGetActiveSessions(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get current user profile
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authControllerGetProfile(options?: RawAxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authControllerGetProfile(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2221,13 +2310,13 @@ export class AuthApi extends BaseAPI {
 
     /**
      * 
-     * @param {CreateUserDto} createUserDto 
+     * @param {RegisterDto} registerDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthApi
      */
-    public authControllerRegister(createUserDto: CreateUserDto, options?: RawAxiosRequestConfig) {
-        return AuthApiFp(this.configuration).authControllerRegister(createUserDto, options).then((request) => request(this.axios, this.basePath));
+    public authControllerRegister(registerDto: RegisterDto, options?: RawAxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authControllerRegister(registerDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
