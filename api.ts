@@ -517,6 +517,12 @@ export interface RegisterResponseDto {
      */
     'phone'?: string;
     /**
+     * The user\'s ID
+     * @type {string}
+     * @memberof RegisterResponseDto
+     */
+    'id': string;
+    /**
      * The type of identifier used for registration
      * @type {string}
      * @memberof RegisterResponseDto
