@@ -2835,8 +2835,8 @@ export const BranchesApiAxiosParamCreator = function (configuration?: Configurat
          * @summary Get all branches with pagination and filters
          * @param {number} [page] 
          * @param {number} [pageSize] 
-         * @param {string} [filters] JSON string
-         * @param {string} [sort] JSON string
+         * @param {string} [filters] JSON string of FilterBranchesDto
+         * @param {string} [sort] JSON string of SortBranchDto[]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2885,8 +2885,8 @@ export const BranchesApiAxiosParamCreator = function (configuration?: Configurat
          * @summary Get branches with infinite scroll for client app
          * @param {number} [page] 
          * @param {number} [pageSize] 
-         * @param {string} [filters] JSON string
-         * @param {string} [sort] JSON string
+         * @param {string} [filters] JSON string of FilterBranchesDto
+         * @param {string} [sort] JSON string of SortBranchDto[]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3066,8 +3066,8 @@ export const BranchesApiFp = function(configuration?: Configuration) {
          * @summary Get all branches with pagination and filters
          * @param {number} [page] 
          * @param {number} [pageSize] 
-         * @param {string} [filters] JSON string
-         * @param {string} [sort] JSON string
+         * @param {string} [filters] JSON string of FilterBranchesDto
+         * @param {string} [sort] JSON string of SortBranchDto[]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3082,8 +3082,8 @@ export const BranchesApiFp = function(configuration?: Configuration) {
          * @summary Get branches with infinite scroll for client app
          * @param {number} [page] 
          * @param {number} [pageSize] 
-         * @param {string} [filters] JSON string
-         * @param {string} [sort] JSON string
+         * @param {string} [filters] JSON string of FilterBranchesDto
+         * @param {string} [sort] JSON string of SortBranchDto[]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3158,8 +3158,8 @@ export const BranchesApiFactory = function (configuration?: Configuration, baseP
          * @summary Get all branches with pagination and filters
          * @param {number} [page] 
          * @param {number} [pageSize] 
-         * @param {string} [filters] JSON string
-         * @param {string} [sort] JSON string
+         * @param {string} [filters] JSON string of FilterBranchesDto
+         * @param {string} [sort] JSON string of SortBranchDto[]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3171,8 +3171,8 @@ export const BranchesApiFactory = function (configuration?: Configuration, baseP
          * @summary Get branches with infinite scroll for client app
          * @param {number} [page] 
          * @param {number} [pageSize] 
-         * @param {string} [filters] JSON string
-         * @param {string} [sort] JSON string
+         * @param {string} [filters] JSON string of FilterBranchesDto
+         * @param {string} [sort] JSON string of SortBranchDto[]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3237,8 +3237,8 @@ export class BranchesApi extends BaseAPI {
      * @summary Get all branches with pagination and filters
      * @param {number} [page] 
      * @param {number} [pageSize] 
-     * @param {string} [filters] JSON string
-     * @param {string} [sort] JSON string
+     * @param {string} [filters] JSON string of FilterBranchesDto
+     * @param {string} [sort] JSON string of SortBranchDto[]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BranchesApi
@@ -3252,8 +3252,8 @@ export class BranchesApi extends BaseAPI {
      * @summary Get branches with infinite scroll for client app
      * @param {number} [page] 
      * @param {number} [pageSize] 
-     * @param {string} [filters] JSON string
-     * @param {string} [sort] JSON string
+     * @param {string} [filters] JSON string of FilterBranchesDto
+     * @param {string} [sort] JSON string of SortBranchDto[]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BranchesApi
@@ -3625,8 +3625,8 @@ export const ProvincesApiAxiosParamCreator = function (configuration?: Configura
          * @summary Get all provinces with pagination and filters
          * @param {number} [page] 
          * @param {number} [pageSize] 
-         * @param {string} [filters] JSON string
-         * @param {string} [sort] JSON string
+         * @param {string} [filters] JSON string of FilterProvincesDto
+         * @param {string} [sort] JSON string of SortProvinceDto[]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3806,8 +3806,8 @@ export const ProvincesApiFp = function(configuration?: Configuration) {
          * @summary Get all provinces with pagination and filters
          * @param {number} [page] 
          * @param {number} [pageSize] 
-         * @param {string} [filters] JSON string
-         * @param {string} [sort] JSON string
+         * @param {string} [filters] JSON string of FilterProvincesDto
+         * @param {string} [sort] JSON string of SortProvinceDto[]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3882,8 +3882,8 @@ export const ProvincesApiFactory = function (configuration?: Configuration, base
          * @summary Get all provinces with pagination and filters
          * @param {number} [page] 
          * @param {number} [pageSize] 
-         * @param {string} [filters] JSON string
-         * @param {string} [sort] JSON string
+         * @param {string} [filters] JSON string of FilterProvincesDto
+         * @param {string} [sort] JSON string of SortProvinceDto[]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3948,8 +3948,8 @@ export class ProvincesApi extends BaseAPI {
      * @summary Get all provinces with pagination and filters
      * @param {number} [page] 
      * @param {number} [pageSize] 
-     * @param {string} [filters] JSON string
-     * @param {string} [sort] JSON string
+     * @param {string} [filters] JSON string of FilterProvincesDto
+     * @param {string} [sort] JSON string of SortProvinceDto[]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProvincesApi
