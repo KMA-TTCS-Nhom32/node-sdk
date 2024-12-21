@@ -377,6 +377,78 @@ export interface CreateUserDto {
 /**
  * 
  * @export
+ * @interface FilterBranchesDto
+ */
+export interface FilterBranchesDto {
+    /**
+     * Search by keyword
+     * @type {string}
+     * @memberof FilterBranchesDto
+     */
+    'keyword'?: string;
+    /**
+     * Filter by active status
+     * @type {boolean}
+     * @memberof FilterBranchesDto
+     */
+    'is_active'?: boolean;
+    /**
+     * Filter by rating
+     * @type {number}
+     * @memberof FilterBranchesDto
+     */
+    'rating'?: number;
+    /**
+     * Filter by province
+     * @type {string}
+     * @memberof FilterBranchesDto
+     */
+    'provinceId'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof FilterBranchesDto
+     */
+    'amenities'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface FilterProvincesDto
+ */
+export interface FilterProvincesDto {
+    /**
+     * Search by keyword
+     * @type {string}
+     * @memberof FilterProvincesDto
+     */
+    'keyword'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface FilterUserDto
+ */
+export interface FilterUserDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof FilterUserDto
+     */
+    'roles'?: FilterUserDtoRolesEnum;
+}
+
+export const FilterUserDtoRolesEnum = {
+    User: 'USER',
+    Staff: 'STAFF',
+    Admin: 'ADMIN'
+} as const;
+
+export type FilterUserDtoRolesEnum = typeof FilterUserDtoRolesEnum[keyof typeof FilterUserDtoRolesEnum];
+
+/**
+ * 
+ * @export
  * @interface HotelRoom
  */
 export interface HotelRoom {
@@ -673,6 +745,99 @@ export interface ProvincePaginationResultDto {
 /**
  * 
  * @export
+ * @interface QueryBranchesDto
+ */
+export interface QueryBranchesDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof QueryBranchesDto
+     */
+    'page'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof QueryBranchesDto
+     */
+    'pageSize'?: number;
+    /**
+     * JSON string of FilterBranchesDto
+     * @type {string}
+     * @memberof QueryBranchesDto
+     */
+    'filters'?: string;
+    /**
+     * JSON string of SortBranchDto[]
+     * @type {string}
+     * @memberof QueryBranchesDto
+     */
+    'sort'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface QueryProvincesDto
+ */
+export interface QueryProvincesDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof QueryProvincesDto
+     */
+    'page'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof QueryProvincesDto
+     */
+    'pageSize'?: number;
+    /**
+     * JSON string of FilterProvincesDto
+     * @type {string}
+     * @memberof QueryProvincesDto
+     */
+    'filters'?: string;
+    /**
+     * JSON string of SortProvinceDto[]
+     * @type {string}
+     * @memberof QueryProvincesDto
+     */
+    'sort'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface QueryUsersDto
+ */
+export interface QueryUsersDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof QueryUsersDto
+     */
+    'page'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof QueryUsersDto
+     */
+    'pageSize'?: number;
+    /**
+     * JSON string of FilterUserDto
+     * @type {string}
+     * @memberof QueryUsersDto
+     */
+    'filters'?: string;
+    /**
+     * JSON string of SortUserDto[]
+     * @type {string}
+     * @memberof QueryUsersDto
+     */
+    'sort'?: string;
+}
+/**
+ * 
+ * @export
  * @interface RefreshTokenDto
  */
 export interface RefreshTokenDto {
@@ -940,6 +1105,87 @@ export interface SessionResponseDto {
      */
     'sessions': Array<string>;
 }
+/**
+ * 
+ * @export
+ * @interface SortBranchDto
+ */
+export interface SortBranchDto {
+    /**
+     * Key of Entity to sort
+     * @type {string}
+     * @memberof SortBranchDto
+     */
+    'orderBy': string;
+    /**
+     * Order of sorting
+     * @type {string}
+     * @memberof SortBranchDto
+     */
+    'order': SortBranchDtoOrderEnum;
+}
+
+export const SortBranchDtoOrderEnum = {
+    Asc: 'asc',
+    Desc: 'desc'
+} as const;
+
+export type SortBranchDtoOrderEnum = typeof SortBranchDtoOrderEnum[keyof typeof SortBranchDtoOrderEnum];
+
+/**
+ * 
+ * @export
+ * @interface SortProvinceDto
+ */
+export interface SortProvinceDto {
+    /**
+     * Key of Entity to sort
+     * @type {string}
+     * @memberof SortProvinceDto
+     */
+    'orderBy': string;
+    /**
+     * Order of sorting
+     * @type {string}
+     * @memberof SortProvinceDto
+     */
+    'order': SortProvinceDtoOrderEnum;
+}
+
+export const SortProvinceDtoOrderEnum = {
+    Asc: 'asc',
+    Desc: 'desc'
+} as const;
+
+export type SortProvinceDtoOrderEnum = typeof SortProvinceDtoOrderEnum[keyof typeof SortProvinceDtoOrderEnum];
+
+/**
+ * 
+ * @export
+ * @interface SortUserDto
+ */
+export interface SortUserDto {
+    /**
+     * Key of User
+     * @type {string}
+     * @memberof SortUserDto
+     */
+    'orderBy': string;
+    /**
+     * Order of sorting
+     * @type {string}
+     * @memberof SortUserDto
+     */
+    'order': SortUserDtoOrderEnum;
+}
+
+export const SortUserDtoOrderEnum = {
+    Asc: 'asc',
+    Desc: 'desc'
+} as const;
+
+export type SortUserDtoOrderEnum = typeof SortUserDtoOrderEnum[keyof typeof SortUserDtoOrderEnum];
+
 /**
  * 
  * @export
