@@ -26,6 +26,64 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerM
 /**
  * 
  * @export
+ * @interface Amenity
+ */
+export interface Amenity {
+    /**
+     * 
+     * @type {string}
+     * @memberof Amenity
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Amenity
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Amenity
+     */
+    'updatedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Amenity
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Amenity
+     */
+    'slug': string;
+    /**
+     * Icon image for the amenity
+     * @type {Image}
+     * @memberof Amenity
+     */
+    'icon': Image | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Amenity
+     */
+    'type': AmenityTypeEnum;
+}
+
+export const AmenityTypeEnum = {
+    Room: 'ROOM',
+    Property: 'PROPERTY',
+    Service: 'SERVICE'
+} as const;
+
+export type AmenityTypeEnum = typeof AmenityTypeEnum[keyof typeof AmenityTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface Branch
  */
 export interface Branch {
@@ -110,10 +168,10 @@ export interface Branch {
 export interface BranchesPaginationResultDto {
     /**
      * 
-     * @type {Array<object>}
+     * @type {Array<Branch>}
      * @memberof BranchesPaginationResultDto
      */
-    'data': Array<object>;
+    'data': Array<Branch>;
     /**
      * 
      * @type {UsersPaginationResultDtoMeta}
@@ -216,6 +274,78 @@ export interface CreateProvinceDto {
 /**
  * 
  * @export
+ * @interface CreateRoomDetailDto
+ */
+export interface CreateRoomDetailDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateRoomDetailDto
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateRoomDetailDto
+     */
+    'description': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateRoomDetailDto
+     */
+    'room_type': CreateRoomDetailDtoRoomTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateRoomDetailDto
+     */
+    'bed_type': CreateRoomDetailDtoBedTypeEnum;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CreateRoomDetailDto
+     */
+    'amenityIds': Array<string>;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateRoomDetailDto
+     */
+    'max_adults': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateRoomDetailDto
+     */
+    'max_children': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateRoomDetailDto
+     */
+    'quantity': number;
+}
+
+export const CreateRoomDetailDtoRoomTypeEnum = {
+    Standard: 'STANDARD',
+    Superior: 'SUPERIOR',
+    Deluxe: 'DELUXE'
+} as const;
+
+export type CreateRoomDetailDtoRoomTypeEnum = typeof CreateRoomDetailDtoRoomTypeEnum[keyof typeof CreateRoomDetailDtoRoomTypeEnum];
+export const CreateRoomDetailDtoBedTypeEnum = {
+    Single: 'SINGLE',
+    Double: 'DOUBLE',
+    Queen: 'QUEEN',
+    King: 'KING'
+} as const;
+
+export type CreateRoomDetailDtoBedTypeEnum = typeof CreateRoomDetailDtoBedTypeEnum[keyof typeof CreateRoomDetailDtoBedTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface CreateUserDto
  */
 export interface CreateUserDto {
@@ -244,6 +374,113 @@ export interface CreateUserDto {
      */
     'name': string;
 }
+/**
+ * 
+ * @export
+ * @interface HotelRoom
+ */
+export interface HotelRoom {
+    /**
+     * 
+     * @type {string}
+     * @memberof HotelRoom
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HotelRoom
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HotelRoom
+     */
+    'updatedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HotelRoom
+     */
+    'name': string;
+    /**
+     * 
+     * @type {Image}
+     * @memberof HotelRoom
+     */
+    'thumbnail': Image;
+    /**
+     * 
+     * @type {Array<Image>}
+     * @memberof HotelRoom
+     */
+    'images': Array<Image>;
+    /**
+     * 
+     * @type {string}
+     * @memberof HotelRoom
+     */
+    'status': HotelRoomStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof HotelRoom
+     */
+    'branchId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof HotelRoom
+     */
+    'detailId': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof HotelRoom
+     */
+    'base_price_per_hour': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof HotelRoom
+     */
+    'special_price_per_hour'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof HotelRoom
+     */
+    'base_price_per_night': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof HotelRoom
+     */
+    'special_price_per_night'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof HotelRoom
+     */
+    'base_price_per_day': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof HotelRoom
+     */
+    'special_price_per_day'?: number;
+}
+
+export const HotelRoomStatusEnum = {
+    Available: 'AVAILABLE',
+    Booked: 'BOOKED',
+    Occupied: 'OCCUPIED',
+    Maintenance: 'MAINTENANCE'
+} as const;
+
+export type HotelRoomStatusEnum = typeof HotelRoomStatusEnum[keyof typeof HotelRoomStatusEnum];
+
 /**
  * 
  * @export
@@ -422,10 +659,10 @@ export interface Province {
 export interface ProvincePaginationResultDto {
     /**
      * 
-     * @type {Array<object>}
+     * @type {Array<Province>}
      * @memberof ProvincePaginationResultDto
      */
-    'data': Array<object>;
+    'data': Array<Province>;
     /**
      * 
      * @type {UsersPaginationResultDtoMeta}
@@ -578,6 +815,121 @@ export interface RevokeSessionResponseDto {
 /**
  * 
  * @export
+ * @interface RoomDetail
+ */
+export interface RoomDetail {
+    /**
+     * 
+     * @type {string}
+     * @memberof RoomDetail
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RoomDetail
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RoomDetail
+     */
+    'updatedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RoomDetail
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RoomDetail
+     */
+    'description': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RoomDetail
+     */
+    'room_type': RoomDetailRoomTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof RoomDetail
+     */
+    'bed_type': RoomDetailBedTypeEnum;
+    /**
+     * 
+     * @type {Array<Amenity>}
+     * @memberof RoomDetail
+     */
+    'amenities': Array<Amenity>;
+    /**
+     * 
+     * @type {number}
+     * @memberof RoomDetail
+     */
+    'max_adults': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RoomDetail
+     */
+    'max_children': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RoomDetail
+     */
+    'quantity': number;
+    /**
+     * 
+     * @type {Array<HotelRoom>}
+     * @memberof RoomDetail
+     */
+    'rooms': Array<HotelRoom>;
+}
+
+export const RoomDetailRoomTypeEnum = {
+    Standard: 'STANDARD',
+    Superior: 'SUPERIOR',
+    Deluxe: 'DELUXE'
+} as const;
+
+export type RoomDetailRoomTypeEnum = typeof RoomDetailRoomTypeEnum[keyof typeof RoomDetailRoomTypeEnum];
+export const RoomDetailBedTypeEnum = {
+    Single: 'SINGLE',
+    Double: 'DOUBLE',
+    Queen: 'QUEEN',
+    King: 'KING'
+} as const;
+
+export type RoomDetailBedTypeEnum = typeof RoomDetailBedTypeEnum[keyof typeof RoomDetailBedTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface RoomDetailPaginationResultDto
+ */
+export interface RoomDetailPaginationResultDto {
+    /**
+     * 
+     * @type {Array<RoomDetail>}
+     * @memberof RoomDetailPaginationResultDto
+     */
+    'data': Array<RoomDetail>;
+    /**
+     * 
+     * @type {UsersPaginationResultDtoMeta}
+     * @memberof RoomDetailPaginationResultDto
+     */
+    'meta': UsersPaginationResultDtoMeta;
+}
+/**
+ * 
+ * @export
  * @interface SessionResponseDto
  */
 export interface SessionResponseDto {
@@ -680,6 +1032,78 @@ export interface UpdateProvinceDto {
      */
     'slug'?: string;
 }
+/**
+ * 
+ * @export
+ * @interface UpdateRoomDetailDto
+ */
+export interface UpdateRoomDetailDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateRoomDetailDto
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateRoomDetailDto
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateRoomDetailDto
+     */
+    'room_type'?: UpdateRoomDetailDtoRoomTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateRoomDetailDto
+     */
+    'bed_type'?: UpdateRoomDetailDtoBedTypeEnum;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof UpdateRoomDetailDto
+     */
+    'amenityIds'?: Array<string>;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateRoomDetailDto
+     */
+    'max_adults'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateRoomDetailDto
+     */
+    'max_children'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateRoomDetailDto
+     */
+    'quantity'?: number;
+}
+
+export const UpdateRoomDetailDtoRoomTypeEnum = {
+    Standard: 'STANDARD',
+    Superior: 'SUPERIOR',
+    Deluxe: 'DELUXE'
+} as const;
+
+export type UpdateRoomDetailDtoRoomTypeEnum = typeof UpdateRoomDetailDtoRoomTypeEnum[keyof typeof UpdateRoomDetailDtoRoomTypeEnum];
+export const UpdateRoomDetailDtoBedTypeEnum = {
+    Single: 'SINGLE',
+    Double: 'DOUBLE',
+    Queen: 'QUEEN',
+    King: 'KING'
+} as const;
+
+export type UpdateRoomDetailDtoBedTypeEnum = typeof UpdateRoomDetailDtoBedTypeEnum[keyof typeof UpdateRoomDetailDtoBedTypeEnum];
+
 /**
  * 
  * @export
@@ -3569,6 +3993,426 @@ export class ProvincesApi extends BaseAPI {
      */
     public provincesControllerUpdate(id: string, updateProvinceDto: UpdateProvinceDto, options?: RawAxiosRequestConfig) {
         return ProvincesApiFp(this.configuration).provincesControllerUpdate(id, updateProvinceDto, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * RoomDetailsApi - axios parameter creator
+ * @export
+ */
+export const RoomDetailsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Create a new room detail
+         * @param {CreateRoomDetailDto} createRoomDetailDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomDetailControllerCreate: async (createRoomDetailDto: CreateRoomDetailDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createRoomDetailDto' is not null or undefined
+            assertParamExists('roomDetailControllerCreate', 'createRoomDetailDto', createRoomDetailDto)
+            const localVarPath = `/api/room-details`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createRoomDetailDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get all room details with pagination and filters
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [filters] JSON string
+         * @param {string} [sort] JSON string
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomDetailControllerFindMany: async (page?: number, pageSize?: number, filters?: string, sort?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/room-details`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            if (filters !== undefined) {
+                localVarQueryParameter['filters'] = filters;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get a room detail by id
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomDetailControllerFindOne: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('roomDetailControllerFindOne', 'id', id)
+            const localVarPath = `/api/room-details/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete a room detail
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomDetailControllerRemove: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('roomDetailControllerRemove', 'id', id)
+            const localVarPath = `/api/room-details/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update a room detail
+         * @param {string} id 
+         * @param {UpdateRoomDetailDto} updateRoomDetailDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomDetailControllerUpdate: async (id: string, updateRoomDetailDto: UpdateRoomDetailDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('roomDetailControllerUpdate', 'id', id)
+            // verify required parameter 'updateRoomDetailDto' is not null or undefined
+            assertParamExists('roomDetailControllerUpdate', 'updateRoomDetailDto', updateRoomDetailDto)
+            const localVarPath = `/api/room-details/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateRoomDetailDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * RoomDetailsApi - functional programming interface
+ * @export
+ */
+export const RoomDetailsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = RoomDetailsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Create a new room detail
+         * @param {CreateRoomDetailDto} createRoomDetailDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async roomDetailControllerCreate(createRoomDetailDto: CreateRoomDetailDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoomDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.roomDetailControllerCreate(createRoomDetailDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoomDetailsApi.roomDetailControllerCreate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get all room details with pagination and filters
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [filters] JSON string
+         * @param {string} [sort] JSON string
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async roomDetailControllerFindMany(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoomDetailPaginationResultDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.roomDetailControllerFindMany(page, pageSize, filters, sort, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoomDetailsApi.roomDetailControllerFindMany']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get a room detail by id
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async roomDetailControllerFindOne(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoomDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.roomDetailControllerFindOne(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoomDetailsApi.roomDetailControllerFindOne']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Delete a room detail
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async roomDetailControllerRemove(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.roomDetailControllerRemove(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoomDetailsApi.roomDetailControllerRemove']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Update a room detail
+         * @param {string} id 
+         * @param {UpdateRoomDetailDto} updateRoomDetailDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async roomDetailControllerUpdate(id: string, updateRoomDetailDto: UpdateRoomDetailDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoomDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.roomDetailControllerUpdate(id, updateRoomDetailDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoomDetailsApi.roomDetailControllerUpdate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * RoomDetailsApi - factory interface
+ * @export
+ */
+export const RoomDetailsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = RoomDetailsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Create a new room detail
+         * @param {CreateRoomDetailDto} createRoomDetailDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomDetailControllerCreate(createRoomDetailDto: CreateRoomDetailDto, options?: RawAxiosRequestConfig): AxiosPromise<RoomDetail> {
+            return localVarFp.roomDetailControllerCreate(createRoomDetailDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get all room details with pagination and filters
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [filters] JSON string
+         * @param {string} [sort] JSON string
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomDetailControllerFindMany(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig): AxiosPromise<RoomDetailPaginationResultDto> {
+            return localVarFp.roomDetailControllerFindMany(page, pageSize, filters, sort, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get a room detail by id
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomDetailControllerFindOne(id: string, options?: RawAxiosRequestConfig): AxiosPromise<RoomDetail> {
+            return localVarFp.roomDetailControllerFindOne(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete a room detail
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomDetailControllerRemove(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.roomDetailControllerRemove(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update a room detail
+         * @param {string} id 
+         * @param {UpdateRoomDetailDto} updateRoomDetailDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomDetailControllerUpdate(id: string, updateRoomDetailDto: UpdateRoomDetailDto, options?: RawAxiosRequestConfig): AxiosPromise<RoomDetail> {
+            return localVarFp.roomDetailControllerUpdate(id, updateRoomDetailDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * RoomDetailsApi - object-oriented interface
+ * @export
+ * @class RoomDetailsApi
+ * @extends {BaseAPI}
+ */
+export class RoomDetailsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Create a new room detail
+     * @param {CreateRoomDetailDto} createRoomDetailDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoomDetailsApi
+     */
+    public roomDetailControllerCreate(createRoomDetailDto: CreateRoomDetailDto, options?: RawAxiosRequestConfig) {
+        return RoomDetailsApiFp(this.configuration).roomDetailControllerCreate(createRoomDetailDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get all room details with pagination and filters
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {string} [filters] JSON string
+     * @param {string} [sort] JSON string
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoomDetailsApi
+     */
+    public roomDetailControllerFindMany(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig) {
+        return RoomDetailsApiFp(this.configuration).roomDetailControllerFindMany(page, pageSize, filters, sort, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get a room detail by id
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoomDetailsApi
+     */
+    public roomDetailControllerFindOne(id: string, options?: RawAxiosRequestConfig) {
+        return RoomDetailsApiFp(this.configuration).roomDetailControllerFindOne(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete a room detail
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoomDetailsApi
+     */
+    public roomDetailControllerRemove(id: string, options?: RawAxiosRequestConfig) {
+        return RoomDetailsApiFp(this.configuration).roomDetailControllerRemove(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update a room detail
+     * @param {string} id 
+     * @param {UpdateRoomDetailDto} updateRoomDetailDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoomDetailsApi
+     */
+    public roomDetailControllerUpdate(id: string, updateRoomDetailDto: UpdateRoomDetailDto, options?: RawAxiosRequestConfig) {
+        return RoomDetailsApiFp(this.configuration).roomDetailControllerUpdate(id, updateRoomDetailDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
