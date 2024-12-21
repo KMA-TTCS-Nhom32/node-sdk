@@ -722,6 +722,25 @@ export interface Province {
      * @memberof Province
      */
     'slug': string;
+    /**
+     * 
+     * @type {ProvinceCount}
+     * @memberof Province
+     */
+    '_count': ProvinceCount;
+}
+/**
+ * Count of branches in the province
+ * @export
+ * @interface ProvinceCount
+ */
+export interface ProvinceCount {
+    /**
+     * 
+     * @type {number}
+     * @memberof ProvinceCount
+     */
+    'branches'?: number;
 }
 /**
  * 
