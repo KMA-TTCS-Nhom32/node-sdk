@@ -130,6 +130,12 @@ export interface Branch {
      */
     'updatedAt': string;
     /**
+     * ID of the province where this branch is located
+     * @type {string}
+     * @memberof Branch
+     */
+    'provinceId': string;
+    /**
      * Branch\'s thumbnail image
      * @type {Image}
      * @memberof Branch
@@ -147,6 +153,12 @@ export interface Branch {
      * @memberof Branch
      */
     'name': string;
+    /**
+     * Branch\'s slug
+     * @type {string}
+     * @memberof Branch
+     */
+    'slug': string;
     /**
      * Branch\'s description
      * @type {string}
@@ -252,6 +264,12 @@ export interface CreateBranchDto {
      * @memberof CreateBranchDto
      */
     'name': string;
+    /**
+     * The branch\'s slug.
+     * @type {string}
+     * @memberof CreateBranchDto
+     */
+    'slug': string;
     /**
      * The branch\'s description.
      * @type {string}
@@ -447,6 +465,12 @@ export interface FilterBranchesDto {
      * @memberof FilterBranchesDto
      */
     'provinceId'?: string;
+    /**
+     * Filter by province slug
+     * @type {string}
+     * @memberof FilterBranchesDto
+     */
+    'provinceSlug'?: string;
     /**
      * 
      * @type {Array<string>}
@@ -1315,6 +1339,12 @@ export interface UpdateBranchDto {
      */
     'name'?: string;
     /**
+     * The branch\'s slug.
+     * @type {string}
+     * @memberof UpdateBranchDto
+     */
+    'slug'?: string;
+    /**
      * The branch\'s description.
      * @type {string}
      * @memberof UpdateBranchDto
@@ -1350,6 +1380,12 @@ export interface UpdateBranchDto {
      * @memberof UpdateBranchDto
      */
     'rating'?: number;
+    /**
+     * Amenities available in the branch
+     * @type {Array<Amenity>}
+     * @memberof UpdateBranchDto
+     */
+    'amenities': Array<Amenity>;
 }
 /**
  * 
