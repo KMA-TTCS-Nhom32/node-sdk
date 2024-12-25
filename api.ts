@@ -199,6 +199,115 @@ export interface Branch {
 /**
  * 
  * @export
+ * @interface BranchDetail
+ */
+export interface BranchDetail {
+    /**
+     * 
+     * @type {string}
+     * @memberof BranchDetail
+     */
+    'id': string;
+    /**
+     * Soft delete flag
+     * @type {boolean}
+     * @memberof BranchDetail
+     */
+    'isDeleted': boolean;
+    /**
+     * Soft delete timestamp
+     * @type {string}
+     * @memberof BranchDetail
+     */
+    'deletedAt': string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BranchDetail
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BranchDetail
+     */
+    'updatedAt': string;
+    /**
+     * ID of the province where this branch is located
+     * @type {string}
+     * @memberof BranchDetail
+     */
+    'provinceId': string;
+    /**
+     * Branch\'s thumbnail image
+     * @type {Image}
+     * @memberof BranchDetail
+     */
+    'thumbnail': Image;
+    /**
+     * Branch\'s image gallery
+     * @type {Array<Image>}
+     * @memberof BranchDetail
+     */
+    'images': Array<Image>;
+    /**
+     * Branch\'s name
+     * @type {string}
+     * @memberof BranchDetail
+     */
+    'name': string;
+    /**
+     * Branch\'s slug
+     * @type {string}
+     * @memberof BranchDetail
+     */
+    'slug': string;
+    /**
+     * Branch\'s description
+     * @type {string}
+     * @memberof BranchDetail
+     */
+    'description': string;
+    /**
+     * Branch\'s contact phone number
+     * @type {string}
+     * @memberof BranchDetail
+     */
+    'phone': string;
+    /**
+     * Branch\'s active status
+     * @type {boolean}
+     * @memberof BranchDetail
+     */
+    'is_active': boolean;
+    /**
+     * Branch\'s physical address
+     * @type {string}
+     * @memberof BranchDetail
+     */
+    'address': string;
+    /**
+     * Branch\'s geographical location
+     * @type {object}
+     * @memberof BranchDetail
+     */
+    'location': object;
+    /**
+     * Branch\'s rating
+     * @type {number}
+     * @memberof BranchDetail
+     */
+    'rating': number;
+    /**
+     * List of rooms available in the branch
+     * @type {Array<HotelRoom>}
+     * @memberof BranchDetail
+     */
+    'rooms': Array<HotelRoom>;
+}
+/**
+ * 
+ * @export
  * @interface BranchesInfinitePaginationResultDto
  */
 export interface BranchesInfinitePaginationResultDto {
@@ -3356,16 +3465,16 @@ export const BranchesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
-         * @summary Get branch by ID
-         * @param {string} id 
+         * @summary Get branch by ID or slug
+         * @param {string} idOrSlug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        branchControllerFindOne: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('branchControllerFindOne', 'id', id)
-            const localVarPath = `/api/branches/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+        branchControllerFindOne: async (idOrSlug: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'idOrSlug' is not null or undefined
+            assertParamExists('branchControllerFindOne', 'idOrSlug', idOrSlug)
+            const localVarPath = `/api/branches/{idOrSlug}`
+                .replace(`{${"idOrSlug"}}`, encodeURIComponent(String(idOrSlug)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3565,13 +3674,13 @@ export const BranchesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get branch by ID
-         * @param {string} id 
+         * @summary Get branch by ID or slug
+         * @param {string} idOrSlug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async branchControllerFindOne(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Branch>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.branchControllerFindOne(id, options);
+        async branchControllerFindOne(idOrSlug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BranchDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.branchControllerFindOne(idOrSlug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BranchesApi.branchControllerFindOne']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3673,13 +3782,13 @@ export const BranchesApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
-         * @summary Get branch by ID
-         * @param {string} id 
+         * @summary Get branch by ID or slug
+         * @param {string} idOrSlug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        branchControllerFindOne(id: string, options?: RawAxiosRequestConfig): AxiosPromise<Branch> {
-            return localVarFp.branchControllerFindOne(id, options).then((request) => request(axios, basePath));
+        branchControllerFindOne(idOrSlug: string, options?: RawAxiosRequestConfig): AxiosPromise<BranchDetail> {
+            return localVarFp.branchControllerFindOne(idOrSlug, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3777,14 +3886,14 @@ export class BranchesApi extends BaseAPI {
 
     /**
      * 
-     * @summary Get branch by ID
-     * @param {string} id 
+     * @summary Get branch by ID or slug
+     * @param {string} idOrSlug 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BranchesApi
      */
-    public branchControllerFindOne(id: string, options?: RawAxiosRequestConfig) {
-        return BranchesApiFp(this.configuration).branchControllerFindOne(id, options).then((request) => request(this.axios, this.basePath));
+    public branchControllerFindOne(idOrSlug: string, options?: RawAxiosRequestConfig) {
+        return BranchesApiFp(this.configuration).branchControllerFindOne(idOrSlug, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
