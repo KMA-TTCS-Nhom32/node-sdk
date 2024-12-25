@@ -136,6 +136,12 @@ export interface Branch {
      */
     'provinceId': string;
     /**
+     * Province where this branch is located
+     * @type {Province}
+     * @memberof Branch
+     */
+    'province'?: Province;
+    /**
      * Branch\'s thumbnail image
      * @type {Image}
      * @memberof Branch
@@ -238,6 +244,12 @@ export interface BranchDetail {
      * @memberof BranchDetail
      */
     'provinceId': string;
+    /**
+     * Province where this branch is located
+     * @type {Province}
+     * @memberof BranchDetail
+     */
+    'province'?: Province;
     /**
      * Branch\'s thumbnail image
      * @type {Image}
@@ -927,7 +939,7 @@ export interface Province {
      * @type {ProvinceCount}
      * @memberof Province
      */
-    '_count': ProvinceCount;
+    '_count'?: ProvinceCount;
 }
 /**
  * Count of branches in the province
