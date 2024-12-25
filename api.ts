@@ -36,6 +36,18 @@ export interface Amenity {
      */
     'id': string;
     /**
+     * Soft delete flag
+     * @type {boolean}
+     * @memberof Amenity
+     */
+    'isDeleted': boolean;
+    /**
+     * Soft delete timestamp
+     * @type {string}
+     * @memberof Amenity
+     */
+    'deletedAt': string | null;
+    /**
      * 
      * @type {string}
      * @memberof Amenity
@@ -93,6 +105,18 @@ export interface Branch {
      * @memberof Branch
      */
     'id': string;
+    /**
+     * Soft delete flag
+     * @type {boolean}
+     * @memberof Branch
+     */
+    'isDeleted': boolean;
+    /**
+     * Soft delete timestamp
+     * @type {string}
+     * @memberof Branch
+     */
+    'deletedAt': string | null;
     /**
      * 
      * @type {string}
@@ -159,6 +183,25 @@ export interface Branch {
      * @memberof Branch
      */
     'rating': number;
+}
+/**
+ * 
+ * @export
+ * @interface BranchesInfinitePaginationResultDto
+ */
+export interface BranchesInfinitePaginationResultDto {
+    /**
+     * 
+     * @type {Array<Branch>}
+     * @memberof BranchesInfinitePaginationResultDto
+     */
+    'data': Array<Branch>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof BranchesInfinitePaginationResultDto
+     */
+    'hasNextPage': boolean;
 }
 /**
  * 
@@ -459,6 +502,18 @@ export interface HotelRoom {
      */
     'id': string;
     /**
+     * Soft delete flag
+     * @type {boolean}
+     * @memberof HotelRoom
+     */
+    'isDeleted': boolean;
+    /**
+     * Soft delete timestamp
+     * @type {string}
+     * @memberof HotelRoom
+     */
+    'deletedAt': string | null;
+    /**
      * 
      * @type {string}
      * @memberof HotelRoom
@@ -692,6 +747,18 @@ export interface Province {
      * @memberof Province
      */
     'id': string;
+    /**
+     * Soft delete flag
+     * @type {boolean}
+     * @memberof Province
+     */
+    'isDeleted': boolean;
+    /**
+     * Soft delete timestamp
+     * @type {string}
+     * @memberof Province
+     */
+    'deletedAt': string | null;
     /**
      * 
      * @type {string}
@@ -1008,6 +1075,18 @@ export interface RoomDetail {
      * @memberof RoomDetail
      */
     'id': string;
+    /**
+     * Soft delete flag
+     * @type {boolean}
+     * @memberof RoomDetail
+     */
+    'isDeleted': boolean;
+    /**
+     * Soft delete timestamp
+     * @type {string}
+     * @memberof RoomDetail
+     */
+    'deletedAt': string | null;
     /**
      * 
      * @type {string}
@@ -1382,6 +1461,18 @@ export interface User {
      */
     'id': string;
     /**
+     * Soft delete flag
+     * @type {boolean}
+     * @memberof User
+     */
+    'isDeleted': boolean;
+    /**
+     * Soft delete timestamp
+     * @type {string}
+     * @memberof User
+     */
+    'deletedAt': string | null;
+    /**
      * 
      * @type {string}
      * @memberof User
@@ -1693,12 +1784,12 @@ export const AmenitiesApiAxiosParamCreator = function (configuration?: Configura
          * 
          * @param {number} [page] 
          * @param {number} [pageSize] 
-         * @param {string} [filters] JSON string
-         * @param {string} [sort] JSON string
+         * @param {object} [filters] 
+         * @param {Array<string>} [sort] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        amenitiesControllerFindAll: async (page?: number, pageSize?: number, filters?: string, sort?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        amenitiesControllerFindAll: async (page?: number, pageSize?: number, filters?: object, sort?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/amenities`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1720,10 +1811,12 @@ export const AmenitiesApiAxiosParamCreator = function (configuration?: Configura
             }
 
             if (filters !== undefined) {
-                localVarQueryParameter['filters'] = filters;
+                for (const [key, value] of Object.entries(filters)) {
+                    localVarQueryParameter[key] = value;
+                }
             }
 
-            if (sort !== undefined) {
+            if (sort) {
                 localVarQueryParameter['sort'] = sort;
             }
 
@@ -1885,12 +1978,12 @@ export const AmenitiesApiFp = function(configuration?: Configuration) {
          * 
          * @param {number} [page] 
          * @param {number} [pageSize] 
-         * @param {string} [filters] JSON string
-         * @param {string} [sort] JSON string
+         * @param {object} [filters] 
+         * @param {Array<string>} [sort] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async amenitiesControllerFindAll(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async amenitiesControllerFindAll(page?: number, pageSize?: number, filters?: object, sort?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.amenitiesControllerFindAll(page, pageSize, filters, sort, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AmenitiesApi.amenitiesControllerFindAll']?.[localVarOperationServerIndex]?.url;
@@ -1961,12 +2054,12 @@ export const AmenitiesApiFactory = function (configuration?: Configuration, base
          * 
          * @param {number} [page] 
          * @param {number} [pageSize] 
-         * @param {string} [filters] JSON string
-         * @param {string} [sort] JSON string
+         * @param {object} [filters] 
+         * @param {Array<string>} [sort] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        amenitiesControllerFindAll(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        amenitiesControllerFindAll(page?: number, pageSize?: number, filters?: object, sort?: Array<string>, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.amenitiesControllerFindAll(page, pageSize, filters, sort, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2027,13 +2120,13 @@ export class AmenitiesApi extends BaseAPI {
      * 
      * @param {number} [page] 
      * @param {number} [pageSize] 
-     * @param {string} [filters] JSON string
-     * @param {string} [sort] JSON string
+     * @param {object} [filters] 
+     * @param {Array<string>} [sort] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AmenitiesApi
      */
-    public amenitiesControllerFindAll(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig) {
+    public amenitiesControllerFindAll(page?: number, pageSize?: number, filters?: object, sort?: Array<string>, options?: RawAxiosRequestConfig) {
         return AmenitiesApiFp(this.configuration).amenitiesControllerFindAll(page, pageSize, filters, sort, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -3069,7 +3162,7 @@ export const BranchesApiAxiosParamCreator = function (configuration?: Configurat
         branchControllerCreate: async (createBranchDto: CreateBranchDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'createBranchDto' is not null or undefined
             assertParamExists('branchControllerCreate', 'createBranchDto', createBranchDto)
-            const localVarPath = `/api/branch`;
+            const localVarPath = `/api/branches`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3097,6 +3190,36 @@ export const BranchesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary Get all soft-deleted branches
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        branchControllerFindDeleted: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/branches/deleted`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get all branches with pagination and filters
          * @param {number} [page] 
          * @param {number} [pageSize] 
@@ -3106,7 +3229,7 @@ export const BranchesApiAxiosParamCreator = function (configuration?: Configurat
          * @throws {RequiredError}
          */
         branchControllerFindMany: async (page?: number, pageSize?: number, filters?: string, sort?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/branch`;
+            const localVarPath = `/api/branches`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3156,7 +3279,7 @@ export const BranchesApiAxiosParamCreator = function (configuration?: Configurat
          * @throws {RequiredError}
          */
         branchControllerFindManyInfinite: async (page?: number, pageSize?: number, filters?: string, sort?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/branch/infinite`;
+            const localVarPath = `/api/branches/infinite`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3205,7 +3328,7 @@ export const BranchesApiAxiosParamCreator = function (configuration?: Configurat
         branchControllerFindOne: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('branchControllerFindOne', 'id', id)
-            const localVarPath = `/api/branch/{id}`
+            const localVarPath = `/api/branches/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3239,7 +3362,7 @@ export const BranchesApiAxiosParamCreator = function (configuration?: Configurat
         branchControllerRemove: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('branchControllerRemove', 'id', id)
-            const localVarPath = `/api/branch/{id}`
+            const localVarPath = `/api/branches/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3249,6 +3372,40 @@ export const BranchesApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Restore a soft-deleted branch
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        branchControllerRestore: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('branchControllerRestore', 'id', id)
+            const localVarPath = `/api/branches/{id}/restore`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -3276,7 +3433,7 @@ export const BranchesApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists('branchControllerUpdate', 'id', id)
             // verify required parameter 'updateBranchDto' is not null or undefined
             assertParamExists('branchControllerUpdate', 'updateBranchDto', updateBranchDto)
-            const localVarPath = `/api/branch/{id}`
+            const localVarPath = `/api/branches/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3328,6 +3485,18 @@ export const BranchesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get all soft-deleted branches
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async branchControllerFindDeleted(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Branch>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.branchControllerFindDeleted(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BranchesApi.branchControllerFindDeleted']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get all branches with pagination and filters
          * @param {number} [page] 
          * @param {number} [pageSize] 
@@ -3352,7 +3521,7 @@ export const BranchesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async branchControllerFindManyInfinite(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Branch>>> {
+        async branchControllerFindManyInfinite(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BranchesInfinitePaginationResultDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.branchControllerFindManyInfinite(page, pageSize, filters, sort, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BranchesApi.branchControllerFindManyInfinite']?.[localVarOperationServerIndex]?.url;
@@ -3382,6 +3551,19 @@ export const BranchesApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.branchControllerRemove(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BranchesApi.branchControllerRemove']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Restore a soft-deleted branch
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async branchControllerRestore(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.branchControllerRestore(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BranchesApi.branchControllerRestore']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -3420,6 +3602,15 @@ export const BranchesApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @summary Get all soft-deleted branches
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        branchControllerFindDeleted(options?: RawAxiosRequestConfig): AxiosPromise<Array<Branch>> {
+            return localVarFp.branchControllerFindDeleted(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get all branches with pagination and filters
          * @param {number} [page] 
          * @param {number} [pageSize] 
@@ -3441,7 +3632,7 @@ export const BranchesApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        branchControllerFindManyInfinite(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<Branch>> {
+        branchControllerFindManyInfinite(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig): AxiosPromise<BranchesInfinitePaginationResultDto> {
             return localVarFp.branchControllerFindManyInfinite(page, pageSize, filters, sort, options).then((request) => request(axios, basePath));
         },
         /**
@@ -3463,6 +3654,16 @@ export const BranchesApiFactory = function (configuration?: Configuration, baseP
          */
         branchControllerRemove(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.branchControllerRemove(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Restore a soft-deleted branch
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        branchControllerRestore(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.branchControllerRestore(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3495,6 +3696,17 @@ export class BranchesApi extends BaseAPI {
      */
     public branchControllerCreate(createBranchDto: CreateBranchDto, options?: RawAxiosRequestConfig) {
         return BranchesApiFp(this.configuration).branchControllerCreate(createBranchDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get all soft-deleted branches
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BranchesApi
+     */
+    public branchControllerFindDeleted(options?: RawAxiosRequestConfig) {
+        return BranchesApiFp(this.configuration).branchControllerFindDeleted(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3549,6 +3761,18 @@ export class BranchesApi extends BaseAPI {
      */
     public branchControllerRemove(id: string, options?: RawAxiosRequestConfig) {
         return BranchesApiFp(this.configuration).branchControllerRemove(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Restore a soft-deleted branch
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BranchesApi
+     */
+    public branchControllerRestore(id: string, options?: RawAxiosRequestConfig) {
+        return BranchesApiFp(this.configuration).branchControllerRestore(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3887,6 +4111,36 @@ export const ProvincesApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
+         * @summary Get all soft-deleted provinces
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        provincesControllerFindDeleted: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/provinces/deleted`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get all provinces with pagination and filters
          * @param {number} [page] 
          * @param {number} [pageSize] 
@@ -4005,6 +4259,40 @@ export const ProvincesApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
+         * @summary Restore a soft-deleted province
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        provincesControllerRestore: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('provincesControllerRestore', 'id', id)
+            const localVarPath = `/api/provinces/{id}/restore`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Update a province
          * @param {string} id 
          * @param {UpdateProvinceDto} updateProvinceDto 
@@ -4068,6 +4356,18 @@ export const ProvincesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get all soft-deleted provinces
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async provincesControllerFindDeleted(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Province>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.provincesControllerFindDeleted(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProvincesApi.provincesControllerFindDeleted']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get all provinces with pagination and filters
          * @param {number} [page] 
          * @param {number} [pageSize] 
@@ -4110,6 +4410,19 @@ export const ProvincesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Restore a soft-deleted province
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async provincesControllerRestore(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.provincesControllerRestore(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProvincesApi.provincesControllerRestore']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Update a province
          * @param {string} id 
          * @param {UpdateProvinceDto} updateProvinceDto 
@@ -4141,6 +4454,15 @@ export const ProvincesApiFactory = function (configuration?: Configuration, base
          */
         provincesControllerCreate(createProvinceDto: CreateProvinceDto, options?: RawAxiosRequestConfig): AxiosPromise<Province> {
             return localVarFp.provincesControllerCreate(createProvinceDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get all soft-deleted provinces
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        provincesControllerFindDeleted(options?: RawAxiosRequestConfig): AxiosPromise<Array<Province>> {
+            return localVarFp.provincesControllerFindDeleted(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4177,6 +4499,16 @@ export const ProvincesApiFactory = function (configuration?: Configuration, base
         },
         /**
          * 
+         * @summary Restore a soft-deleted province
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        provincesControllerRestore(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.provincesControllerRestore(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Update a province
          * @param {string} id 
          * @param {UpdateProvinceDto} updateProvinceDto 
@@ -4206,6 +4538,17 @@ export class ProvincesApi extends BaseAPI {
      */
     public provincesControllerCreate(createProvinceDto: CreateProvinceDto, options?: RawAxiosRequestConfig) {
         return ProvincesApiFp(this.configuration).provincesControllerCreate(createProvinceDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get all soft-deleted provinces
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProvincesApi
+     */
+    public provincesControllerFindDeleted(options?: RawAxiosRequestConfig) {
+        return ProvincesApiFp(this.configuration).provincesControllerFindDeleted(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4245,6 +4588,18 @@ export class ProvincesApi extends BaseAPI {
      */
     public provincesControllerRemove(id: string, options?: RawAxiosRequestConfig) {
         return ProvincesApiFp(this.configuration).provincesControllerRemove(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Restore a soft-deleted province
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProvincesApi
+     */
+    public provincesControllerRestore(id: string, options?: RawAxiosRequestConfig) {
+        return ProvincesApiFp(this.configuration).provincesControllerRestore(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4310,12 +4665,12 @@ export const RoomDetailsApiAxiosParamCreator = function (configuration?: Configu
          * @summary Get all room details with pagination and filters
          * @param {number} [page] 
          * @param {number} [pageSize] 
-         * @param {string} [filters] JSON string
-         * @param {string} [sort] JSON string
+         * @param {object} [filters] 
+         * @param {Array<string>} [sort] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        roomDetailControllerFindMany: async (page?: number, pageSize?: number, filters?: string, sort?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        roomDetailControllerFindMany: async (page?: number, pageSize?: number, filters?: object, sort?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/room-details`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4337,10 +4692,12 @@ export const RoomDetailsApiAxiosParamCreator = function (configuration?: Configu
             }
 
             if (filters !== undefined) {
-                localVarQueryParameter['filters'] = filters;
+                for (const [key, value] of Object.entries(filters)) {
+                    localVarQueryParameter[key] = value;
+                }
             }
 
-            if (sort !== undefined) {
+            if (sort) {
                 localVarQueryParameter['sort'] = sort;
             }
 
@@ -4491,12 +4848,12 @@ export const RoomDetailsApiFp = function(configuration?: Configuration) {
          * @summary Get all room details with pagination and filters
          * @param {number} [page] 
          * @param {number} [pageSize] 
-         * @param {string} [filters] JSON string
-         * @param {string} [sort] JSON string
+         * @param {object} [filters] 
+         * @param {Array<string>} [sort] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async roomDetailControllerFindMany(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoomDetailPaginationResultDto>> {
+        async roomDetailControllerFindMany(page?: number, pageSize?: number, filters?: object, sort?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoomDetailPaginationResultDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.roomDetailControllerFindMany(page, pageSize, filters, sort, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RoomDetailsApi.roomDetailControllerFindMany']?.[localVarOperationServerIndex]?.url;
@@ -4567,12 +4924,12 @@ export const RoomDetailsApiFactory = function (configuration?: Configuration, ba
          * @summary Get all room details with pagination and filters
          * @param {number} [page] 
          * @param {number} [pageSize] 
-         * @param {string} [filters] JSON string
-         * @param {string} [sort] JSON string
+         * @param {object} [filters] 
+         * @param {Array<string>} [sort] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        roomDetailControllerFindMany(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig): AxiosPromise<RoomDetailPaginationResultDto> {
+        roomDetailControllerFindMany(page?: number, pageSize?: number, filters?: object, sort?: Array<string>, options?: RawAxiosRequestConfig): AxiosPromise<RoomDetailPaginationResultDto> {
             return localVarFp.roomDetailControllerFindMany(page, pageSize, filters, sort, options).then((request) => request(axios, basePath));
         },
         /**
@@ -4633,13 +4990,13 @@ export class RoomDetailsApi extends BaseAPI {
      * @summary Get all room details with pagination and filters
      * @param {number} [page] 
      * @param {number} [pageSize] 
-     * @param {string} [filters] JSON string
-     * @param {string} [sort] JSON string
+     * @param {object} [filters] 
+     * @param {Array<string>} [sort] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RoomDetailsApi
      */
-    public roomDetailControllerFindMany(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig) {
+    public roomDetailControllerFindMany(page?: number, pageSize?: number, filters?: object, sort?: Array<string>, options?: RawAxiosRequestConfig) {
         return RoomDetailsApiFp(this.configuration).roomDetailControllerFindMany(page, pageSize, filters, sort, options).then((request) => request(this.axios, this.basePath));
     }
 
