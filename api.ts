@@ -26,6 +26,25 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerM
 /**
  * 
  * @export
+ * @interface AmenitiesPaginationResultDto
+ */
+export interface AmenitiesPaginationResultDto {
+    /**
+     * 
+     * @type {Array<Amenity>}
+     * @memberof AmenitiesPaginationResultDto
+     */
+    'data': Array<Amenity>;
+    /**
+     * 
+     * @type {UsersPaginationResultDtoMeta}
+     * @memberof AmenitiesPaginationResultDto
+     */
+    'meta': UsersPaginationResultDtoMeta;
+}
+/**
+ * 
+ * @export
  * @interface Amenity
  */
 export interface Amenity {
@@ -358,6 +377,46 @@ export interface BranchesPaginationResultDto {
 /**
  * 
  * @export
+ * @interface CreateAmenityDto
+ */
+export interface CreateAmenityDto {
+    /**
+     * The name of the amenity
+     * @type {string}
+     * @memberof CreateAmenityDto
+     */
+    'name': string;
+    /**
+     * URL-friendly version of the name (lowercase, hyphenated)
+     * @type {string}
+     * @memberof CreateAmenityDto
+     */
+    'slug': string;
+    /**
+     * Type of amenity (ROOM, PROPERTY, or SERVICE)
+     * @type {string}
+     * @memberof CreateAmenityDto
+     */
+    'type': CreateAmenityDtoTypeEnum;
+    /**
+     * Icon image details
+     * @type {Image}
+     * @memberof CreateAmenityDto
+     */
+    'icon': Image;
+}
+
+export const CreateAmenityDtoTypeEnum = {
+    Room: 'ROOM',
+    Property: 'PROPERTY',
+    Service: 'SERVICE'
+} as const;
+
+export type CreateAmenityDtoTypeEnum = typeof CreateAmenityDtoTypeEnum[keyof typeof CreateAmenityDtoTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface CreateBranchDto
  */
 export interface CreateBranchDto {
@@ -556,6 +615,34 @@ export interface CreateUserDto {
      */
     'name': string;
 }
+/**
+ * 
+ * @export
+ * @interface FilterAmenityDto
+ */
+export interface FilterAmenityDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof FilterAmenityDto
+     */
+    'types'?: FilterAmenityDtoTypesEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilterAmenityDto
+     */
+    'search'?: string;
+}
+
+export const FilterAmenityDtoTypesEnum = {
+    Room: 'ROOM',
+    Property: 'PROPERTY',
+    Service: 'SERVICE'
+} as const;
+
+export type FilterAmenityDtoTypesEnum = typeof FilterAmenityDtoTypesEnum[keyof typeof FilterAmenityDtoTypesEnum];
+
 /**
  * 
  * @export
@@ -1351,6 +1438,33 @@ export interface SessionResponseDto {
 /**
  * 
  * @export
+ * @interface SortAmenityDto
+ */
+export interface SortAmenityDto {
+    /**
+     * Key of Entity to sort
+     * @type {string}
+     * @memberof SortAmenityDto
+     */
+    'orderBy': string;
+    /**
+     * Order of sorting
+     * @type {string}
+     * @memberof SortAmenityDto
+     */
+    'order': SortAmenityDtoOrderEnum;
+}
+
+export const SortAmenityDtoOrderEnum = {
+    Asc: 'asc',
+    Desc: 'desc'
+} as const;
+
+export type SortAmenityDtoOrderEnum = typeof SortAmenityDtoOrderEnum[keyof typeof SortAmenityDtoOrderEnum];
+
+/**
+ * 
+ * @export
  * @interface SortBranchDto
  */
 export interface SortBranchDto {
@@ -1428,6 +1542,46 @@ export const SortUserDtoOrderEnum = {
 } as const;
 
 export type SortUserDtoOrderEnum = typeof SortUserDtoOrderEnum[keyof typeof SortUserDtoOrderEnum];
+
+/**
+ * 
+ * @export
+ * @interface UpdateAmenityDto
+ */
+export interface UpdateAmenityDto {
+    /**
+     * The name of the amenity
+     * @type {string}
+     * @memberof UpdateAmenityDto
+     */
+    'name'?: string;
+    /**
+     * URL-friendly version of the name (lowercase, hyphenated)
+     * @type {string}
+     * @memberof UpdateAmenityDto
+     */
+    'slug'?: string;
+    /**
+     * Type of amenity (ROOM, PROPERTY, or SERVICE)
+     * @type {string}
+     * @memberof UpdateAmenityDto
+     */
+    'type'?: UpdateAmenityDtoTypeEnum;
+    /**
+     * Icon image details
+     * @type {Image}
+     * @memberof UpdateAmenityDto
+     */
+    'icon'?: Image;
+}
+
+export const UpdateAmenityDtoTypeEnum = {
+    Room: 'ROOM',
+    Property: 'PROPERTY',
+    Service: 'SERVICE'
+} as const;
+
+export type UpdateAmenityDtoTypeEnum = typeof UpdateAmenityDtoTypeEnum[keyof typeof UpdateAmenityDtoTypeEnum];
 
 /**
  * 
@@ -1886,14 +2040,14 @@ export const AmenitiesApiAxiosParamCreator = function (configuration?: Configura
     return {
         /**
          * 
-         * @param {string} [name] 
-         * @param {string} [slug] 
-         * @param {AmenitiesControllerCreateTypeEnum} [type] 
-         * @param {File} [icon] 
+         * @summary Create new amenity
+         * @param {CreateAmenityDto} createAmenityDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        amenitiesControllerCreate: async (name?: string, slug?: string, type?: AmenitiesControllerCreateTypeEnum, icon?: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        amenitiesControllerCreate: async (createAmenityDto: CreateAmenityDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createAmenityDto' is not null or undefined
+            assertParamExists('amenitiesControllerCreate', 'createAmenityDto', createAmenityDto)
             const localVarPath = `/api/amenities`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1905,32 +2059,15 @@ export const AmenitiesApiAxiosParamCreator = function (configuration?: Configura
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
 
-            if (name !== undefined) { 
-                localVarFormParams.append('name', name as any);
-            }
     
-            if (slug !== undefined) { 
-                localVarFormParams.append('slug', slug as any);
-            }
-    
-            if (type !== undefined) { 
-                localVarFormParams.append('type', type as any);
-            }
-    
-            if (icon !== undefined) { 
-                localVarFormParams.append('icon', icon as any);
-            }
-    
-    
-            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
-    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = localVarFormParams;
+            localVarRequestOptions.data = serializeDataIfNeeded(createAmenityDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1939,14 +2076,15 @@ export const AmenitiesApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
+         * @summary Get all amenities
          * @param {number} [page] 
          * @param {number} [pageSize] 
-         * @param {object} [filters] 
-         * @param {Array<string>} [sort] 
+         * @param {string} [filters] JSON string of FilterAmenityDto
+         * @param {string} [sort] JSON string of SortAmenityDto
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        amenitiesControllerFindAll: async (page?: number, pageSize?: number, filters?: object, sort?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        amenitiesControllerFindAll: async (page?: number, pageSize?: number, filters?: string, sort?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/amenities`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1968,12 +2106,10 @@ export const AmenitiesApiAxiosParamCreator = function (configuration?: Configura
             }
 
             if (filters !== undefined) {
-                for (const [key, value] of Object.entries(filters)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['filters'] = filters;
             }
 
-            if (sort) {
+            if (sort !== undefined) {
                 localVarQueryParameter['sort'] = sort;
             }
 
@@ -2056,16 +2192,17 @@ export const AmenitiesApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
+         * @summary Update amenity
          * @param {string} id 
-         * @param {string} [name] The name of the amenity
-         * @param {string} [slug] URL-friendly version of the name (lowercase, hyphenated)
-         * @param {AmenitiesControllerUpdateTypeEnum} [type] Type of amenity (ROOM, PROPERTY, or SERVICE)
+         * @param {UpdateAmenityDto} updateAmenityDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        amenitiesControllerUpdate: async (id: string, name?: string, slug?: string, type?: AmenitiesControllerUpdateTypeEnum, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        amenitiesControllerUpdate: async (id: string, updateAmenityDto: UpdateAmenityDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('amenitiesControllerUpdate', 'id', id)
+            // verify required parameter 'updateAmenityDto' is not null or undefined
+            assertParamExists('amenitiesControllerUpdate', 'updateAmenityDto', updateAmenityDto)
             const localVarPath = `/api/amenities/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2078,28 +2215,15 @@ export const AmenitiesApiAxiosParamCreator = function (configuration?: Configura
             const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
 
-            if (name !== undefined) { 
-                localVarFormParams.append('name', name as any);
-            }
     
-            if (slug !== undefined) { 
-                localVarFormParams.append('slug', slug as any);
-            }
-    
-            if (type !== undefined) { 
-                localVarFormParams.append('type', type as any);
-            }
-    
-    
-            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
-    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = localVarFormParams;
+            localVarRequestOptions.data = serializeDataIfNeeded(updateAmenityDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2118,29 +2242,28 @@ export const AmenitiesApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {string} [name] 
-         * @param {string} [slug] 
-         * @param {AmenitiesControllerCreateTypeEnum} [type] 
-         * @param {File} [icon] 
+         * @summary Create new amenity
+         * @param {CreateAmenityDto} createAmenityDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async amenitiesControllerCreate(name?: string, slug?: string, type?: AmenitiesControllerCreateTypeEnum, icon?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.amenitiesControllerCreate(name, slug, type, icon, options);
+        async amenitiesControllerCreate(createAmenityDto: CreateAmenityDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Amenity>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.amenitiesControllerCreate(createAmenityDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AmenitiesApi.amenitiesControllerCreate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
+         * @summary Get all amenities
          * @param {number} [page] 
          * @param {number} [pageSize] 
-         * @param {object} [filters] 
-         * @param {Array<string>} [sort] 
+         * @param {string} [filters] JSON string of FilterAmenityDto
+         * @param {string} [sort] JSON string of SortAmenityDto
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async amenitiesControllerFindAll(page?: number, pageSize?: number, filters?: object, sort?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async amenitiesControllerFindAll(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AmenitiesPaginationResultDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.amenitiesControllerFindAll(page, pageSize, filters, sort, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AmenitiesApi.amenitiesControllerFindAll']?.[localVarOperationServerIndex]?.url;
@@ -2172,15 +2295,14 @@ export const AmenitiesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Update amenity
          * @param {string} id 
-         * @param {string} [name] The name of the amenity
-         * @param {string} [slug] URL-friendly version of the name (lowercase, hyphenated)
-         * @param {AmenitiesControllerUpdateTypeEnum} [type] Type of amenity (ROOM, PROPERTY, or SERVICE)
+         * @param {UpdateAmenityDto} updateAmenityDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async amenitiesControllerUpdate(id: string, name?: string, slug?: string, type?: AmenitiesControllerUpdateTypeEnum, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.amenitiesControllerUpdate(id, name, slug, type, options);
+        async amenitiesControllerUpdate(id: string, updateAmenityDto: UpdateAmenityDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Amenity>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.amenitiesControllerUpdate(id, updateAmenityDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AmenitiesApi.amenitiesControllerUpdate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2197,26 +2319,25 @@ export const AmenitiesApiFactory = function (configuration?: Configuration, base
     return {
         /**
          * 
-         * @param {string} [name] 
-         * @param {string} [slug] 
-         * @param {AmenitiesControllerCreateTypeEnum} [type] 
-         * @param {File} [icon] 
+         * @summary Create new amenity
+         * @param {CreateAmenityDto} createAmenityDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        amenitiesControllerCreate(name?: string, slug?: string, type?: AmenitiesControllerCreateTypeEnum, icon?: File, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.amenitiesControllerCreate(name, slug, type, icon, options).then((request) => request(axios, basePath));
+        amenitiesControllerCreate(createAmenityDto: CreateAmenityDto, options?: RawAxiosRequestConfig): AxiosPromise<Amenity> {
+            return localVarFp.amenitiesControllerCreate(createAmenityDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Get all amenities
          * @param {number} [page] 
          * @param {number} [pageSize] 
-         * @param {object} [filters] 
-         * @param {Array<string>} [sort] 
+         * @param {string} [filters] JSON string of FilterAmenityDto
+         * @param {string} [sort] JSON string of SortAmenityDto
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        amenitiesControllerFindAll(page?: number, pageSize?: number, filters?: object, sort?: Array<string>, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        amenitiesControllerFindAll(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig): AxiosPromise<AmenitiesPaginationResultDto> {
             return localVarFp.amenitiesControllerFindAll(page, pageSize, filters, sort, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2239,15 +2360,14 @@ export const AmenitiesApiFactory = function (configuration?: Configuration, base
         },
         /**
          * 
+         * @summary Update amenity
          * @param {string} id 
-         * @param {string} [name] The name of the amenity
-         * @param {string} [slug] URL-friendly version of the name (lowercase, hyphenated)
-         * @param {AmenitiesControllerUpdateTypeEnum} [type] Type of amenity (ROOM, PROPERTY, or SERVICE)
+         * @param {UpdateAmenityDto} updateAmenityDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        amenitiesControllerUpdate(id: string, name?: string, slug?: string, type?: AmenitiesControllerUpdateTypeEnum, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.amenitiesControllerUpdate(id, name, slug, type, options).then((request) => request(axios, basePath));
+        amenitiesControllerUpdate(id: string, updateAmenityDto: UpdateAmenityDto, options?: RawAxiosRequestConfig): AxiosPromise<Amenity> {
+            return localVarFp.amenitiesControllerUpdate(id, updateAmenityDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2261,29 +2381,28 @@ export const AmenitiesApiFactory = function (configuration?: Configuration, base
 export class AmenitiesApi extends BaseAPI {
     /**
      * 
-     * @param {string} [name] 
-     * @param {string} [slug] 
-     * @param {AmenitiesControllerCreateTypeEnum} [type] 
-     * @param {File} [icon] 
+     * @summary Create new amenity
+     * @param {CreateAmenityDto} createAmenityDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AmenitiesApi
      */
-    public amenitiesControllerCreate(name?: string, slug?: string, type?: AmenitiesControllerCreateTypeEnum, icon?: File, options?: RawAxiosRequestConfig) {
-        return AmenitiesApiFp(this.configuration).amenitiesControllerCreate(name, slug, type, icon, options).then((request) => request(this.axios, this.basePath));
+    public amenitiesControllerCreate(createAmenityDto: CreateAmenityDto, options?: RawAxiosRequestConfig) {
+        return AmenitiesApiFp(this.configuration).amenitiesControllerCreate(createAmenityDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
+     * @summary Get all amenities
      * @param {number} [page] 
      * @param {number} [pageSize] 
-     * @param {object} [filters] 
-     * @param {Array<string>} [sort] 
+     * @param {string} [filters] JSON string of FilterAmenityDto
+     * @param {string} [sort] JSON string of SortAmenityDto
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AmenitiesApi
      */
-    public amenitiesControllerFindAll(page?: number, pageSize?: number, filters?: object, sort?: Array<string>, options?: RawAxiosRequestConfig) {
+    public amenitiesControllerFindAll(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig) {
         return AmenitiesApiFp(this.configuration).amenitiesControllerFindAll(page, pageSize, filters, sort, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -2311,37 +2430,18 @@ export class AmenitiesApi extends BaseAPI {
 
     /**
      * 
+     * @summary Update amenity
      * @param {string} id 
-     * @param {string} [name] The name of the amenity
-     * @param {string} [slug] URL-friendly version of the name (lowercase, hyphenated)
-     * @param {AmenitiesControllerUpdateTypeEnum} [type] Type of amenity (ROOM, PROPERTY, or SERVICE)
+     * @param {UpdateAmenityDto} updateAmenityDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AmenitiesApi
      */
-    public amenitiesControllerUpdate(id: string, name?: string, slug?: string, type?: AmenitiesControllerUpdateTypeEnum, options?: RawAxiosRequestConfig) {
-        return AmenitiesApiFp(this.configuration).amenitiesControllerUpdate(id, name, slug, type, options).then((request) => request(this.axios, this.basePath));
+    public amenitiesControllerUpdate(id: string, updateAmenityDto: UpdateAmenityDto, options?: RawAxiosRequestConfig) {
+        return AmenitiesApiFp(this.configuration).amenitiesControllerUpdate(id, updateAmenityDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
-/**
- * @export
- */
-export const AmenitiesControllerCreateTypeEnum = {
-    Room: 'ROOM',
-    Property: 'PROPERTY',
-    Service: 'SERVICE'
-} as const;
-export type AmenitiesControllerCreateTypeEnum = typeof AmenitiesControllerCreateTypeEnum[keyof typeof AmenitiesControllerCreateTypeEnum];
-/**
- * @export
- */
-export const AmenitiesControllerUpdateTypeEnum = {
-    Room: 'ROOM',
-    Property: 'PROPERTY',
-    Service: 'SERVICE'
-} as const;
-export type AmenitiesControllerUpdateTypeEnum = typeof AmenitiesControllerUpdateTypeEnum[keyof typeof AmenitiesControllerUpdateTypeEnum];
 
 
 /**
@@ -3511,6 +3611,42 @@ export const BranchesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary Get latest branches
+         * @param {number} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        branchControllerGetLatestBranches: async (body: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('branchControllerGetLatestBranches', 'body', body)
+            const localVarPath = `/api/branches/latest`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Delete a branch
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -3699,6 +3835,19 @@ export const BranchesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get latest branches
+         * @param {number} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async branchControllerGetLatestBranches(body: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Branch>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.branchControllerGetLatestBranches(body, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BranchesApi.branchControllerGetLatestBranches']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Delete a branch
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -3804,6 +3953,16 @@ export const BranchesApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @summary Get latest branches
+         * @param {number} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        branchControllerGetLatestBranches(body: number, options?: RawAxiosRequestConfig): AxiosPromise<Array<Branch>> {
+            return localVarFp.branchControllerGetLatestBranches(body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Delete a branch
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -3906,6 +4065,18 @@ export class BranchesApi extends BaseAPI {
      */
     public branchControllerFindOne(idOrSlug: string, options?: RawAxiosRequestConfig) {
         return BranchesApiFp(this.configuration).branchControllerFindOne(idOrSlug, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get latest branches
+     * @param {number} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BranchesApi
+     */
+    public branchControllerGetLatestBranches(body: number, options?: RawAxiosRequestConfig) {
+        return BranchesApiFp(this.configuration).branchControllerGetLatestBranches(body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4100,6 +4271,37 @@ export const ImagesApiAxiosParamCreator = function (configuration?: Configuratio
         },
         /**
          * 
+         * @summary Upload amenity icon
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        imagesControllerUploadIcon: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/images/icon`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Upload multiple image
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4152,10 +4354,23 @@ export const ImagesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Upload amenity icon
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async imagesControllerUploadImages(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async imagesControllerUploadIcon(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ImageUploadResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.imagesControllerUploadIcon(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ImagesApi.imagesControllerUploadIcon']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Upload multiple image
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async imagesControllerUploadImages(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ImageUploadResponseDto>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.imagesControllerUploadImages(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ImagesApi.imagesControllerUploadImages']?.[localVarOperationServerIndex]?.url;
@@ -4183,10 +4398,20 @@ export const ImagesApiFactory = function (configuration?: Configuration, basePat
         },
         /**
          * 
+         * @summary Upload amenity icon
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        imagesControllerUploadImages(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        imagesControllerUploadIcon(options?: RawAxiosRequestConfig): AxiosPromise<ImageUploadResponseDto> {
+            return localVarFp.imagesControllerUploadIcon(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Upload multiple image
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        imagesControllerUploadImages(options?: RawAxiosRequestConfig): AxiosPromise<Array<ImageUploadResponseDto>> {
             return localVarFp.imagesControllerUploadImages(options).then((request) => request(axios, basePath));
         },
     };
@@ -4213,6 +4438,18 @@ export class ImagesApi extends BaseAPI {
 
     /**
      * 
+     * @summary Upload amenity icon
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ImagesApi
+     */
+    public imagesControllerUploadIcon(options?: RawAxiosRequestConfig) {
+        return ImagesApiFp(this.configuration).imagesControllerUploadIcon(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Upload multiple image
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ImagesApi
