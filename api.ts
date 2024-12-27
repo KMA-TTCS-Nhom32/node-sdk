@@ -1063,6 +1063,37 @@ export interface ProvincePaginationResultDto {
 /**
  * 
  * @export
+ * @interface QueryAmenityDto
+ */
+export interface QueryAmenityDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof QueryAmenityDto
+     */
+    'page'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof QueryAmenityDto
+     */
+    'pageSize'?: number;
+    /**
+     * JSON string of FilterAmenityDto
+     * @type {string}
+     * @memberof QueryAmenityDto
+     */
+    'filters'?: string;
+    /**
+     * JSON string of SortAmenityDto
+     * @type {string}
+     * @memberof QueryAmenityDto
+     */
+    'sort'?: string;
+}
+/**
+ * 
+ * @export
  * @interface QueryBranchesDto
  */
 export interface QueryBranchesDto {
@@ -2076,7 +2107,7 @@ export const AmenitiesApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
-         * @summary Get all amenities
+         * @summary Get amenities
          * @param {number} [page] 
          * @param {number} [pageSize] 
          * @param {string} [filters] JSON string of FilterAmenityDto
@@ -2084,7 +2115,7 @@ export const AmenitiesApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        amenitiesControllerFindAll: async (page?: number, pageSize?: number, filters?: string, sort?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        amenitiesControllerFindMany: async (page?: number, pageSize?: number, filters?: string, sort?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/amenities`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2255,7 +2286,7 @@ export const AmenitiesApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get all amenities
+         * @summary Get amenities
          * @param {number} [page] 
          * @param {number} [pageSize] 
          * @param {string} [filters] JSON string of FilterAmenityDto
@@ -2263,10 +2294,10 @@ export const AmenitiesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async amenitiesControllerFindAll(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AmenitiesPaginationResultDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.amenitiesControllerFindAll(page, pageSize, filters, sort, options);
+        async amenitiesControllerFindMany(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AmenitiesPaginationResultDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.amenitiesControllerFindMany(page, pageSize, filters, sort, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AmenitiesApi.amenitiesControllerFindAll']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AmenitiesApi.amenitiesControllerFindMany']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -2329,7 +2360,7 @@ export const AmenitiesApiFactory = function (configuration?: Configuration, base
         },
         /**
          * 
-         * @summary Get all amenities
+         * @summary Get amenities
          * @param {number} [page] 
          * @param {number} [pageSize] 
          * @param {string} [filters] JSON string of FilterAmenityDto
@@ -2337,8 +2368,8 @@ export const AmenitiesApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        amenitiesControllerFindAll(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig): AxiosPromise<AmenitiesPaginationResultDto> {
-            return localVarFp.amenitiesControllerFindAll(page, pageSize, filters, sort, options).then((request) => request(axios, basePath));
+        amenitiesControllerFindMany(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig): AxiosPromise<AmenitiesPaginationResultDto> {
+            return localVarFp.amenitiesControllerFindMany(page, pageSize, filters, sort, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2393,7 +2424,7 @@ export class AmenitiesApi extends BaseAPI {
 
     /**
      * 
-     * @summary Get all amenities
+     * @summary Get amenities
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {string} [filters] JSON string of FilterAmenityDto
@@ -2402,8 +2433,8 @@ export class AmenitiesApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AmenitiesApi
      */
-    public amenitiesControllerFindAll(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig) {
-        return AmenitiesApiFp(this.configuration).amenitiesControllerFindAll(page, pageSize, filters, sort, options).then((request) => request(this.axios, this.basePath));
+    public amenitiesControllerFindMany(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig) {
+        return AmenitiesApiFp(this.configuration).amenitiesControllerFindMany(page, pageSize, filters, sort, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
