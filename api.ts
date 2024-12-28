@@ -209,12 +209,6 @@ export interface Branch {
      */
     'address': string;
     /**
-     * Branch\'s geographical location
-     * @type {object}
-     * @memberof Branch
-     */
-    'location': object;
-    /**
      * Branch\'s rating
      * @type {number}
      * @memberof Branch
@@ -317,12 +311,6 @@ export interface BranchDetail {
      * @memberof BranchDetail
      */
     'address': string;
-    /**
-     * Branch\'s geographical location
-     * @type {object}
-     * @memberof BranchDetail
-     */
-    'location': object;
     /**
      * Branch\'s rating
      * @type {number}
@@ -474,12 +462,6 @@ export interface CreateBranchDto {
      * @memberof CreateBranchDto
      */
     'address': string;
-    /**
-     * Branch\'s geographical location
-     * @type {LocationDto}
-     * @memberof CreateBranchDto
-     */
-    'location': LocationDto;
     /**
      * The branch\'s rating.
      * @type {number}
@@ -890,25 +872,6 @@ export interface InitiateForgotPasswordEmailDto {
      * @memberof InitiateForgotPasswordEmailDto
      */
     'email': string;
-}
-/**
- * 
- * @export
- * @interface LocationDto
- */
-export interface LocationDto {
-    /**
-     * Latitude coordinate
-     * @type {number}
-     * @memberof LocationDto
-     */
-    'latitude': number;
-    /**
-     * Longitude coordinate
-     * @type {number}
-     * @memberof LocationDto
-     */
-    'longitude': number;
 }
 /**
  * 
@@ -1674,12 +1637,6 @@ export interface UpdateBranchDto {
      * @memberof UpdateBranchDto
      */
     'address'?: string;
-    /**
-     * Branch\'s geographical location
-     * @type {LocationDto}
-     * @memberof UpdateBranchDto
-     */
-    'location'?: LocationDto;
     /**
      * The branch\'s rating.
      * @type {number}
