@@ -318,11 +318,23 @@ export interface BranchDetail {
      */
     'rating': number;
     /**
+     * Amenities available in the branch
+     * @type {Array<Amenity>}
+     * @memberof BranchDetail
+     */
+    'amenities': Array<Amenity>;
+    /**
      * List of rooms available in the branch
      * @type {Array<HotelRoom>}
      * @memberof BranchDetail
      */
     'rooms': Array<HotelRoom>;
+    /**
+     * Nearby locations
+     * @type {Array<NearBy>}
+     * @memberof BranchDetail
+     */
+    'nearBy': Array<NearBy>;
 }
 /**
  * 
@@ -929,6 +941,25 @@ export interface LogoutResponseDto {
      * @memberof LogoutResponseDto
      */
     'message': string;
+}
+/**
+ * 
+ * @export
+ * @interface NearBy
+ */
+export interface NearBy {
+    /**
+     * Name of the nearby location
+     * @type {string}
+     * @memberof NearBy
+     */
+    'name': string;
+    /**
+     * Distance from the branch
+     * @type {string}
+     * @memberof NearBy
+     */
+    'distance': string;
 }
 /**
  * 
@@ -1644,11 +1675,17 @@ export interface UpdateBranchDto {
      */
     'rating'?: number;
     /**
-     * Amenities available in the branch
-     * @type {Array<Amenity>}
+     * Branch amenities
+     * @type {Array<string>}
      * @memberof UpdateBranchDto
      */
-    'amenities': Array<Amenity>;
+    'amenityIds': Array<string>;
+    /**
+     * Nearby locations
+     * @type {Array<NearBy>}
+     * @memberof UpdateBranchDto
+     */
+    'nearBy': Array<NearBy>;
 }
 /**
  * 
