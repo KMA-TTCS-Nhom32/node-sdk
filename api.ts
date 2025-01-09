@@ -325,10 +325,10 @@ export interface BranchDetail {
     'amenities': Array<Amenity>;
     /**
      * List of rooms available in the branch
-     * @type {Array<HotelRoom>}
+     * @type {Array<RoomDetail>}
      * @memberof BranchDetail
      */
-    'rooms': Array<HotelRoom>;
+    'rooms': Array<RoomDetail>;
     /**
      * Nearby locations
      * @type {Array<NearBy>}
@@ -373,6 +373,31 @@ export interface BranchesPaginationResultDto {
      * @memberof BranchesPaginationResultDto
      */
     'meta': UsersPaginationResultDtoMeta;
+}
+/**
+ * 
+ * @export
+ * @interface ChangePasswordDto
+ */
+export interface ChangePasswordDto {
+    /**
+     * The current password of the user
+     * @type {string}
+     * @memberof ChangePasswordDto
+     */
+    'currentPassword': string;
+    /**
+     * The new password of the user
+     * @type {string}
+     * @memberof ChangePasswordDto
+     */
+    'newPassword': string;
+    /**
+     * The confirm password of the user
+     * @type {string}
+     * @memberof ChangePasswordDto
+     */
+    'confirmPassword': string;
 }
 /**
  * 
@@ -484,6 +509,47 @@ export interface CreateBranchDto {
 /**
  * 
  * @export
+ * @interface CreateHotelRoomDto
+ */
+export interface CreateHotelRoomDto {
+    /**
+     * Hotel Room\'s name
+     * @type {string}
+     * @memberof CreateHotelRoomDto
+     */
+    'name': string;
+    /**
+     * Hotel Room\'s slug
+     * @type {string}
+     * @memberof CreateHotelRoomDto
+     */
+    'slug': string;
+    /**
+     * Hotel Room\'s status
+     * @type {string}
+     * @memberof CreateHotelRoomDto
+     */
+    'status': CreateHotelRoomDtoStatusEnum;
+    /**
+     * ID of the room detail
+     * @type {string}
+     * @memberof CreateHotelRoomDto
+     */
+    'detailId': string;
+}
+
+export const CreateHotelRoomDtoStatusEnum = {
+    Available: 'AVAILABLE',
+    Booked: 'BOOKED',
+    Occupied: 'OCCUPIED',
+    Maintenance: 'MAINTENANCE'
+} as const;
+
+export type CreateHotelRoomDtoStatusEnum = typeof CreateHotelRoomDtoStatusEnum[keyof typeof CreateHotelRoomDtoStatusEnum];
+
+/**
+ * 
+ * @export
  * @interface CreateProvinceDto
  */
 export interface CreateProvinceDto {
@@ -518,6 +584,30 @@ export interface CreateRoomDetailDto {
      * @memberof CreateRoomDetailDto
      */
     'name': string;
+    /**
+     * Hotel Room\'s slug
+     * @type {string}
+     * @memberof CreateRoomDetailDto
+     */
+    'slug': string;
+    /**
+     * ID of the branch where this room is located
+     * @type {string}
+     * @memberof CreateRoomDetailDto
+     */
+    'branchId': string;
+    /**
+     * Hotel Room\'s thumbnail image
+     * @type {Image}
+     * @memberof CreateRoomDetailDto
+     */
+    'thumbnail': Image;
+    /**
+     * Hotel Room\'s image gallery
+     * @type {Array<Image>}
+     * @memberof CreateRoomDetailDto
+     */
+    'images': Array<Image>;
     /**
      * 
      * @type {string}
@@ -555,11 +645,41 @@ export interface CreateRoomDetailDto {
      */
     'max_children': number;
     /**
-     * 
-     * @type {number}
+     * Hotel Room\'s base price per hour
+     * @type {string}
      * @memberof CreateRoomDetailDto
      */
-    'quantity': number;
+    'base_price_per_hour': string;
+    /**
+     * Hotel Room\'s special price per hour
+     * @type {string}
+     * @memberof CreateRoomDetailDto
+     */
+    'special_price_per_hour'?: string;
+    /**
+     * Hotel Room\'s base price per night
+     * @type {string}
+     * @memberof CreateRoomDetailDto
+     */
+    'base_price_per_night': string;
+    /**
+     * Hotel Room\'s special price per night
+     * @type {string}
+     * @memberof CreateRoomDetailDto
+     */
+    'special_price_per_night'?: string;
+    /**
+     * Hotel Room\'s base price per day
+     * @type {string}
+     * @memberof CreateRoomDetailDto
+     */
+    'base_price_per_day': string;
+    /**
+     * Hotel Room\'s special price per day
+     * @type {string}
+     * @memberof CreateRoomDetailDto
+     */
+    'special_price_per_day'?: string;
 }
 
 export const CreateRoomDetailDtoRoomTypeEnum = {
@@ -683,6 +803,47 @@ export interface FilterBranchesDto {
 /**
  * 
  * @export
+ * @interface FilterHotelRoomDto
+ */
+export interface FilterHotelRoomDto {
+    /**
+     * Search by keyword
+     * @type {string}
+     * @memberof FilterHotelRoomDto
+     */
+    'keyword'?: string;
+    /**
+     * Filter by hotel room status
+     * @type {string}
+     * @memberof FilterHotelRoomDto
+     */
+    'status'?: FilterHotelRoomDtoStatusEnum;
+    /**
+     * Filter by room detail ID
+     * @type {string}
+     * @memberof FilterHotelRoomDto
+     */
+    'detailId'?: string;
+    /**
+     * Filter by room detail slug
+     * @type {string}
+     * @memberof FilterHotelRoomDto
+     */
+    'detailSlug'?: string;
+}
+
+export const FilterHotelRoomDtoStatusEnum = {
+    Available: 'AVAILABLE',
+    Booked: 'BOOKED',
+    Occupied: 'OCCUPIED',
+    Maintenance: 'MAINTENANCE'
+} as const;
+
+export type FilterHotelRoomDtoStatusEnum = typeof FilterHotelRoomDtoStatusEnum[keyof typeof FilterHotelRoomDtoStatusEnum];
+
+/**
+ * 
+ * @export
  * @interface FilterProvincesDto
  */
 export interface FilterProvincesDto {
@@ -693,6 +854,102 @@ export interface FilterProvincesDto {
      */
     'keyword'?: string;
 }
+/**
+ * 
+ * @export
+ * @interface FilterRoomDetailDto
+ */
+export interface FilterRoomDetailDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof FilterRoomDetailDto
+     */
+    'keyword'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilterRoomDetailDto
+     */
+    'room_type'?: FilterRoomDetailDtoRoomTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilterRoomDetailDto
+     */
+    'bed_type'?: FilterRoomDetailDtoBedTypeEnum;
+    /**
+     * Filter by rating
+     * @type {number}
+     * @memberof FilterRoomDetailDto
+     */
+    'rating_from'?: number;
+    /**
+     * Filter by rating
+     * @type {number}
+     * @memberof FilterRoomDetailDto
+     */
+    'rating_to'?: number;
+    /**
+     * Filter by branch ID
+     * @type {string}
+     * @memberof FilterRoomDetailDto
+     */
+    'branchId'?: string;
+    /**
+     * Filter by branch slug
+     * @type {string}
+     * @memberof FilterRoomDetailDto
+     */
+    'branchSlug'?: string;
+    /**
+     * Filter by province ID
+     * @type {string}
+     * @memberof FilterRoomDetailDto
+     */
+    'provinceId'?: string;
+    /**
+     * Filter by province slug
+     * @type {string}
+     * @memberof FilterRoomDetailDto
+     */
+    'provinceSlug'?: string;
+    /**
+     * Filter by amenities
+     * @type {Array<string>}
+     * @memberof FilterRoomDetailDto
+     */
+    'amenities'?: Array<string>;
+    /**
+     * Filter by minimum price
+     * @type {object}
+     * @memberof FilterRoomDetailDto
+     */
+    'minPrice'?: object;
+    /**
+     * Filter by maximum price
+     * @type {object}
+     * @memberof FilterRoomDetailDto
+     */
+    'maxPrice'?: object;
+}
+
+export const FilterRoomDetailDtoRoomTypeEnum = {
+    Standard: 'STANDARD',
+    Superior: 'SUPERIOR',
+    Deluxe: 'DELUXE'
+} as const;
+
+export type FilterRoomDetailDtoRoomTypeEnum = typeof FilterRoomDetailDtoRoomTypeEnum[keyof typeof FilterRoomDetailDtoRoomTypeEnum];
+export const FilterRoomDetailDtoBedTypeEnum = {
+    Single: 'SINGLE',
+    Double: 'DOUBLE',
+    Queen: 'QUEEN',
+    King: 'KING'
+} as const;
+
+export type FilterRoomDetailDtoBedTypeEnum = typeof FilterRoomDetailDtoBedTypeEnum[keyof typeof FilterRoomDetailDtoBedTypeEnum];
+
 /**
  * 
  * @export
@@ -752,77 +1009,35 @@ export interface HotelRoom {
      */
     'updatedAt': string;
     /**
-     * 
+     * Hotel Room\'s name
      * @type {string}
      * @memberof HotelRoom
      */
     'name': string;
     /**
-     * 
-     * @type {Image}
+     * Hotel Room\'s slug
+     * @type {string}
      * @memberof HotelRoom
      */
-    'thumbnail': Image;
+    'slug': string;
     /**
-     * 
-     * @type {Array<Image>}
-     * @memberof HotelRoom
-     */
-    'images': Array<Image>;
-    /**
-     * 
+     * Hotel Room\'s status
      * @type {string}
      * @memberof HotelRoom
      */
     'status': HotelRoomStatusEnum;
     /**
-     * 
-     * @type {string}
-     * @memberof HotelRoom
-     */
-    'branchId': string;
-    /**
-     * 
+     * ID of the room detail
      * @type {string}
      * @memberof HotelRoom
      */
     'detailId': string;
     /**
-     * 
-     * @type {number}
+     * Room detail
+     * @type {RoomDetail}
      * @memberof HotelRoom
      */
-    'base_price_per_hour': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof HotelRoom
-     */
-    'special_price_per_hour'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof HotelRoom
-     */
-    'base_price_per_night': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof HotelRoom
-     */
-    'special_price_per_night'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof HotelRoom
-     */
-    'base_price_per_day': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof HotelRoom
-     */
-    'special_price_per_day'?: number;
+    'detail': RoomDetail;
 }
 
 export const HotelRoomStatusEnum = {
@@ -834,6 +1049,25 @@ export const HotelRoomStatusEnum = {
 
 export type HotelRoomStatusEnum = typeof HotelRoomStatusEnum[keyof typeof HotelRoomStatusEnum];
 
+/**
+ * 
+ * @export
+ * @interface HotelRoomPaginationResultDto
+ */
+export interface HotelRoomPaginationResultDto {
+    /**
+     * 
+     * @type {Array<HotelRoom>}
+     * @memberof HotelRoomPaginationResultDto
+     */
+    'data': Array<HotelRoom>;
+    /**
+     * 
+     * @type {UsersPaginationResultDtoMeta}
+     * @memberof HotelRoomPaginationResultDto
+     */
+    'meta': UsersPaginationResultDtoMeta;
+}
 /**
  * 
  * @export
@@ -1119,6 +1353,37 @@ export interface QueryBranchesDto {
 /**
  * 
  * @export
+ * @interface QueryHotelRoomDto
+ */
+export interface QueryHotelRoomDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof QueryHotelRoomDto
+     */
+    'page'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof QueryHotelRoomDto
+     */
+    'pageSize'?: number;
+    /**
+     * JSON string of FilterHotelRoomDto
+     * @type {string}
+     * @memberof QueryHotelRoomDto
+     */
+    'filters'?: string;
+    /**
+     * JSON string of SortHotelRoomDto[]
+     * @type {string}
+     * @memberof QueryHotelRoomDto
+     */
+    'sort'?: string;
+}
+/**
+ * 
+ * @export
  * @interface QueryProvincesDto
  */
 export interface QueryProvincesDto {
@@ -1146,6 +1411,37 @@ export interface QueryProvincesDto {
      * @memberof QueryProvincesDto
      */
     'sort'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface QueryRoomDetailDto
+ */
+export interface QueryRoomDetailDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof QueryRoomDetailDto
+     */
+    'page'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof QueryRoomDetailDto
+     */
+    'pageSize'?: number;
+    /**
+     * JSON string of FilterRoomDetailDto
+     * @type {string}
+     * @memberof QueryRoomDetailDto
+     */
+    'filters'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof QueryRoomDetailDto
+     */
+    'sort'?: Array<string>;
 }
 /**
  * 
@@ -1363,6 +1659,36 @@ export interface RoomDetail {
      */
     'name': string;
     /**
+     * Hotel Detail\'s slug
+     * @type {string}
+     * @memberof RoomDetail
+     */
+    'slug': string;
+    /**
+     * ID of the branch where this room is located
+     * @type {string}
+     * @memberof RoomDetail
+     */
+    'branchId': string;
+    /**
+     * Branch where this room is located
+     * @type {Branch}
+     * @memberof RoomDetail
+     */
+    'branch': Branch;
+    /**
+     * Hotel Room\'s thumbnail image
+     * @type {Image}
+     * @memberof RoomDetail
+     */
+    'thumbnail': Image;
+    /**
+     * Hotel Room\'s image gallery
+     * @type {Array<Image>}
+     * @memberof RoomDetail
+     */
+    'images': Array<Image>;
+    /**
      * 
      * @type {string}
      * @memberof RoomDetail
@@ -1405,11 +1731,47 @@ export interface RoomDetail {
      */
     'quantity': number;
     /**
+     * Hotel Room\'s base price per hour
+     * @type {string}
+     * @memberof RoomDetail
+     */
+    'base_price_per_hour': string;
+    /**
+     * Hotel Room\'s special price per hour
+     * @type {string}
+     * @memberof RoomDetail
+     */
+    'special_price_per_hour'?: string;
+    /**
+     * Hotel Room\'s base price per night
+     * @type {string}
+     * @memberof RoomDetail
+     */
+    'base_price_per_night': string;
+    /**
+     * Hotel Room\'s special price per night
+     * @type {string}
+     * @memberof RoomDetail
+     */
+    'special_price_per_night'?: string;
+    /**
+     * Hotel Room\'s base price per day
+     * @type {string}
+     * @memberof RoomDetail
+     */
+    'base_price_per_day': string;
+    /**
+     * Hotel Room\'s special price per day
+     * @type {string}
+     * @memberof RoomDetail
+     */
+    'special_price_per_day'?: string;
+    /**
      * 
      * @type {Array<HotelRoom>}
      * @memberof RoomDetail
      */
-    'rooms': Array<HotelRoom>;
+    'flat_rooms': Array<HotelRoom>;
 }
 
 export const RoomDetailRoomTypeEnum = {
@@ -1428,6 +1790,25 @@ export const RoomDetailBedTypeEnum = {
 
 export type RoomDetailBedTypeEnum = typeof RoomDetailBedTypeEnum[keyof typeof RoomDetailBedTypeEnum];
 
+/**
+ * 
+ * @export
+ * @interface RoomDetailInfinitePaginationResultDto
+ */
+export interface RoomDetailInfinitePaginationResultDto {
+    /**
+     * 
+     * @type {Array<RoomDetail>}
+     * @memberof RoomDetailInfinitePaginationResultDto
+     */
+    'data': Array<RoomDetail>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RoomDetailInfinitePaginationResultDto
+     */
+    'hasNextPage': boolean;
+}
 /**
  * 
  * @export
@@ -1517,6 +1898,33 @@ export type SortBranchDtoOrderEnum = typeof SortBranchDtoOrderEnum[keyof typeof 
 /**
  * 
  * @export
+ * @interface SortHotelRoomDto
+ */
+export interface SortHotelRoomDto {
+    /**
+     * Key of Entity to sort
+     * @type {string}
+     * @memberof SortHotelRoomDto
+     */
+    'orderBy': string;
+    /**
+     * Order of sorting
+     * @type {string}
+     * @memberof SortHotelRoomDto
+     */
+    'order': SortHotelRoomDtoOrderEnum;
+}
+
+export const SortHotelRoomDtoOrderEnum = {
+    Asc: 'asc',
+    Desc: 'desc'
+} as const;
+
+export type SortHotelRoomDtoOrderEnum = typeof SortHotelRoomDtoOrderEnum[keyof typeof SortHotelRoomDtoOrderEnum];
+
+/**
+ * 
+ * @export
  * @interface SortProvinceDto
  */
 export interface SortProvinceDto {
@@ -1540,6 +1948,33 @@ export const SortProvinceDtoOrderEnum = {
 } as const;
 
 export type SortProvinceDtoOrderEnum = typeof SortProvinceDtoOrderEnum[keyof typeof SortProvinceDtoOrderEnum];
+
+/**
+ * 
+ * @export
+ * @interface SortRoomDetailDto
+ */
+export interface SortRoomDetailDto {
+    /**
+     * Key of Entity to sort
+     * @type {string}
+     * @memberof SortRoomDetailDto
+     */
+    'orderBy': string;
+    /**
+     * Order of sorting
+     * @type {string}
+     * @memberof SortRoomDetailDto
+     */
+    'order': SortRoomDetailDtoOrderEnum;
+}
+
+export const SortRoomDetailDtoOrderEnum = {
+    Asc: 'asc',
+    Desc: 'desc'
+} as const;
+
+export type SortRoomDetailDtoOrderEnum = typeof SortRoomDetailDtoOrderEnum[keyof typeof SortRoomDetailDtoOrderEnum];
 
 /**
  * 
@@ -1679,14 +2114,106 @@ export interface UpdateBranchDto {
      * @type {Array<string>}
      * @memberof UpdateBranchDto
      */
-    'amenityIds': Array<string>;
+    'amenityIds'?: Array<string>;
     /**
      * Nearby locations
      * @type {Array<NearBy>}
      * @memberof UpdateBranchDto
      */
-    'nearBy': Array<NearBy>;
+    'nearBy'?: Array<NearBy>;
 }
+/**
+ * 
+ * @export
+ * @interface UpdateHotelRoomDto
+ */
+export interface UpdateHotelRoomDto {
+    /**
+     * Hotel Room\'s name
+     * @type {string}
+     * @memberof UpdateHotelRoomDto
+     */
+    'name'?: string;
+    /**
+     * Hotel Room\'s slug
+     * @type {string}
+     * @memberof UpdateHotelRoomDto
+     */
+    'slug'?: string;
+    /**
+     * Hotel Room\'s status
+     * @type {string}
+     * @memberof UpdateHotelRoomDto
+     */
+    'status'?: UpdateHotelRoomDtoStatusEnum;
+    /**
+     * ID of the room detail
+     * @type {string}
+     * @memberof UpdateHotelRoomDto
+     */
+    'detailId'?: string;
+}
+
+export const UpdateHotelRoomDtoStatusEnum = {
+    Available: 'AVAILABLE',
+    Booked: 'BOOKED',
+    Occupied: 'OCCUPIED',
+    Maintenance: 'MAINTENANCE'
+} as const;
+
+export type UpdateHotelRoomDtoStatusEnum = typeof UpdateHotelRoomDtoStatusEnum[keyof typeof UpdateHotelRoomDtoStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface UpdateProfileDto
+ */
+export interface UpdateProfileDto {
+    /**
+     * Full name of the user
+     * @type {string}
+     * @memberof UpdateProfileDto
+     */
+    'name'?: string;
+    /**
+     * Avatar of the user
+     * @type {Image}
+     * @memberof UpdateProfileDto
+     */
+    'avatar'?: Image;
+    /**
+     * Birth date of the user
+     * @type {string}
+     * @memberof UpdateProfileDto
+     */
+    'birth_date'?: string;
+    /**
+     * User gender
+     * @type {string}
+     * @memberof UpdateProfileDto
+     */
+    'gender'?: UpdateProfileDtoGenderEnum;
+    /**
+     * User email
+     * @type {string}
+     * @memberof UpdateProfileDto
+     */
+    'email'?: string;
+    /**
+     * User phone number
+     * @type {string}
+     * @memberof UpdateProfileDto
+     */
+    'phone'?: string;
+}
+
+export const UpdateProfileDtoGenderEnum = {
+    Male: 'MALE',
+    Female: 'FEMALE'
+} as const;
+
+export type UpdateProfileDtoGenderEnum = typeof UpdateProfileDtoGenderEnum[keyof typeof UpdateProfileDtoGenderEnum];
+
 /**
  * 
  * @export
@@ -1725,6 +2252,30 @@ export interface UpdateRoomDetailDto {
      */
     'name'?: string;
     /**
+     * Hotel Room\'s slug
+     * @type {string}
+     * @memberof UpdateRoomDetailDto
+     */
+    'slug'?: string;
+    /**
+     * ID of the branch where this room is located
+     * @type {string}
+     * @memberof UpdateRoomDetailDto
+     */
+    'branchId'?: string;
+    /**
+     * Hotel Room\'s thumbnail image
+     * @type {Image}
+     * @memberof UpdateRoomDetailDto
+     */
+    'thumbnail'?: Image;
+    /**
+     * Hotel Room\'s image gallery
+     * @type {Array<Image>}
+     * @memberof UpdateRoomDetailDto
+     */
+    'images'?: Array<Image>;
+    /**
      * 
      * @type {string}
      * @memberof UpdateRoomDetailDto
@@ -1743,7 +2294,7 @@ export interface UpdateRoomDetailDto {
      */
     'bed_type'?: UpdateRoomDetailDtoBedTypeEnum;
     /**
-     * 
+     * Branch amenities
      * @type {Array<string>}
      * @memberof UpdateRoomDetailDto
      */
@@ -1761,11 +2312,41 @@ export interface UpdateRoomDetailDto {
      */
     'max_children'?: number;
     /**
-     * 
-     * @type {number}
+     * Hotel Room\'s base price per hour
+     * @type {string}
      * @memberof UpdateRoomDetailDto
      */
-    'quantity'?: number;
+    'base_price_per_hour'?: string;
+    /**
+     * Hotel Room\'s special price per hour
+     * @type {string}
+     * @memberof UpdateRoomDetailDto
+     */
+    'special_price_per_hour'?: string;
+    /**
+     * Hotel Room\'s base price per night
+     * @type {string}
+     * @memberof UpdateRoomDetailDto
+     */
+    'base_price_per_night'?: string;
+    /**
+     * Hotel Room\'s special price per night
+     * @type {string}
+     * @memberof UpdateRoomDetailDto
+     */
+    'special_price_per_night'?: string;
+    /**
+     * Hotel Room\'s base price per day
+     * @type {string}
+     * @memberof UpdateRoomDetailDto
+     */
+    'base_price_per_day'?: string;
+    /**
+     * Hotel Room\'s special price per day
+     * @type {string}
+     * @memberof UpdateRoomDetailDto
+     */
+    'special_price_per_day'?: string;
 }
 
 export const UpdateRoomDetailDtoRoomTypeEnum = {
@@ -2573,6 +3154,42 @@ export class AppApi extends BaseAPI {
 export const AuthApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * 
+         * @summary Change user password
+         * @param {ChangePasswordDto} changePasswordDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerChangePassword: async (changePasswordDto: ChangePasswordDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'changePasswordDto' is not null or undefined
+            assertParamExists('authControllerChangePassword', 'changePasswordDto', changePasswordDto)
+            const localVarPath = `/api/auth/change-password`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(changePasswordDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Retrieve all active sessions for the current user
          * @summary Get active sessions
          * @param {*} [options] Override http request option.
@@ -2953,6 +3570,42 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
+         * @summary Update user profile
+         * @param {UpdateProfileDto} updateProfileDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerUpdateProfile: async (updateProfileDto: UpdateProfileDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'updateProfileDto' is not null or undefined
+            assertParamExists('authControllerUpdateProfile', 'updateProfileDto', updateProfileDto)
+            const localVarPath = `/api/auth/profile`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateProfileDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Verify email with OTP code
          * @param {VerifyEmailDto} verifyEmailDto 
          * @param {*} [options] Override http request option.
@@ -2997,6 +3650,19 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
 export const AuthApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AuthApiAxiosParamCreator(configuration)
     return {
+        /**
+         * 
+         * @summary Change user password
+         * @param {ChangePasswordDto} changePasswordDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authControllerChangePassword(changePasswordDto: ChangePasswordDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerChangePassword(changePasswordDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AuthApi.authControllerChangePassword']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
         /**
          * Retrieve all active sessions for the current user
          * @summary Get active sessions
@@ -3138,6 +3804,19 @@ export const AuthApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Update user profile
+         * @param {UpdateProfileDto} updateProfileDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authControllerUpdateProfile(updateProfileDto: UpdateProfileDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerUpdateProfile(updateProfileDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AuthApi.authControllerUpdateProfile']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Verify email with OTP code
          * @param {VerifyEmailDto} verifyEmailDto 
          * @param {*} [options] Override http request option.
@@ -3159,6 +3838,16 @@ export const AuthApiFp = function(configuration?: Configuration) {
 export const AuthApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = AuthApiFp(configuration)
     return {
+        /**
+         * 
+         * @summary Change user password
+         * @param {ChangePasswordDto} changePasswordDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerChangePassword(changePasswordDto: ChangePasswordDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.authControllerChangePassword(changePasswordDto, options).then((request) => request(axios, basePath));
+        },
         /**
          * Retrieve all active sessions for the current user
          * @summary Get active sessions
@@ -3267,6 +3956,16 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
+         * @summary Update user profile
+         * @param {UpdateProfileDto} updateProfileDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerUpdateProfile(updateProfileDto: UpdateProfileDto, options?: RawAxiosRequestConfig): AxiosPromise<User> {
+            return localVarFp.authControllerUpdateProfile(updateProfileDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Verify email with OTP code
          * @param {VerifyEmailDto} verifyEmailDto 
          * @param {*} [options] Override http request option.
@@ -3285,6 +3984,18 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
  * @extends {BaseAPI}
  */
 export class AuthApi extends BaseAPI {
+    /**
+     * 
+     * @summary Change user password
+     * @param {ChangePasswordDto} changePasswordDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authControllerChangePassword(changePasswordDto: ChangePasswordDto, options?: RawAxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authControllerChangePassword(changePasswordDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Retrieve all active sessions for the current user
      * @summary Get active sessions
@@ -3411,6 +4122,18 @@ export class AuthApi extends BaseAPI {
      */
     public authControllerRevokeSession(sessionId: string, options?: RawAxiosRequestConfig) {
         return AuthApiFp(this.configuration).authControllerRevokeSession(sessionId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update user profile
+     * @param {UpdateProfileDto} updateProfileDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authControllerUpdateProfile(updateProfileDto: UpdateProfileDto, options?: RawAxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authControllerUpdateProfile(updateProfileDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3637,13 +4360,11 @@ export const BranchesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * 
          * @summary Get latest branches
-         * @param {number} body 
+         * @param {number} [limit] Number of branches to get
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        branchControllerGetLatestBranches: async (body: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'body' is not null or undefined
-            assertParamExists('branchControllerGetLatestBranches', 'body', body)
+        branchControllerGetLatestBranches: async (limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/branches/latest`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3656,14 +4377,15 @@ export const BranchesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3861,12 +4583,12 @@ export const BranchesApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get latest branches
-         * @param {number} body 
+         * @param {number} [limit] Number of branches to get
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async branchControllerGetLatestBranches(body: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Branch>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.branchControllerGetLatestBranches(body, options);
+        async branchControllerGetLatestBranches(limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Branch>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.branchControllerGetLatestBranches(limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BranchesApi.branchControllerGetLatestBranches']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3979,12 +4701,12 @@ export const BranchesApiFactory = function (configuration?: Configuration, baseP
         /**
          * 
          * @summary Get latest branches
-         * @param {number} body 
+         * @param {number} [limit] Number of branches to get
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        branchControllerGetLatestBranches(body: number, options?: RawAxiosRequestConfig): AxiosPromise<Array<Branch>> {
-            return localVarFp.branchControllerGetLatestBranches(body, options).then((request) => request(axios, basePath));
+        branchControllerGetLatestBranches(limit?: number, options?: RawAxiosRequestConfig): AxiosPromise<Array<Branch>> {
+            return localVarFp.branchControllerGetLatestBranches(limit, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4095,13 +4817,13 @@ export class BranchesApi extends BaseAPI {
     /**
      * 
      * @summary Get latest branches
-     * @param {number} body 
+     * @param {number} [limit] Number of branches to get
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BranchesApi
      */
-    public branchControllerGetLatestBranches(body: number, options?: RawAxiosRequestConfig) {
-        return BranchesApiFp(this.configuration).branchControllerGetLatestBranches(body, options).then((request) => request(this.axios, this.basePath));
+    public branchControllerGetLatestBranches(limit?: number, options?: RawAxiosRequestConfig) {
+        return BranchesApiFp(this.configuration).branchControllerGetLatestBranches(limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5081,15 +5803,45 @@ export const RoomDetailsApiAxiosParamCreator = function (configuration?: Configu
         },
         /**
          * 
+         * @summary Get all soft-deleted room details
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomDetailControllerFindDeleted: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/room-details/deleted`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get all room details with pagination and filters
          * @param {number} [page] 
          * @param {number} [pageSize] 
-         * @param {object} [filters] 
+         * @param {string} [filters] JSON string of FilterRoomDetailDto
          * @param {Array<string>} [sort] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        roomDetailControllerFindMany: async (page?: number, pageSize?: number, filters?: object, sort?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        roomDetailControllerFindMany: async (page?: number, pageSize?: number, filters?: string, sort?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/room-details`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5111,9 +5863,57 @@ export const RoomDetailsApiAxiosParamCreator = function (configuration?: Configu
             }
 
             if (filters !== undefined) {
-                for (const [key, value] of Object.entries(filters)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['filters'] = filters;
+            }
+
+            if (sort) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get all room details with infinite pagination and filters
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [filters] JSON string of FilterRoomDetailDto
+         * @param {Array<string>} [sort] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomDetailControllerFindManyInfinite: async (page?: number, pageSize?: number, filters?: string, sort?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/room-details/infinite`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            if (filters !== undefined) {
+                localVarQueryParameter['filters'] = filters;
             }
 
             if (sort) {
@@ -5167,7 +5967,7 @@ export const RoomDetailsApiAxiosParamCreator = function (configuration?: Configu
         },
         /**
          * 
-         * @summary Delete a room detail
+         * @summary Soft delete a room detail
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5185,6 +5985,40 @@ export const RoomDetailsApiAxiosParamCreator = function (configuration?: Configu
             }
 
             const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Restore a soft-deleted room detail
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomDetailControllerRestore: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('roomDetailControllerRestore', 'id', id)
+            const localVarPath = `/api/room-details/{id}/restore`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -5264,18 +6098,46 @@ export const RoomDetailsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get all soft-deleted room details
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async roomDetailControllerFindDeleted(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RoomDetail>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.roomDetailControllerFindDeleted(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoomDetailsApi.roomDetailControllerFindDeleted']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get all room details with pagination and filters
          * @param {number} [page] 
          * @param {number} [pageSize] 
-         * @param {object} [filters] 
+         * @param {string} [filters] JSON string of FilterRoomDetailDto
          * @param {Array<string>} [sort] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async roomDetailControllerFindMany(page?: number, pageSize?: number, filters?: object, sort?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoomDetailPaginationResultDto>> {
+        async roomDetailControllerFindMany(page?: number, pageSize?: number, filters?: string, sort?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoomDetailPaginationResultDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.roomDetailControllerFindMany(page, pageSize, filters, sort, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RoomDetailsApi.roomDetailControllerFindMany']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get all room details with infinite pagination and filters
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [filters] JSON string of FilterRoomDetailDto
+         * @param {Array<string>} [sort] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async roomDetailControllerFindManyInfinite(page?: number, pageSize?: number, filters?: string, sort?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoomDetailInfinitePaginationResultDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.roomDetailControllerFindManyInfinite(page, pageSize, filters, sort, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoomDetailsApi.roomDetailControllerFindManyInfinite']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5293,7 +6155,7 @@ export const RoomDetailsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Delete a room detail
+         * @summary Soft delete a room detail
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5302,6 +6164,19 @@ export const RoomDetailsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.roomDetailControllerRemove(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RoomDetailsApi.roomDetailControllerRemove']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Restore a soft-deleted room detail
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async roomDetailControllerRestore(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoomDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.roomDetailControllerRestore(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoomDetailsApi.roomDetailControllerRestore']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5340,16 +6215,38 @@ export const RoomDetailsApiFactory = function (configuration?: Configuration, ba
         },
         /**
          * 
+         * @summary Get all soft-deleted room details
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomDetailControllerFindDeleted(options?: RawAxiosRequestConfig): AxiosPromise<Array<RoomDetail>> {
+            return localVarFp.roomDetailControllerFindDeleted(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get all room details with pagination and filters
          * @param {number} [page] 
          * @param {number} [pageSize] 
-         * @param {object} [filters] 
+         * @param {string} [filters] JSON string of FilterRoomDetailDto
          * @param {Array<string>} [sort] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        roomDetailControllerFindMany(page?: number, pageSize?: number, filters?: object, sort?: Array<string>, options?: RawAxiosRequestConfig): AxiosPromise<RoomDetailPaginationResultDto> {
+        roomDetailControllerFindMany(page?: number, pageSize?: number, filters?: string, sort?: Array<string>, options?: RawAxiosRequestConfig): AxiosPromise<RoomDetailPaginationResultDto> {
             return localVarFp.roomDetailControllerFindMany(page, pageSize, filters, sort, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get all room details with infinite pagination and filters
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [filters] JSON string of FilterRoomDetailDto
+         * @param {Array<string>} [sort] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomDetailControllerFindManyInfinite(page?: number, pageSize?: number, filters?: string, sort?: Array<string>, options?: RawAxiosRequestConfig): AxiosPromise<RoomDetailInfinitePaginationResultDto> {
+            return localVarFp.roomDetailControllerFindManyInfinite(page, pageSize, filters, sort, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5363,13 +6260,23 @@ export const RoomDetailsApiFactory = function (configuration?: Configuration, ba
         },
         /**
          * 
-         * @summary Delete a room detail
+         * @summary Soft delete a room detail
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         roomDetailControllerRemove(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.roomDetailControllerRemove(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Restore a soft-deleted room detail
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomDetailControllerRestore(id: string, options?: RawAxiosRequestConfig): AxiosPromise<RoomDetail> {
+            return localVarFp.roomDetailControllerRestore(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5406,17 +6313,43 @@ export class RoomDetailsApi extends BaseAPI {
 
     /**
      * 
+     * @summary Get all soft-deleted room details
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoomDetailsApi
+     */
+    public roomDetailControllerFindDeleted(options?: RawAxiosRequestConfig) {
+        return RoomDetailsApiFp(this.configuration).roomDetailControllerFindDeleted(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Get all room details with pagination and filters
      * @param {number} [page] 
      * @param {number} [pageSize] 
-     * @param {object} [filters] 
+     * @param {string} [filters] JSON string of FilterRoomDetailDto
      * @param {Array<string>} [sort] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RoomDetailsApi
      */
-    public roomDetailControllerFindMany(page?: number, pageSize?: number, filters?: object, sort?: Array<string>, options?: RawAxiosRequestConfig) {
+    public roomDetailControllerFindMany(page?: number, pageSize?: number, filters?: string, sort?: Array<string>, options?: RawAxiosRequestConfig) {
         return RoomDetailsApiFp(this.configuration).roomDetailControllerFindMany(page, pageSize, filters, sort, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get all room details with infinite pagination and filters
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {string} [filters] JSON string of FilterRoomDetailDto
+     * @param {Array<string>} [sort] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoomDetailsApi
+     */
+    public roomDetailControllerFindManyInfinite(page?: number, pageSize?: number, filters?: string, sort?: Array<string>, options?: RawAxiosRequestConfig) {
+        return RoomDetailsApiFp(this.configuration).roomDetailControllerFindManyInfinite(page, pageSize, filters, sort, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5433,7 +6366,7 @@ export class RoomDetailsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Delete a room detail
+     * @summary Soft delete a room detail
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5441,6 +6374,18 @@ export class RoomDetailsApi extends BaseAPI {
      */
     public roomDetailControllerRemove(id: string, options?: RawAxiosRequestConfig) {
         return RoomDetailsApiFp(this.configuration).roomDetailControllerRemove(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Restore a soft-deleted room detail
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoomDetailsApi
+     */
+    public roomDetailControllerRestore(id: string, options?: RawAxiosRequestConfig) {
+        return RoomDetailsApiFp(this.configuration).roomDetailControllerRestore(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5454,6 +6399,557 @@ export class RoomDetailsApi extends BaseAPI {
      */
     public roomDetailControllerUpdate(id: string, updateRoomDetailDto: UpdateRoomDetailDto, options?: RawAxiosRequestConfig) {
         return RoomDetailsApiFp(this.configuration).roomDetailControllerUpdate(id, updateRoomDetailDto, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * RoomsApi - axios parameter creator
+ * @export
+ */
+export const RoomsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Create a new room
+         * @param {CreateHotelRoomDto} createHotelRoomDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomControllerCreate: async (createHotelRoomDto: CreateHotelRoomDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createHotelRoomDto' is not null or undefined
+            assertParamExists('roomControllerCreate', 'createHotelRoomDto', createHotelRoomDto)
+            const localVarPath = `/api/rooms`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createHotelRoomDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get all soft-deleted rooms
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomControllerFindDeleted: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/rooms/deleted`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get all rooms with pagination and filters
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [filters] JSON string of FilterHotelRoomDto
+         * @param {string} [sort] JSON string of SortHotelRoomDto[]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomControllerFindMany: async (page?: number, pageSize?: number, filters?: string, sort?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/rooms`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            if (filters !== undefined) {
+                localVarQueryParameter['filters'] = filters;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get a room by id
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomControllerFindOne: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('roomControllerFindOne', 'id', id)
+            const localVarPath = `/api/rooms/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Soft delete a room
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomControllerRemove: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('roomControllerRemove', 'id', id)
+            const localVarPath = `/api/rooms/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Restore a soft-deleted room
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomControllerRestore: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('roomControllerRestore', 'id', id)
+            const localVarPath = `/api/rooms/{id}/restore`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update a room
+         * @param {string} id 
+         * @param {UpdateHotelRoomDto} updateHotelRoomDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomControllerUpdate: async (id: string, updateHotelRoomDto: UpdateHotelRoomDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('roomControllerUpdate', 'id', id)
+            // verify required parameter 'updateHotelRoomDto' is not null or undefined
+            assertParamExists('roomControllerUpdate', 'updateHotelRoomDto', updateHotelRoomDto)
+            const localVarPath = `/api/rooms/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateHotelRoomDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * RoomsApi - functional programming interface
+ * @export
+ */
+export const RoomsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = RoomsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Create a new room
+         * @param {CreateHotelRoomDto} createHotelRoomDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async roomControllerCreate(createHotelRoomDto: CreateHotelRoomDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HotelRoom>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.roomControllerCreate(createHotelRoomDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoomsApi.roomControllerCreate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get all soft-deleted rooms
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async roomControllerFindDeleted(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<HotelRoom>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.roomControllerFindDeleted(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoomsApi.roomControllerFindDeleted']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get all rooms with pagination and filters
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [filters] JSON string of FilterHotelRoomDto
+         * @param {string} [sort] JSON string of SortHotelRoomDto[]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async roomControllerFindMany(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HotelRoomPaginationResultDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.roomControllerFindMany(page, pageSize, filters, sort, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoomsApi.roomControllerFindMany']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get a room by id
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async roomControllerFindOne(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HotelRoom>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.roomControllerFindOne(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoomsApi.roomControllerFindOne']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Soft delete a room
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async roomControllerRemove(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.roomControllerRemove(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoomsApi.roomControllerRemove']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Restore a soft-deleted room
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async roomControllerRestore(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HotelRoom>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.roomControllerRestore(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoomsApi.roomControllerRestore']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Update a room
+         * @param {string} id 
+         * @param {UpdateHotelRoomDto} updateHotelRoomDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async roomControllerUpdate(id: string, updateHotelRoomDto: UpdateHotelRoomDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HotelRoom>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.roomControllerUpdate(id, updateHotelRoomDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoomsApi.roomControllerUpdate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * RoomsApi - factory interface
+ * @export
+ */
+export const RoomsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = RoomsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Create a new room
+         * @param {CreateHotelRoomDto} createHotelRoomDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomControllerCreate(createHotelRoomDto: CreateHotelRoomDto, options?: RawAxiosRequestConfig): AxiosPromise<HotelRoom> {
+            return localVarFp.roomControllerCreate(createHotelRoomDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get all soft-deleted rooms
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomControllerFindDeleted(options?: RawAxiosRequestConfig): AxiosPromise<Array<HotelRoom>> {
+            return localVarFp.roomControllerFindDeleted(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get all rooms with pagination and filters
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [filters] JSON string of FilterHotelRoomDto
+         * @param {string} [sort] JSON string of SortHotelRoomDto[]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomControllerFindMany(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig): AxiosPromise<HotelRoomPaginationResultDto> {
+            return localVarFp.roomControllerFindMany(page, pageSize, filters, sort, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get a room by id
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomControllerFindOne(id: string, options?: RawAxiosRequestConfig): AxiosPromise<HotelRoom> {
+            return localVarFp.roomControllerFindOne(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Soft delete a room
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomControllerRemove(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.roomControllerRemove(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Restore a soft-deleted room
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomControllerRestore(id: string, options?: RawAxiosRequestConfig): AxiosPromise<HotelRoom> {
+            return localVarFp.roomControllerRestore(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update a room
+         * @param {string} id 
+         * @param {UpdateHotelRoomDto} updateHotelRoomDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomControllerUpdate(id: string, updateHotelRoomDto: UpdateHotelRoomDto, options?: RawAxiosRequestConfig): AxiosPromise<HotelRoom> {
+            return localVarFp.roomControllerUpdate(id, updateHotelRoomDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * RoomsApi - object-oriented interface
+ * @export
+ * @class RoomsApi
+ * @extends {BaseAPI}
+ */
+export class RoomsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Create a new room
+     * @param {CreateHotelRoomDto} createHotelRoomDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoomsApi
+     */
+    public roomControllerCreate(createHotelRoomDto: CreateHotelRoomDto, options?: RawAxiosRequestConfig) {
+        return RoomsApiFp(this.configuration).roomControllerCreate(createHotelRoomDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get all soft-deleted rooms
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoomsApi
+     */
+    public roomControllerFindDeleted(options?: RawAxiosRequestConfig) {
+        return RoomsApiFp(this.configuration).roomControllerFindDeleted(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get all rooms with pagination and filters
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {string} [filters] JSON string of FilterHotelRoomDto
+     * @param {string} [sort] JSON string of SortHotelRoomDto[]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoomsApi
+     */
+    public roomControllerFindMany(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig) {
+        return RoomsApiFp(this.configuration).roomControllerFindMany(page, pageSize, filters, sort, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get a room by id
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoomsApi
+     */
+    public roomControllerFindOne(id: string, options?: RawAxiosRequestConfig) {
+        return RoomsApiFp(this.configuration).roomControllerFindOne(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Soft delete a room
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoomsApi
+     */
+    public roomControllerRemove(id: string, options?: RawAxiosRequestConfig) {
+        return RoomsApiFp(this.configuration).roomControllerRemove(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Restore a soft-deleted room
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoomsApi
+     */
+    public roomControllerRestore(id: string, options?: RawAxiosRequestConfig) {
+        return RoomsApiFp(this.configuration).roomControllerRestore(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update a room
+     * @param {string} id 
+     * @param {UpdateHotelRoomDto} updateHotelRoomDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoomsApi
+     */
+    public roomControllerUpdate(id: string, updateHotelRoomDto: UpdateHotelRoomDto, options?: RawAxiosRequestConfig) {
+        return RoomsApiFp(this.configuration).roomControllerUpdate(id, updateHotelRoomDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
