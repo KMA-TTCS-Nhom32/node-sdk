@@ -26,6 +26,25 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerM
 /**
  * 
  * @export
+ * @interface AddTranslationDto
+ */
+export interface AddTranslationDto {
+    /**
+     * The language code for the translations
+     * @type {string}
+     * @memberof AddTranslationDto
+     */
+    'language': string;
+    /**
+     * Array of translations to add
+     * @type {Array<TranslationData>}
+     * @memberof AddTranslationDto
+     */
+    'data': Array<TranslationData>;
+}
+/**
+ * 
+ * @export
  * @interface AmenitiesPaginationResultDto
  */
 export interface AmenitiesPaginationResultDto {
@@ -112,6 +131,268 @@ export const AmenityTypeEnum = {
 
 export type AmenityTypeEnum = typeof AmenityTypeEnum[keyof typeof AmenityTypeEnum];
 
+/**
+ * 
+ * @export
+ * @interface Booking
+ */
+export interface Booking {
+    /**
+     * 
+     * @type {string}
+     * @memberof Booking
+     */
+    'id': string;
+    /**
+     * Soft delete flag
+     * @type {boolean}
+     * @memberof Booking
+     */
+    'isDeleted': boolean;
+    /**
+     * Soft delete timestamp
+     * @type {string}
+     * @memberof Booking
+     */
+    'deletedAt': string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof Booking
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Booking
+     */
+    'updatedAt': string;
+    /**
+     * Booking code
+     * @type {string}
+     * @memberof Booking
+     */
+    'code': string;
+    /**
+     * Type of booking
+     * @type {string}
+     * @memberof Booking
+     */
+    'type': BookingTypeEnum;
+    /**
+     * Type of booking
+     * @type {string}
+     * @memberof Booking
+     */
+    'create_type': BookingCreateTypeEnum;
+    /**
+     * ID of the room being booked
+     * @type {string}
+     * @memberof Booking
+     */
+    'roomId': string;
+    /**
+     * Room being booked
+     * @type {HotelRoom}
+     * @memberof Booking
+     */
+    'room': HotelRoom;
+    /**
+     * ID of the user making the booking
+     * @type {string}
+     * @memberof Booking
+     */
+    'userId': string;
+    /**
+     * User making the booking
+     * @type {User}
+     * @memberof Booking
+     */
+    'user': User;
+    /**
+     * Booking start date
+     * @type {string}
+     * @memberof Booking
+     */
+    'start_date': string;
+    /**
+     * Booking end date
+     * @type {string}
+     * @memberof Booking
+     */
+    'end_date': string;
+    /**
+     * Booking start time
+     * @type {string}
+     * @memberof Booking
+     */
+    'start_time': string;
+    /**
+     * Booking end time
+     * @type {string}
+     * @memberof Booking
+     */
+    'end_time': string;
+    /**
+     * Number of adults
+     * @type {string}
+     * @memberof Booking
+     */
+    'total_amount': string;
+    /**
+     * Booking status
+     * @type {string}
+     * @memberof Booking
+     */
+    'status': BookingStatusEnum;
+    /**
+     * Reason for canceling the booking
+     * @type {string}
+     * @memberof Booking
+     */
+    'cancel_reason': string;
+    /**
+     * Payment method
+     * @type {string}
+     * @memberof Booking
+     */
+    'payment_method': BookingPaymentMethodEnum;
+    /**
+     * Number of guests
+     * @type {number}
+     * @memberof Booking
+     */
+    'number_of_guests': number;
+    /**
+     * Number of adults
+     * @type {number}
+     * @memberof Booking
+     */
+    'adults': number;
+    /**
+     * Number of children
+     * @type {number}
+     * @memberof Booking
+     */
+    'children': number;
+    /**
+     * Number of infants
+     * @type {number}
+     * @memberof Booking
+     */
+    'infants': number;
+    /**
+     * Special requirements
+     * @type {string}
+     * @memberof Booking
+     */
+    'special_requests': string;
+    /**
+     * Check in time
+     * @type {string}
+     * @memberof Booking
+     */
+    'check_in_time': string;
+    /**
+     * Check out time
+     * @type {string}
+     * @memberof Booking
+     */
+    'check_out_time': string;
+    /**
+     * Payment status
+     * @type {string}
+     * @memberof Booking
+     */
+    'payment_status': BookingPaymentStatusEnum;
+    /**
+     * Payment details
+     * @type {object}
+     * @memberof Booking
+     */
+    'payment_details': object;
+    /**
+     * Guest details
+     * @type {GuestDetail}
+     * @memberof Booking
+     */
+    'guest_details': GuestDetail;
+    /**
+     * Promotion code
+     * @type {string}
+     * @memberof Booking
+     */
+    'promotion_code': string;
+    /**
+     * Is business trip
+     * @type {boolean}
+     * @memberof Booking
+     */
+    'is_business_trip': boolean;
+}
+
+export const BookingTypeEnum = {
+    Hourly: 'HOURLY',
+    Nightly: 'NIGHTLY',
+    Daily: 'DAILY'
+} as const;
+
+export type BookingTypeEnum = typeof BookingTypeEnum[keyof typeof BookingTypeEnum];
+export const BookingCreateTypeEnum = {
+    OnlineBooking: 'ONLINE_BOOKING',
+    AtHotel: 'AT_HOTEL'
+} as const;
+
+export type BookingCreateTypeEnum = typeof BookingCreateTypeEnum[keyof typeof BookingCreateTypeEnum];
+export const BookingStatusEnum = {
+    Pending: 'PENDING',
+    WaitingForCheckIn: 'WAITING_FOR_CHECK_IN',
+    CheckedIn: 'CHECKED_IN',
+    Cancelled: 'CANCELLED',
+    Completed: 'COMPLETED',
+    Refunded: 'REFUNDED',
+    Rejected: 'REJECTED'
+} as const;
+
+export type BookingStatusEnum = typeof BookingStatusEnum[keyof typeof BookingStatusEnum];
+export const BookingPaymentMethodEnum = {
+    Cash: 'CASH',
+    Banking: 'BANKING',
+    Zalopay: 'ZALOPAY',
+    Momo: 'MOMO',
+    VnPay: 'VN_PAY',
+    VietQr: 'VIET_QR'
+} as const;
+
+export type BookingPaymentMethodEnum = typeof BookingPaymentMethodEnum[keyof typeof BookingPaymentMethodEnum];
+export const BookingPaymentStatusEnum = {
+    Unpaid: 'UNPAID',
+    Paid: 'PAID',
+    Failed: 'FAILED',
+    Refunded: 'REFUNDED'
+} as const;
+
+export type BookingPaymentStatusEnum = typeof BookingPaymentStatusEnum[keyof typeof BookingPaymentStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface BookingsPaginationResultDto
+ */
+export interface BookingsPaginationResultDto {
+    /**
+     * 
+     * @type {Array<Booking>}
+     * @memberof BookingsPaginationResultDto
+     */
+    'data': Array<Booking>;
+    /**
+     * 
+     * @type {UsersPaginationResultDtoMeta}
+     * @memberof BookingsPaginationResultDto
+     */
+    'meta': UsersPaginationResultDtoMeta;
+}
 /**
  * 
  * @export
@@ -442,6 +723,216 @@ export type CreateAmenityDtoTypeEnum = typeof CreateAmenityDtoTypeEnum[keyof typ
 /**
  * 
  * @export
+ * @interface CreateBookingAtHotelDto
+ */
+export interface CreateBookingAtHotelDto {
+    /**
+     * Booking type
+     * @type {string}
+     * @memberof CreateBookingAtHotelDto
+     */
+    'type': CreateBookingAtHotelDtoTypeEnum;
+    /**
+     * Start date of the booking
+     * @type {string}
+     * @memberof CreateBookingAtHotelDto
+     */
+    'start_date': string;
+    /**
+     * End date of the booking
+     * @type {string}
+     * @memberof CreateBookingAtHotelDto
+     */
+    'end_date': string;
+    /**
+     * Start time of the booking
+     * @type {string}
+     * @memberof CreateBookingAtHotelDto
+     */
+    'start_time': string;
+    /**
+     * End time of the booking
+     * @type {string}
+     * @memberof CreateBookingAtHotelDto
+     */
+    'end_time': string;
+    /**
+     * Number of guests
+     * @type {number}
+     * @memberof CreateBookingAtHotelDto
+     */
+    'number_of_guests': number;
+    /**
+     * Number of adults
+     * @type {number}
+     * @memberof CreateBookingAtHotelDto
+     */
+    'adults': number;
+    /**
+     * Number of children
+     * @type {number}
+     * @memberof CreateBookingAtHotelDto
+     */
+    'children': number;
+    /**
+     * Number of infants
+     * @type {number}
+     * @memberof CreateBookingAtHotelDto
+     */
+    'infants': number;
+    /**
+     * Special requirements
+     * @type {string}
+     * @memberof CreateBookingAtHotelDto
+     */
+    'special_requests'?: string;
+    /**
+     * Guest details
+     * @type {GuestDetail}
+     * @memberof CreateBookingAtHotelDto
+     */
+    'guest_details'?: GuestDetail;
+    /**
+     * ID of the room being booked
+     * @type {string}
+     * @memberof CreateBookingAtHotelDto
+     */
+    'roomId': string;
+    /**
+     * Check in time
+     * @type {string}
+     * @memberof CreateBookingAtHotelDto
+     */
+    'check_in_time': string;
+}
+
+export const CreateBookingAtHotelDtoTypeEnum = {
+    Hourly: 'HOURLY',
+    Nightly: 'NIGHTLY',
+    Daily: 'DAILY'
+} as const;
+
+export type CreateBookingAtHotelDtoTypeEnum = typeof CreateBookingAtHotelDtoTypeEnum[keyof typeof CreateBookingAtHotelDtoTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface CreateBookingOnlineDto
+ */
+export interface CreateBookingOnlineDto {
+    /**
+     * Booking type
+     * @type {string}
+     * @memberof CreateBookingOnlineDto
+     */
+    'type': CreateBookingOnlineDtoTypeEnum;
+    /**
+     * Start date of the booking
+     * @type {string}
+     * @memberof CreateBookingOnlineDto
+     */
+    'start_date': string;
+    /**
+     * End date of the booking
+     * @type {string}
+     * @memberof CreateBookingOnlineDto
+     */
+    'end_date': string;
+    /**
+     * Start time of the booking
+     * @type {string}
+     * @memberof CreateBookingOnlineDto
+     */
+    'start_time': string;
+    /**
+     * End time of the booking
+     * @type {string}
+     * @memberof CreateBookingOnlineDto
+     */
+    'end_time': string;
+    /**
+     * Number of guests
+     * @type {number}
+     * @memberof CreateBookingOnlineDto
+     */
+    'number_of_guests': number;
+    /**
+     * Number of adults
+     * @type {number}
+     * @memberof CreateBookingOnlineDto
+     */
+    'adults': number;
+    /**
+     * Number of children
+     * @type {number}
+     * @memberof CreateBookingOnlineDto
+     */
+    'children': number;
+    /**
+     * Number of infants
+     * @type {number}
+     * @memberof CreateBookingOnlineDto
+     */
+    'infants': number;
+    /**
+     * Special requirements
+     * @type {string}
+     * @memberof CreateBookingOnlineDto
+     */
+    'special_requests'?: string;
+    /**
+     * Guest details
+     * @type {GuestDetail}
+     * @memberof CreateBookingOnlineDto
+     */
+    'guest_details'?: GuestDetail;
+    /**
+     * ID of the room detail being booked
+     * @type {string}
+     * @memberof CreateBookingOnlineDto
+     */
+    'detailId': string;
+    /**
+     * Promotion code
+     * @type {string}
+     * @memberof CreateBookingOnlineDto
+     */
+    'promotion_code'?: string;
+    /**
+     * Payment method
+     * @type {string}
+     * @memberof CreateBookingOnlineDto
+     */
+    'payment_method'?: CreateBookingOnlineDtoPaymentMethodEnum;
+    /**
+     * Is this booking a business trip?
+     * @type {boolean}
+     * @memberof CreateBookingOnlineDto
+     */
+    'is_business_trip'?: boolean;
+}
+
+export const CreateBookingOnlineDtoTypeEnum = {
+    Hourly: 'HOURLY',
+    Nightly: 'NIGHTLY',
+    Daily: 'DAILY'
+} as const;
+
+export type CreateBookingOnlineDtoTypeEnum = typeof CreateBookingOnlineDtoTypeEnum[keyof typeof CreateBookingOnlineDtoTypeEnum];
+export const CreateBookingOnlineDtoPaymentMethodEnum = {
+    Cash: 'CASH',
+    Banking: 'BANKING',
+    Zalopay: 'ZALOPAY',
+    Momo: 'MOMO',
+    VnPay: 'VN_PAY',
+    VietQr: 'VIET_QR'
+} as const;
+
+export type CreateBookingOnlineDtoPaymentMethodEnum = typeof CreateBookingOnlineDtoPaymentMethodEnum[keyof typeof CreateBookingOnlineDtoPaymentMethodEnum];
+
+/**
+ * 
+ * @export
  * @interface CreateBranchDto
  */
 export interface CreateBranchDto {
@@ -732,6 +1223,37 @@ export interface CreateUserDto {
 /**
  * 
  * @export
+ * @interface DetailTranslationContent
+ */
+export interface DetailTranslationContent {
+    /**
+     * 
+     * @type {string}
+     * @memberof DetailTranslationContent
+     */
+    'content': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof DetailTranslationContent
+     */
+    'fuzzy': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof DetailTranslationContent
+     */
+    'proofread': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof DetailTranslationContent
+     */
+    'updated': string;
+}
+/**
+ * 
+ * @export
  * @interface FilterAmenityDto
  */
 export interface FilterAmenityDto {
@@ -756,6 +1278,117 @@ export const FilterAmenityDtoTypesEnum = {
 } as const;
 
 export type FilterAmenityDtoTypesEnum = typeof FilterAmenityDtoTypesEnum[keyof typeof FilterAmenityDtoTypesEnum];
+
+/**
+ * 
+ * @export
+ * @interface FilterBookingsDto
+ */
+export interface FilterBookingsDto {
+    /**
+     * Filter by booking status
+     * @type {Array<string>}
+     * @memberof FilterBookingsDto
+     */
+    'status'?: Array<FilterBookingsDtoStatusEnum>;
+    /**
+     * Filter by booking type
+     * @type {string}
+     * @memberof FilterBookingsDto
+     */
+    'type'?: FilterBookingsDtoTypeEnum;
+    /**
+     * Search by keyword
+     * @type {string}
+     * @memberof FilterBookingsDto
+     */
+    'keyword'?: string;
+    /**
+     * Filter by branch
+     * @type {string}
+     * @memberof FilterBookingsDto
+     */
+    'branchId'?: string;
+    /**
+     * Filter by user
+     * @type {string}
+     * @memberof FilterBookingsDto
+     */
+    'userId'?: string;
+    /**
+     * Filter by room detail
+     * @type {string}
+     * @memberof FilterBookingsDto
+     */
+    'detailId'?: string;
+    /**
+     * Filter by room
+     * @type {string}
+     * @memberof FilterBookingsDto
+     */
+    'roomId'?: string;
+    /**
+     * Filter by start date
+     * @type {string}
+     * @memberof FilterBookingsDto
+     */
+    'start_date'?: string;
+    /**
+     * Filter by end date
+     * @type {string}
+     * @memberof FilterBookingsDto
+     */
+    'end_date'?: string;
+    /**
+     * Filter by payment status
+     * @type {string}
+     * @memberof FilterBookingsDto
+     */
+    'payment_status'?: FilterBookingsDtoPaymentStatusEnum;
+    /**
+     * Filter by payment method
+     * @type {string}
+     * @memberof FilterBookingsDto
+     */
+    'payment_method'?: FilterBookingsDtoPaymentMethodEnum;
+}
+
+export const FilterBookingsDtoStatusEnum = {
+    Pending: 'PENDING',
+    WaitingForCheckIn: 'WAITING_FOR_CHECK_IN',
+    CheckedIn: 'CHECKED_IN',
+    Cancelled: 'CANCELLED',
+    Completed: 'COMPLETED',
+    Refunded: 'REFUNDED',
+    Rejected: 'REJECTED'
+} as const;
+
+export type FilterBookingsDtoStatusEnum = typeof FilterBookingsDtoStatusEnum[keyof typeof FilterBookingsDtoStatusEnum];
+export const FilterBookingsDtoTypeEnum = {
+    Hourly: 'HOURLY',
+    Nightly: 'NIGHTLY',
+    Daily: 'DAILY'
+} as const;
+
+export type FilterBookingsDtoTypeEnum = typeof FilterBookingsDtoTypeEnum[keyof typeof FilterBookingsDtoTypeEnum];
+export const FilterBookingsDtoPaymentStatusEnum = {
+    Unpaid: 'UNPAID',
+    Paid: 'PAID',
+    Failed: 'FAILED',
+    Refunded: 'REFUNDED'
+} as const;
+
+export type FilterBookingsDtoPaymentStatusEnum = typeof FilterBookingsDtoPaymentStatusEnum[keyof typeof FilterBookingsDtoPaymentStatusEnum];
+export const FilterBookingsDtoPaymentMethodEnum = {
+    Cash: 'CASH',
+    Banking: 'BANKING',
+    Zalopay: 'ZALOPAY',
+    Momo: 'MOMO',
+    VnPay: 'VN_PAY',
+    VietQr: 'VIET_QR'
+} as const;
+
+export type FilterBookingsDtoPaymentMethodEnum = typeof FilterBookingsDtoPaymentMethodEnum[keyof typeof FilterBookingsDtoPaymentMethodEnum];
 
 /**
  * 
@@ -840,6 +1473,32 @@ export const FilterHotelRoomDtoStatusEnum = {
 } as const;
 
 export type FilterHotelRoomDtoStatusEnum = typeof FilterHotelRoomDtoStatusEnum[keyof typeof FilterHotelRoomDtoStatusEnum];
+
+/**
+ * 
+ * @export
+ * @interface FilterMyBookingsDto
+ */
+export interface FilterMyBookingsDto {
+    /**
+     * Filter by booking status
+     * @type {Array<string>}
+     * @memberof FilterMyBookingsDto
+     */
+    'status'?: Array<FilterMyBookingsDtoStatusEnum>;
+}
+
+export const FilterMyBookingsDtoStatusEnum = {
+    Pending: 'PENDING',
+    WaitingForCheckIn: 'WAITING_FOR_CHECK_IN',
+    CheckedIn: 'CHECKED_IN',
+    Cancelled: 'CANCELLED',
+    Completed: 'COMPLETED',
+    Refunded: 'REFUNDED',
+    Rejected: 'REJECTED'
+} as const;
+
+export type FilterMyBookingsDtoStatusEnum = typeof FilterMyBookingsDtoStatusEnum[keyof typeof FilterMyBookingsDtoStatusEnum];
 
 /**
  * 
@@ -971,6 +1630,59 @@ export const FilterUserDtoRolesEnum = {
 } as const;
 
 export type FilterUserDtoRolesEnum = typeof FilterUserDtoRolesEnum[keyof typeof FilterUserDtoRolesEnum];
+
+/**
+ * 
+ * @export
+ * @interface GetTranslationsRequestDto
+ */
+export interface GetTranslationsRequestDto {
+    /**
+     * Language code to fetch translations for
+     * @type {string}
+     * @memberof GetTranslationsRequestDto
+     */
+    'language': string;
+}
+/**
+ * 
+ * @export
+ * @interface GuestDetail
+ */
+export interface GuestDetail {
+    /**
+     * Guest identification number
+     * @type {string}
+     * @memberof GuestDetail
+     */
+    'identification_number': string;
+    /**
+     * Guest identification card type
+     * @type {string}
+     * @memberof GuestDetail
+     */
+    'identification_card': GuestDetailIdentificationCardEnum;
+    /**
+     * Front image of the guest identification card
+     * @type {Image}
+     * @memberof GuestDetail
+     */
+    'front_image': Image;
+    /**
+     * Back image of the guest identification card
+     * @type {Image}
+     * @memberof GuestDetail
+     */
+    'back_image': Image;
+}
+
+export const GuestDetailIdentificationCardEnum = {
+    Cccd: 'CCCD',
+    Cmnd: 'CMND',
+    Cmt: 'CMT'
+} as const;
+
+export type GuestDetailIdentificationCardEnum = typeof GuestDetailIdentificationCardEnum[keyof typeof GuestDetailIdentificationCardEnum];
 
 /**
  * 
@@ -1118,6 +1830,38 @@ export interface InitiateForgotPasswordEmailDto {
      * @memberof InitiateForgotPasswordEmailDto
      */
     'email': string;
+}
+/**
+ * 
+ * @export
+ * @interface ListTranslationResponseDto
+ */
+export interface ListTranslationResponseDto {
+    /**
+     * 
+     * @type {ResponseStatus}
+     * @memberof ListTranslationResponseDto
+     */
+    'response': ResponseStatus;
+    /**
+     * 
+     * @type {ListTranslationResult}
+     * @memberof ListTranslationResponseDto
+     */
+    'result': ListTranslationResult;
+}
+/**
+ * 
+ * @export
+ * @interface ListTranslationResult
+ */
+export interface ListTranslationResult {
+    /**
+     * 
+     * @type {Array<Term>}
+     * @memberof ListTranslationResult
+     */
+    'terms': Array<Term>;
 }
 /**
  * 
@@ -1322,6 +2066,37 @@ export interface QueryAmenityDto {
 /**
  * 
  * @export
+ * @interface QueryBookingsDto
+ */
+export interface QueryBookingsDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof QueryBookingsDto
+     */
+    'page'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof QueryBookingsDto
+     */
+    'pageSize'?: number;
+    /**
+     * JSON string of FilterBookingsDto
+     * @type {string}
+     * @memberof QueryBookingsDto
+     */
+    'filters'?: string;
+    /**
+     * JSON string of SortBookingsDto[]
+     * @type {string}
+     * @memberof QueryBookingsDto
+     */
+    'sort'?: string;
+}
+/**
+ * 
+ * @export
  * @interface QueryBranchesDto
  */
 export interface QueryBranchesDto {
@@ -1380,6 +2155,31 @@ export interface QueryHotelRoomDto {
      * @memberof QueryHotelRoomDto
      */
     'sort'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface QueryMyBookingsDto
+ */
+export interface QueryMyBookingsDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof QueryMyBookingsDto
+     */
+    'page'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof QueryMyBookingsDto
+     */
+    'pageSize'?: number;
+    /**
+     * Filter my bookings
+     * @type {FilterMyBookingsDto}
+     * @memberof QueryMyBookingsDto
+     */
+    'filters'?: FilterMyBookingsDto;
 }
 /**
  * 
@@ -1602,6 +2402,31 @@ export interface ResetPasswordWithOTPEmailDto {
      * @memberof ResetPasswordWithOTPEmailDto
      */
     'newPassword': string;
+}
+/**
+ * 
+ * @export
+ * @interface ResponseStatus
+ */
+export interface ResponseStatus {
+    /**
+     * 
+     * @type {string}
+     * @memberof ResponseStatus
+     */
+    'status': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResponseStatus
+     */
+    'code': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResponseStatus
+     */
+    'message': string;
 }
 /**
  * 
@@ -1871,6 +2696,33 @@ export type SortAmenityDtoOrderEnum = typeof SortAmenityDtoOrderEnum[keyof typeo
 /**
  * 
  * @export
+ * @interface SortBookingsDto
+ */
+export interface SortBookingsDto {
+    /**
+     * Key of Entity to sort
+     * @type {string}
+     * @memberof SortBookingsDto
+     */
+    'orderBy': string;
+    /**
+     * Order of sorting
+     * @type {string}
+     * @memberof SortBookingsDto
+     */
+    'order': SortBookingsDtoOrderEnum;
+}
+
+export const SortBookingsDtoOrderEnum = {
+    Asc: 'asc',
+    Desc: 'desc'
+} as const;
+
+export type SortBookingsDtoOrderEnum = typeof SortBookingsDtoOrderEnum[keyof typeof SortBookingsDtoOrderEnum];
+
+/**
+ * 
+ * @export
  * @interface SortBranchDto
  */
 export interface SortBranchDto {
@@ -2003,6 +2855,93 @@ export const SortUserDtoOrderEnum = {
 
 export type SortUserDtoOrderEnum = typeof SortUserDtoOrderEnum[keyof typeof SortUserDtoOrderEnum];
 
+/**
+ * 
+ * @export
+ * @interface Term
+ */
+export interface Term {
+    /**
+     * 
+     * @type {string}
+     * @memberof Term
+     */
+    'term': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Term
+     */
+    'context': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Term
+     */
+    'plural'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Term
+     */
+    'created'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Term
+     */
+    'updated'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Term
+     */
+    'reference'?: string;
+    /**
+     * 
+     * @type {DetailTranslationContent}
+     * @memberof Term
+     */
+    'translation': DetailTranslationContent;
+}
+/**
+ * 
+ * @export
+ * @interface TranslationContent
+ */
+export interface TranslationContent {
+    /**
+     * 
+     * @type {string}
+     * @memberof TranslationContent
+     */
+    'content': string;
+}
+/**
+ * 
+ * @export
+ * @interface TranslationData
+ */
+export interface TranslationData {
+    /**
+     * The term to translate
+     * @type {string}
+     * @memberof TranslationData
+     */
+    'term': string;
+    /**
+     * 
+     * @type {TranslationContent}
+     * @memberof TranslationData
+     */
+    'translation': TranslationContent;
+    /**
+     * Optional context for the translation
+     * @type {string}
+     * @memberof TranslationData
+     */
+    'context'?: string;
+}
 /**
  * 
  * @export
@@ -4152,6 +5091,507 @@ export class AuthApi extends BaseAPI {
 
 
 /**
+ * BookingApi - axios parameter creator
+ * @export
+ */
+export const BookingApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Create a new booking directly at the hotel
+         * @param {CreateBookingAtHotelDto} createBookingAtHotelDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bookingControllerCreateBookingDirectly: async (createBookingAtHotelDto: CreateBookingAtHotelDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createBookingAtHotelDto' is not null or undefined
+            assertParamExists('bookingControllerCreateBookingDirectly', 'createBookingAtHotelDto', createBookingAtHotelDto)
+            const localVarPath = `/api/booking/directly`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createBookingAtHotelDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a new booking online
+         * @param {CreateBookingOnlineDto} createBookingOnlineDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bookingControllerCreateBookingOnline: async (createBookingOnlineDto: CreateBookingOnlineDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createBookingOnlineDto' is not null or undefined
+            assertParamExists('bookingControllerCreateBookingOnline', 'createBookingOnlineDto', createBookingOnlineDto)
+            const localVarPath = `/api/booking`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createBookingOnlineDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get booking details
+         * @param {string} bookingId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bookingControllerFindById: async (bookingId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'bookingId' is not null or undefined
+            assertParamExists('bookingControllerFindById', 'bookingId', bookingId)
+            const localVarPath = `/api/booking/{bookingId}`
+                .replace(`{${"bookingId"}}`, encodeURIComponent(String(bookingId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get all bookings with pagination and filters
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [filters] JSON string of FilterBookingsDto
+         * @param {string} [sort] JSON string of SortBookingsDto[]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bookingControllerGetBookings: async (page?: number, pageSize?: number, filters?: string, sort?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/booking`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            if (filters !== undefined) {
+                localVarQueryParameter['filters'] = filters;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get all my bookings with pagination and filters
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {FilterMyBookingsDto} [filters] Filter my bookings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bookingControllerGetMyBookings: async (page?: number, pageSize?: number, filters?: FilterMyBookingsDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/booking/my-bookings`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            if (filters !== undefined) {
+                for (const [key, value] of Object.entries(filters)) {
+                    localVarQueryParameter[key] = value;
+                }
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update booking status
+         * @param {string} bookingId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bookingControllerUpdateBookingStatus: async (bookingId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'bookingId' is not null or undefined
+            assertParamExists('bookingControllerUpdateBookingStatus', 'bookingId', bookingId)
+            const localVarPath = `/api/booking/update-status/{bookingId}`
+                .replace(`{${"bookingId"}}`, encodeURIComponent(String(bookingId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BookingApi - functional programming interface
+ * @export
+ */
+export const BookingApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BookingApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Create a new booking directly at the hotel
+         * @param {CreateBookingAtHotelDto} createBookingAtHotelDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async bookingControllerCreateBookingDirectly(createBookingAtHotelDto: CreateBookingAtHotelDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Booking>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.bookingControllerCreateBookingDirectly(createBookingAtHotelDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BookingApi.bookingControllerCreateBookingDirectly']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Create a new booking online
+         * @param {CreateBookingOnlineDto} createBookingOnlineDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async bookingControllerCreateBookingOnline(createBookingOnlineDto: CreateBookingOnlineDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Booking>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.bookingControllerCreateBookingOnline(createBookingOnlineDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BookingApi.bookingControllerCreateBookingOnline']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get booking details
+         * @param {string} bookingId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async bookingControllerFindById(bookingId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Booking>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.bookingControllerFindById(bookingId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BookingApi.bookingControllerFindById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get all bookings with pagination and filters
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [filters] JSON string of FilterBookingsDto
+         * @param {string} [sort] JSON string of SortBookingsDto[]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async bookingControllerGetBookings(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BookingsPaginationResultDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.bookingControllerGetBookings(page, pageSize, filters, sort, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BookingApi.bookingControllerGetBookings']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get all my bookings with pagination and filters
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {FilterMyBookingsDto} [filters] Filter my bookings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async bookingControllerGetMyBookings(page?: number, pageSize?: number, filters?: FilterMyBookingsDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BookingsPaginationResultDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.bookingControllerGetMyBookings(page, pageSize, filters, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BookingApi.bookingControllerGetMyBookings']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Update booking status
+         * @param {string} bookingId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async bookingControllerUpdateBookingStatus(bookingId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Booking>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.bookingControllerUpdateBookingStatus(bookingId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BookingApi.bookingControllerUpdateBookingStatus']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * BookingApi - factory interface
+ * @export
+ */
+export const BookingApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BookingApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Create a new booking directly at the hotel
+         * @param {CreateBookingAtHotelDto} createBookingAtHotelDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bookingControllerCreateBookingDirectly(createBookingAtHotelDto: CreateBookingAtHotelDto, options?: RawAxiosRequestConfig): AxiosPromise<Booking> {
+            return localVarFp.bookingControllerCreateBookingDirectly(createBookingAtHotelDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a new booking online
+         * @param {CreateBookingOnlineDto} createBookingOnlineDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bookingControllerCreateBookingOnline(createBookingOnlineDto: CreateBookingOnlineDto, options?: RawAxiosRequestConfig): AxiosPromise<Booking> {
+            return localVarFp.bookingControllerCreateBookingOnline(createBookingOnlineDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get booking details
+         * @param {string} bookingId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bookingControllerFindById(bookingId: string, options?: RawAxiosRequestConfig): AxiosPromise<Booking> {
+            return localVarFp.bookingControllerFindById(bookingId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get all bookings with pagination and filters
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {string} [filters] JSON string of FilterBookingsDto
+         * @param {string} [sort] JSON string of SortBookingsDto[]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bookingControllerGetBookings(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig): AxiosPromise<BookingsPaginationResultDto> {
+            return localVarFp.bookingControllerGetBookings(page, pageSize, filters, sort, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get all my bookings with pagination and filters
+         * @param {number} [page] 
+         * @param {number} [pageSize] 
+         * @param {FilterMyBookingsDto} [filters] Filter my bookings
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bookingControllerGetMyBookings(page?: number, pageSize?: number, filters?: FilterMyBookingsDto, options?: RawAxiosRequestConfig): AxiosPromise<BookingsPaginationResultDto> {
+            return localVarFp.bookingControllerGetMyBookings(page, pageSize, filters, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update booking status
+         * @param {string} bookingId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bookingControllerUpdateBookingStatus(bookingId: string, options?: RawAxiosRequestConfig): AxiosPromise<Booking> {
+            return localVarFp.bookingControllerUpdateBookingStatus(bookingId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * BookingApi - object-oriented interface
+ * @export
+ * @class BookingApi
+ * @extends {BaseAPI}
+ */
+export class BookingApi extends BaseAPI {
+    /**
+     * 
+     * @summary Create a new booking directly at the hotel
+     * @param {CreateBookingAtHotelDto} createBookingAtHotelDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BookingApi
+     */
+    public bookingControllerCreateBookingDirectly(createBookingAtHotelDto: CreateBookingAtHotelDto, options?: RawAxiosRequestConfig) {
+        return BookingApiFp(this.configuration).bookingControllerCreateBookingDirectly(createBookingAtHotelDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a new booking online
+     * @param {CreateBookingOnlineDto} createBookingOnlineDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BookingApi
+     */
+    public bookingControllerCreateBookingOnline(createBookingOnlineDto: CreateBookingOnlineDto, options?: RawAxiosRequestConfig) {
+        return BookingApiFp(this.configuration).bookingControllerCreateBookingOnline(createBookingOnlineDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get booking details
+     * @param {string} bookingId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BookingApi
+     */
+    public bookingControllerFindById(bookingId: string, options?: RawAxiosRequestConfig) {
+        return BookingApiFp(this.configuration).bookingControllerFindById(bookingId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get all bookings with pagination and filters
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {string} [filters] JSON string of FilterBookingsDto
+     * @param {string} [sort] JSON string of SortBookingsDto[]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BookingApi
+     */
+    public bookingControllerGetBookings(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig) {
+        return BookingApiFp(this.configuration).bookingControllerGetBookings(page, pageSize, filters, sort, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get all my bookings with pagination and filters
+     * @param {number} [page] 
+     * @param {number} [pageSize] 
+     * @param {FilterMyBookingsDto} [filters] Filter my bookings
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BookingApi
+     */
+    public bookingControllerGetMyBookings(page?: number, pageSize?: number, filters?: FilterMyBookingsDto, options?: RawAxiosRequestConfig) {
+        return BookingApiFp(this.configuration).bookingControllerGetMyBookings(page, pageSize, filters, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update booking status
+     * @param {string} bookingId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BookingApi
+     */
+    public bookingControllerUpdateBookingStatus(bookingId: string, options?: RawAxiosRequestConfig) {
+        return BookingApiFp(this.configuration).bookingControllerUpdateBookingStatus(bookingId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * BranchesApi - axios parameter creator
  * @export
  */
@@ -5203,6 +6643,187 @@ export class ImagesApi extends BaseAPI {
      */
     public imagesControllerUploadImages(options?: RawAxiosRequestConfig) {
         return ImagesApiFp(this.configuration).imagesControllerUploadImages(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * POEditorApi - axios parameter creator
+ * @export
+ */
+export const POEditorApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Add translations to POEditor project
+         * @param {AddTranslationDto} addTranslationDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        poeditorControllerAddTranslation: async (addTranslationDto: AddTranslationDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'addTranslationDto' is not null or undefined
+            assertParamExists('poeditorControllerAddTranslation', 'addTranslationDto', addTranslationDto)
+            const localVarPath = `/api/poeditor/translations`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(addTranslationDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get translations from POEditor project
+         * @param {GetTranslationsRequestDto} getTranslationsRequestDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        poeditorControllerGetTranslations: async (getTranslationsRequestDto: GetTranslationsRequestDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'getTranslationsRequestDto' is not null or undefined
+            assertParamExists('poeditorControllerGetTranslations', 'getTranslationsRequestDto', getTranslationsRequestDto)
+            const localVarPath = `/api/poeditor/translations-list`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(getTranslationsRequestDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * POEditorApi - functional programming interface
+ * @export
+ */
+export const POEditorApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = POEditorApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Add translations to POEditor project
+         * @param {AddTranslationDto} addTranslationDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async poeditorControllerAddTranslation(addTranslationDto: AddTranslationDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.poeditorControllerAddTranslation(addTranslationDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['POEditorApi.poeditorControllerAddTranslation']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get translations from POEditor project
+         * @param {GetTranslationsRequestDto} getTranslationsRequestDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async poeditorControllerGetTranslations(getTranslationsRequestDto: GetTranslationsRequestDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListTranslationResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.poeditorControllerGetTranslations(getTranslationsRequestDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['POEditorApi.poeditorControllerGetTranslations']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * POEditorApi - factory interface
+ * @export
+ */
+export const POEditorApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = POEditorApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Add translations to POEditor project
+         * @param {AddTranslationDto} addTranslationDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        poeditorControllerAddTranslation(addTranslationDto: AddTranslationDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.poeditorControllerAddTranslation(addTranslationDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get translations from POEditor project
+         * @param {GetTranslationsRequestDto} getTranslationsRequestDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        poeditorControllerGetTranslations(getTranslationsRequestDto: GetTranslationsRequestDto, options?: RawAxiosRequestConfig): AxiosPromise<ListTranslationResponseDto> {
+            return localVarFp.poeditorControllerGetTranslations(getTranslationsRequestDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * POEditorApi - object-oriented interface
+ * @export
+ * @class POEditorApi
+ * @extends {BaseAPI}
+ */
+export class POEditorApi extends BaseAPI {
+    /**
+     * 
+     * @summary Add translations to POEditor project
+     * @param {AddTranslationDto} addTranslationDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof POEditorApi
+     */
+    public poeditorControllerAddTranslation(addTranslationDto: AddTranslationDto, options?: RawAxiosRequestConfig) {
+        return POEditorApiFp(this.configuration).poeditorControllerAddTranslation(addTranslationDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get translations from POEditor project
+     * @param {GetTranslationsRequestDto} getTranslationsRequestDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof POEditorApi
+     */
+    public poeditorControllerGetTranslations(getTranslationsRequestDto: GetTranslationsRequestDto, options?: RawAxiosRequestConfig) {
+        return POEditorApiFp(this.configuration).poeditorControllerGetTranslations(getTranslationsRequestDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
