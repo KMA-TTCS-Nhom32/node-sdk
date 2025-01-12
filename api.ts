@@ -2646,6 +2646,12 @@ export interface RoomDetail {
      * @memberof RoomDetail
      */
     'flat_rooms': Array<HotelRoom>;
+    /**
+     * Price history of this room
+     * @type {Array<RoomPriceHistory>}
+     * @memberof RoomDetail
+     */
+    'roomPriceHistories'?: Array<RoomPriceHistory>;
 }
 
 export const RoomDetailRoomTypeEnum = {
