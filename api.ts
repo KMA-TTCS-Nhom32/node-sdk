@@ -1142,35 +1142,17 @@ export interface CreateRoomDetailDto {
      */
     'base_price_per_hour': string;
     /**
-     * Hotel Room\'s special price per hour
-     * @type {string}
-     * @memberof CreateRoomDetailDto
-     */
-    'special_price_per_hour'?: string;
-    /**
      * Hotel Room\'s base price per night
      * @type {string}
      * @memberof CreateRoomDetailDto
      */
     'base_price_per_night': string;
     /**
-     * Hotel Room\'s special price per night
-     * @type {string}
-     * @memberof CreateRoomDetailDto
-     */
-    'special_price_per_night'?: string;
-    /**
      * Hotel Room\'s base price per day
      * @type {string}
      * @memberof CreateRoomDetailDto
      */
     'base_price_per_day': string;
-    /**
-     * Hotel Room\'s special price per day
-     * @type {string}
-     * @memberof CreateRoomDetailDto
-     */
-    'special_price_per_day'?: string;
 }
 
 export const CreateRoomDetailDtoRoomTypeEnum = {
@@ -1189,6 +1171,61 @@ export const CreateRoomDetailDtoBedTypeEnum = {
 
 export type CreateRoomDetailDtoBedTypeEnum = typeof CreateRoomDetailDtoBedTypeEnum[keyof typeof CreateRoomDetailDtoBedTypeEnum];
 
+/**
+ * 
+ * @export
+ * @interface CreateRoomPriceHistoryDto
+ */
+export interface CreateRoomPriceHistoryDto {
+    /**
+     * Day that the price is applied
+     * @type {string}
+     * @memberof CreateRoomPriceHistoryDto
+     */
+    'name': string;
+    /**
+     * Description of the price history
+     * @type {string}
+     * @memberof CreateRoomPriceHistoryDto
+     */
+    'description'?: string;
+    /**
+     * ID of the room detail
+     * @type {string}
+     * @memberof CreateRoomPriceHistoryDto
+     */
+    'roomDetailId': string;
+    /**
+     * Hotel Room\'s base price per hour
+     * @type {string}
+     * @memberof CreateRoomPriceHistoryDto
+     */
+    'price_per_hour'?: string;
+    /**
+     * Hotel Room\'s base price per day
+     * @type {string}
+     * @memberof CreateRoomPriceHistoryDto
+     */
+    'price_per_day'?: string;
+    /**
+     * Hotel Room\'s base price per night
+     * @type {string}
+     * @memberof CreateRoomPriceHistoryDto
+     */
+    'price_per_night'?: string;
+    /**
+     * Effective from date
+     * @type {string}
+     * @memberof CreateRoomPriceHistoryDto
+     */
+    'effective_from': string;
+    /**
+     * Effective to date
+     * @type {string}
+     * @memberof CreateRoomPriceHistoryDto
+     */
+    'effective_to'?: string;
+}
 /**
  * 
  * @export
@@ -1259,10 +1296,10 @@ export interface DetailTranslationContent {
 export interface FilterAmenityDto {
     /**
      * 
-     * @type {string}
+     * @type {Array<string>}
      * @memberof FilterAmenityDto
      */
-    'types'?: FilterAmenityDtoTypesEnum;
+    'types'?: Array<FilterAmenityDtoTypesEnum>;
     /**
      * 
      * @type {string}
@@ -1642,7 +1679,7 @@ export interface GetTranslationsRequestDto {
      * @type {string}
      * @memberof GetTranslationsRequestDto
      */
-    'language': string;
+    'language'?: string;
 }
 /**
  * 
@@ -2656,6 +2693,103 @@ export interface RoomDetailPaginationResultDto {
 /**
  * 
  * @export
+ * @interface RoomPriceHistory
+ */
+export interface RoomPriceHistory {
+    /**
+     * 
+     * @type {string}
+     * @memberof RoomPriceHistory
+     */
+    'id': string;
+    /**
+     * Soft delete flag
+     * @type {boolean}
+     * @memberof RoomPriceHistory
+     */
+    'isDeleted': boolean;
+    /**
+     * Soft delete timestamp
+     * @type {string}
+     * @memberof RoomPriceHistory
+     */
+    'deletedAt': string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof RoomPriceHistory
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RoomPriceHistory
+     */
+    'updatedAt': string;
+    /**
+     * Name of the price history
+     * @type {string}
+     * @memberof RoomPriceHistory
+     */
+    'name': string;
+    /**
+     * Description of the price history
+     * @type {string}
+     * @memberof RoomPriceHistory
+     */
+    'description': string;
+    /**
+     * ID of the room detail this price history belongs to
+     * @type {string}
+     * @memberof RoomPriceHistory
+     */
+    'roomDetailId': string;
+    /**
+     * The associated room detail
+     * @type {RoomDetail}
+     * @memberof RoomPriceHistory
+     */
+    'roomDetail'?: RoomDetail;
+    /**
+     * Price per hour for the room
+     * @type {string}
+     * @memberof RoomPriceHistory
+     */
+    'price_per_hour': string;
+    /**
+     * Price per night for the room
+     * @type {string}
+     * @memberof RoomPriceHistory
+     */
+    'price_per_night': string;
+    /**
+     * Price per day for the room
+     * @type {string}
+     * @memberof RoomPriceHistory
+     */
+    'price_per_day': string;
+    /**
+     * Start date when this price becomes effective
+     * @type {string}
+     * @memberof RoomPriceHistory
+     */
+    'effective_from': string;
+    /**
+     * End date when this price expires
+     * @type {string}
+     * @memberof RoomPriceHistory
+     */
+    'effective_to': string;
+    /**
+     * Whether this price is currently being applied
+     * @type {boolean}
+     * @memberof RoomPriceHistory
+     */
+    'is_applied': boolean;
+}
+/**
+ * 
+ * @export
  * @interface SessionResponseDto
  */
 export interface SessionResponseDto {
@@ -3257,29 +3391,29 @@ export interface UpdateRoomDetailDto {
      */
     'base_price_per_hour'?: string;
     /**
-     * Hotel Room\'s special price per hour
-     * @type {string}
-     * @memberof UpdateRoomDetailDto
-     */
-    'special_price_per_hour'?: string;
-    /**
      * Hotel Room\'s base price per night
      * @type {string}
      * @memberof UpdateRoomDetailDto
      */
     'base_price_per_night'?: string;
     /**
-     * Hotel Room\'s special price per night
-     * @type {string}
-     * @memberof UpdateRoomDetailDto
-     */
-    'special_price_per_night'?: string;
-    /**
      * Hotel Room\'s base price per day
      * @type {string}
      * @memberof UpdateRoomDetailDto
      */
     'base_price_per_day'?: string;
+    /**
+     * Hotel Room\'s special price per hour
+     * @type {string}
+     * @memberof UpdateRoomDetailDto
+     */
+    'special_price_per_hour'?: string;
+    /**
+     * Hotel Room\'s special price per night
+     * @type {string}
+     * @memberof UpdateRoomDetailDto
+     */
+    'special_price_per_night'?: string;
     /**
      * Hotel Room\'s special price per day
      * @type {string}
@@ -3304,6 +3438,55 @@ export const UpdateRoomDetailDtoBedTypeEnum = {
 
 export type UpdateRoomDetailDtoBedTypeEnum = typeof UpdateRoomDetailDtoBedTypeEnum[keyof typeof UpdateRoomDetailDtoBedTypeEnum];
 
+/**
+ * 
+ * @export
+ * @interface UpdateRoomPriceHistoryDto
+ */
+export interface UpdateRoomPriceHistoryDto {
+    /**
+     * Day that the price is applied
+     * @type {string}
+     * @memberof UpdateRoomPriceHistoryDto
+     */
+    'name'?: string;
+    /**
+     * Description of the price history
+     * @type {string}
+     * @memberof UpdateRoomPriceHistoryDto
+     */
+    'description'?: string;
+    /**
+     * Hotel Room\'s base price per hour
+     * @type {string}
+     * @memberof UpdateRoomPriceHistoryDto
+     */
+    'price_per_hour'?: string;
+    /**
+     * Hotel Room\'s base price per day
+     * @type {string}
+     * @memberof UpdateRoomPriceHistoryDto
+     */
+    'price_per_day'?: string;
+    /**
+     * Hotel Room\'s base price per night
+     * @type {string}
+     * @memberof UpdateRoomPriceHistoryDto
+     */
+    'price_per_night'?: string;
+    /**
+     * Effective from date
+     * @type {string}
+     * @memberof UpdateRoomPriceHistoryDto
+     */
+    'effective_from'?: string;
+    /**
+     * Effective to date
+     * @type {string}
+     * @memberof UpdateRoomPriceHistoryDto
+     */
+    'effective_to'?: string;
+}
 /**
  * 
  * @export
@@ -8020,6 +8203,332 @@ export class RoomDetailsApi extends BaseAPI {
      */
     public roomDetailControllerUpdate(id: string, updateRoomDetailDto: UpdateRoomDetailDto, options?: RawAxiosRequestConfig) {
         return RoomDetailsApiFp(this.configuration).roomDetailControllerUpdate(id, updateRoomDetailDto, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * RoomPriceHistoriesApi - axios parameter creator
+ * @export
+ */
+export const RoomPriceHistoriesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Create a new room price history
+         * @param {CreateRoomPriceHistoryDto} createRoomPriceHistoryDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomPriceHistoryControllerCreate: async (createRoomPriceHistoryDto: CreateRoomPriceHistoryDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createRoomPriceHistoryDto' is not null or undefined
+            assertParamExists('roomPriceHistoryControllerCreate', 'createRoomPriceHistoryDto', createRoomPriceHistoryDto)
+            const localVarPath = `/api/room-price-histories`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createRoomPriceHistoryDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get all price histories for a specific room detail
+         * @param {string} roomDetailId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomPriceHistoryControllerFindManyByRoomDetail: async (roomDetailId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'roomDetailId' is not null or undefined
+            assertParamExists('roomPriceHistoryControllerFindManyByRoomDetail', 'roomDetailId', roomDetailId)
+            const localVarPath = `/api/room-price-histories/room-detail/{roomDetailId}`
+                .replace(`{${"roomDetailId"}}`, encodeURIComponent(String(roomDetailId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete a room price history
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomPriceHistoryControllerRemove: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('roomPriceHistoryControllerRemove', 'id', id)
+            const localVarPath = `/api/room-price-histories/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update a room price history
+         * @param {string} id 
+         * @param {UpdateRoomPriceHistoryDto} updateRoomPriceHistoryDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomPriceHistoryControllerUpdate: async (id: string, updateRoomPriceHistoryDto: UpdateRoomPriceHistoryDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('roomPriceHistoryControllerUpdate', 'id', id)
+            // verify required parameter 'updateRoomPriceHistoryDto' is not null or undefined
+            assertParamExists('roomPriceHistoryControllerUpdate', 'updateRoomPriceHistoryDto', updateRoomPriceHistoryDto)
+            const localVarPath = `/api/room-price-histories/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateRoomPriceHistoryDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * RoomPriceHistoriesApi - functional programming interface
+ * @export
+ */
+export const RoomPriceHistoriesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = RoomPriceHistoriesApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Create a new room price history
+         * @param {CreateRoomPriceHistoryDto} createRoomPriceHistoryDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async roomPriceHistoryControllerCreate(createRoomPriceHistoryDto: CreateRoomPriceHistoryDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoomPriceHistory>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.roomPriceHistoryControllerCreate(createRoomPriceHistoryDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoomPriceHistoriesApi.roomPriceHistoryControllerCreate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get all price histories for a specific room detail
+         * @param {string} roomDetailId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async roomPriceHistoryControllerFindManyByRoomDetail(roomDetailId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RoomPriceHistory>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.roomPriceHistoryControllerFindManyByRoomDetail(roomDetailId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoomPriceHistoriesApi.roomPriceHistoryControllerFindManyByRoomDetail']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Delete a room price history
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async roomPriceHistoryControllerRemove(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.roomPriceHistoryControllerRemove(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoomPriceHistoriesApi.roomPriceHistoryControllerRemove']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Update a room price history
+         * @param {string} id 
+         * @param {UpdateRoomPriceHistoryDto} updateRoomPriceHistoryDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async roomPriceHistoryControllerUpdate(id: string, updateRoomPriceHistoryDto: UpdateRoomPriceHistoryDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoomPriceHistory>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.roomPriceHistoryControllerUpdate(id, updateRoomPriceHistoryDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoomPriceHistoriesApi.roomPriceHistoryControllerUpdate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * RoomPriceHistoriesApi - factory interface
+ * @export
+ */
+export const RoomPriceHistoriesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = RoomPriceHistoriesApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Create a new room price history
+         * @param {CreateRoomPriceHistoryDto} createRoomPriceHistoryDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomPriceHistoryControllerCreate(createRoomPriceHistoryDto: CreateRoomPriceHistoryDto, options?: RawAxiosRequestConfig): AxiosPromise<RoomPriceHistory> {
+            return localVarFp.roomPriceHistoryControllerCreate(createRoomPriceHistoryDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get all price histories for a specific room detail
+         * @param {string} roomDetailId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomPriceHistoryControllerFindManyByRoomDetail(roomDetailId: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<RoomPriceHistory>> {
+            return localVarFp.roomPriceHistoryControllerFindManyByRoomDetail(roomDetailId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete a room price history
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomPriceHistoryControllerRemove(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.roomPriceHistoryControllerRemove(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update a room price history
+         * @param {string} id 
+         * @param {UpdateRoomPriceHistoryDto} updateRoomPriceHistoryDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomPriceHistoryControllerUpdate(id: string, updateRoomPriceHistoryDto: UpdateRoomPriceHistoryDto, options?: RawAxiosRequestConfig): AxiosPromise<RoomPriceHistory> {
+            return localVarFp.roomPriceHistoryControllerUpdate(id, updateRoomPriceHistoryDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * RoomPriceHistoriesApi - object-oriented interface
+ * @export
+ * @class RoomPriceHistoriesApi
+ * @extends {BaseAPI}
+ */
+export class RoomPriceHistoriesApi extends BaseAPI {
+    /**
+     * 
+     * @summary Create a new room price history
+     * @param {CreateRoomPriceHistoryDto} createRoomPriceHistoryDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoomPriceHistoriesApi
+     */
+    public roomPriceHistoryControllerCreate(createRoomPriceHistoryDto: CreateRoomPriceHistoryDto, options?: RawAxiosRequestConfig) {
+        return RoomPriceHistoriesApiFp(this.configuration).roomPriceHistoryControllerCreate(createRoomPriceHistoryDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get all price histories for a specific room detail
+     * @param {string} roomDetailId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoomPriceHistoriesApi
+     */
+    public roomPriceHistoryControllerFindManyByRoomDetail(roomDetailId: string, options?: RawAxiosRequestConfig) {
+        return RoomPriceHistoriesApiFp(this.configuration).roomPriceHistoryControllerFindManyByRoomDetail(roomDetailId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete a room price history
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoomPriceHistoriesApi
+     */
+    public roomPriceHistoryControllerRemove(id: string, options?: RawAxiosRequestConfig) {
+        return RoomPriceHistoriesApiFp(this.configuration).roomPriceHistoryControllerRemove(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update a room price history
+     * @param {string} id 
+     * @param {UpdateRoomPriceHistoryDto} updateRoomPriceHistoryDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoomPriceHistoriesApi
+     */
+    public roomPriceHistoryControllerUpdate(id: string, updateRoomPriceHistoryDto: UpdateRoomPriceHistoryDto, options?: RawAxiosRequestConfig) {
+        return RoomPriceHistoriesApiFp(this.configuration).roomPriceHistoryControllerUpdate(id, updateRoomPriceHistoryDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
