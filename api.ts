@@ -3783,6 +3783,25 @@ export interface VerifyEmailDto {
      */
     'code': string;
 }
+/**
+ * 
+ * @export
+ * @interface VerifyEmailOTP
+ */
+export interface VerifyEmailOTP {
+    /**
+     * Email
+     * @type {string}
+     * @memberof VerifyEmailOTP
+     */
+    'email': string;
+    /**
+     * Verification code
+     * @type {string}
+     * @memberof VerifyEmailOTP
+     */
+    'code': string;
+}
 
 /**
  * AmenitiesApi - axios parameter creator
@@ -9280,6 +9299,42 @@ export const VerificationApiAxiosParamCreator = function (configuration?: Config
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Verify an email OTP
+         * @param {VerifyEmailOTP} verifyEmailOTP 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        verificationControllerVerifyEmailOTP: async (verifyEmailOTP: VerifyEmailOTP, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'verifyEmailOTP' is not null or undefined
+            assertParamExists('verificationControllerVerifyEmailOTP', 'verifyEmailOTP', verifyEmailOTP)
+            const localVarPath = `/api/verification/verify-email-otp`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(verifyEmailOTP, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -9303,6 +9358,19 @@ export const VerificationApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['VerificationApi.verificationControllerVerifyCode']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @summary Verify an email OTP
+         * @param {VerifyEmailOTP} verifyEmailOTP 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async verificationControllerVerifyEmailOTP(verifyEmailOTP: VerifyEmailOTP, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VerifyCodeResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.verificationControllerVerifyEmailOTP(verifyEmailOTP, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['VerificationApi.verificationControllerVerifyEmailOTP']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -9322,6 +9390,16 @@ export const VerificationApiFactory = function (configuration?: Configuration, b
          */
         verificationControllerVerifyCode(verifyCodeDto: VerifyCodeDto, options?: RawAxiosRequestConfig): AxiosPromise<VerifyCodeResponseDto> {
             return localVarFp.verificationControllerVerifyCode(verifyCodeDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Verify an email OTP
+         * @param {VerifyEmailOTP} verifyEmailOTP 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        verificationControllerVerifyEmailOTP(verifyEmailOTP: VerifyEmailOTP, options?: RawAxiosRequestConfig): AxiosPromise<VerifyCodeResponseDto> {
+            return localVarFp.verificationControllerVerifyEmailOTP(verifyEmailOTP, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -9343,6 +9421,18 @@ export class VerificationApi extends BaseAPI {
      */
     public verificationControllerVerifyCode(verifyCodeDto: VerifyCodeDto, options?: RawAxiosRequestConfig) {
         return VerificationApiFp(this.configuration).verificationControllerVerifyCode(verifyCodeDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Verify an email OTP
+     * @param {VerifyEmailOTP} verifyEmailOTP 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VerificationApi
+     */
+    public verificationControllerVerifyEmailOTP(verifyEmailOTP: VerifyEmailOTP, options?: RawAxiosRequestConfig) {
+        return VerificationApiFp(this.configuration).verificationControllerVerifyEmailOTP(verifyEmailOTP, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
