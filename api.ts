@@ -1136,6 +1136,12 @@ export interface CreateRoomDetailDto {
      */
     'max_children': number;
     /**
+     * Room area(m2)
+     * @type {number}
+     * @memberof CreateRoomDetailDto
+     */
+    'area': number;
+    /**
      * Hotel Room\'s base price per hour
      * @type {string}
      * @memberof CreateRoomDetailDto
@@ -2569,6 +2575,12 @@ export interface RoomDetail {
      */
     'bed_type': RoomDetailBedTypeEnum;
     /**
+     * Room area in square meters
+     * @type {number}
+     * @memberof RoomDetail
+     */
+    'area': number;
+    /**
      * 
      * @type {Array<Amenity>}
      * @memberof RoomDetail
@@ -3384,6 +3396,12 @@ export interface UpdateRoomDetailDto {
      * @memberof UpdateRoomDetailDto
      */
     'max_children'?: number;
+    /**
+     * Room area(m2)
+     * @type {number}
+     * @memberof UpdateRoomDetailDto
+     */
+    'area'?: number;
     /**
      * Hotel Room\'s base price per hour
      * @type {string}
