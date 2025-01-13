@@ -45,6 +45,34 @@ export interface AddTranslationDto {
 /**
  * 
  * @export
+ * @interface AdminUpdateUserDto
+ */
+export interface AdminUpdateUserDto {
+    /**
+     * The user\'s role.
+     * @type {string}
+     * @memberof AdminUpdateUserDto
+     */
+    'role': AdminUpdateUserDtoRoleEnum;
+    /**
+     * Filter by branch ID
+     * @type {string}
+     * @memberof AdminUpdateUserDto
+     */
+    'branchId'?: string;
+}
+
+export const AdminUpdateUserDtoRoleEnum = {
+    User: 'USER',
+    Staff: 'STAFF',
+    Admin: 'ADMIN'
+} as const;
+
+export type AdminUpdateUserDtoRoleEnum = typeof AdminUpdateUserDtoRoleEnum[keyof typeof AdminUpdateUserDtoRoleEnum];
+
+/**
+ * 
+ * @export
  * @interface AmenitiesPaginationResultDto
  */
 export interface AmenitiesPaginationResultDto {
@@ -130,6 +158,114 @@ export const AmenityTypeEnum = {
 } as const;
 
 export type AmenityTypeEnum = typeof AmenityTypeEnum[keyof typeof AmenityTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface BlockActivity
+ */
+export interface BlockActivity {
+    /**
+     * 
+     * @type {string}
+     * @memberof BlockActivity
+     */
+    'id': string;
+    /**
+     * Soft delete flag
+     * @type {boolean}
+     * @memberof BlockActivity
+     */
+    'isDeleted': boolean;
+    /**
+     * Soft delete timestamp
+     * @type {string}
+     * @memberof BlockActivity
+     */
+    'deletedAt': string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlockActivity
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof BlockActivity
+     */
+    'updatedAt': string;
+    /**
+     * ID of user who was blocked/unblocked
+     * @type {string}
+     * @memberof BlockActivity
+     */
+    'userId': string;
+    /**
+     * Details of user who was blocked/unblocked
+     * @type {User}
+     * @memberof BlockActivity
+     */
+    'user': User;
+    /**
+     * ID of user who performed the block/unblock action
+     * @type {string}
+     * @memberof BlockActivity
+     */
+    'blockedBy': string;
+    /**
+     * Details of user who performed the block/unblock action
+     * @type {User}
+     * @memberof BlockActivity
+     */
+    'blockedByUser': User;
+    /**
+     * Type of action performed (BLOCK/UNBLOCK)
+     * @type {string}
+     * @memberof BlockActivity
+     */
+    'action': BlockActivityActionEnum;
+    /**
+     * Reason for the block/unblock action
+     * @type {string}
+     * @memberof BlockActivity
+     */
+    'reason': string;
+}
+
+export const BlockActivityActionEnum = {
+    Block: 'BLOCK',
+    Unblock: 'UNBLOCK'
+} as const;
+
+export type BlockActivityActionEnum = typeof BlockActivityActionEnum[keyof typeof BlockActivityActionEnum];
+
+/**
+ * 
+ * @export
+ * @interface BlockOrUnblockUserDto
+ */
+export interface BlockOrUnblockUserDto {
+    /**
+     * The reason for blocking/unblocking the user
+     * @type {string}
+     * @memberof BlockOrUnblockUserDto
+     */
+    'reason': string;
+    /**
+     * The action to perform (BLOCK or UNBLOCK)
+     * @type {string}
+     * @memberof BlockOrUnblockUserDto
+     */
+    'action': BlockOrUnblockUserDtoActionEnum;
+}
+
+export const BlockOrUnblockUserDtoActionEnum = {
+    Block: 'BLOCK',
+    Unblock: 'UNBLOCK'
+} as const;
+
+export type BlockOrUnblockUserDtoActionEnum = typeof BlockOrUnblockUserDtoActionEnum[keyof typeof BlockOrUnblockUserDtoActionEnum];
 
 /**
  * 
@@ -1266,6 +1402,19 @@ export interface CreateUserDto {
 /**
  * 
  * @export
+ * @interface DeleteUserDto
+ */
+export interface DeleteUserDto {
+    /**
+     * Reason for deleting the user
+     * @type {string}
+     * @memberof DeleteUserDto
+     */
+    'reason': string;
+}
+/**
+ * 
+ * @export
  * @interface DetailTranslationContent
  */
 export interface DetailTranslationContent {
@@ -1663,7 +1812,31 @@ export interface FilterUserDto {
      * @type {string}
      * @memberof FilterUserDto
      */
+    'keyword'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FilterUserDto
+     */
     'roles'?: FilterUserDtoRolesEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FilterUserDto
+     */
+    'is_blocked'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FilterUserDto
+     */
+    'is_active'?: boolean;
+    /**
+     * Filter by branch ID
+     * @type {string}
+     * @memberof FilterUserDto
+     */
+    'branchId'?: string;
 }
 
 export const FilterUserDtoRolesEnum = {
@@ -2349,7 +2522,7 @@ export interface QueryUsersDto {
      */
     'filters'?: string;
     /**
-     * JSON string of SortUserDto[]
+     * JSON string of SortUserDto
      * @type {string}
      * @memberof QueryUsersDto
      */
@@ -3590,6 +3763,12 @@ export interface User {
      * @type {string}
      * @memberof User
      */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof User
+     */
     'email': string;
     /**
      * 
@@ -3597,6 +3776,24 @@ export interface User {
      * @memberof User
      */
     'phone': string;
+    /**
+     * The user birth date
+     * @type {string}
+     * @memberof User
+     */
+    'birth_date'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof User
+     */
+    'gender'?: UserGenderEnum;
+    /**
+     * User avatar
+     * @type {Image}
+     * @memberof User
+     */
+    'avatar'?: Image;
     /**
      * 
      * @type {boolean}
@@ -3626,15 +3823,15 @@ export interface User {
      * @type {string}
      * @memberof User
      */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof User
-     */
     'role': UserRoleEnum;
 }
 
+export const UserGenderEnum = {
+    Male: 'MALE',
+    Female: 'FEMALE'
+} as const;
+
+export type UserGenderEnum = typeof UserGenderEnum[keyof typeof UserGenderEnum];
 export const UserIdentifierTypeEnum = {
     Email: 'EMAIL',
     Phone: 'PHONE'
@@ -3648,6 +3845,196 @@ export const UserRoleEnum = {
 } as const;
 
 export type UserRoleEnum = typeof UserRoleEnum[keyof typeof UserRoleEnum];
+
+/**
+ * 
+ * @export
+ * @interface UserDetail
+ */
+export interface UserDetail {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDetail
+     */
+    'id': string;
+    /**
+     * Soft delete flag
+     * @type {boolean}
+     * @memberof UserDetail
+     */
+    'isDeleted': boolean;
+    /**
+     * Soft delete timestamp
+     * @type {string}
+     * @memberof UserDetail
+     */
+    'deletedAt': string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDetail
+     */
+    'createdAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDetail
+     */
+    'updatedAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDetail
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDetail
+     */
+    'email': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDetail
+     */
+    'phone': string;
+    /**
+     * The user birth date
+     * @type {string}
+     * @memberof UserDetail
+     */
+    'birth_date'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDetail
+     */
+    'gender'?: UserDetailGenderEnum;
+    /**
+     * User avatar
+     * @type {Image}
+     * @memberof UserDetail
+     */
+    'avatar'?: Image;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserDetail
+     */
+    'verified_email': boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserDetail
+     */
+    'verified_phone': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDetail
+     */
+    'identifier_type': UserDetailIdentifierTypeEnum;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UserDetail
+     */
+    'is_blocked': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserDetail
+     */
+    'role': UserDetailRoleEnum;
+    /**
+     * Date when user was blocked
+     * @type {string}
+     * @memberof UserDetail
+     */
+    'blocked_at'?: string;
+    /**
+     * Reason for blocking the user
+     * @type {string}
+     * @memberof UserDetail
+     */
+    'blocked_reason'?: string;
+    /**
+     * Reason for deleting the user
+     * @type {string}
+     * @memberof UserDetail
+     */
+    'deleted_reason'?: string;
+    /**
+     * Stored identity (email/phone) before deletion
+     * @type {string}
+     * @memberof UserDetail
+     */
+    'deleted_identity'?: string;
+    /**
+     * Whether the user is active
+     * @type {boolean}
+     * @memberof UserDetail
+     */
+    'is_active': boolean;
+    /**
+     * ID of the branch where user works (for staff)
+     * @type {string}
+     * @memberof UserDetail
+     */
+    'branchId'?: string;
+    /**
+     * Branch details where user works
+     * @type {Branch}
+     * @memberof UserDetail
+     */
+    'working_at'?: Branch;
+    /**
+     * User bookings history
+     * @type {Array<Booking>}
+     * @memberof UserDetail
+     */
+    'bookings': Array<Booking>;
+    /**
+     * User loyalty points
+     * @type {number}
+     * @memberof UserDetail
+     */
+    'loyalty_points': number;
+    /**
+     * History of blocks received by user
+     * @type {Array<BlockActivity>}
+     * @memberof UserDetail
+     */
+    'blockHistory': Array<BlockActivity>;
+    /**
+     * History of blocks given by user
+     * @type {Array<BlockActivity>}
+     * @memberof UserDetail
+     */
+    'blockedByMe': Array<BlockActivity>;
+}
+
+export const UserDetailGenderEnum = {
+    Male: 'MALE',
+    Female: 'FEMALE'
+} as const;
+
+export type UserDetailGenderEnum = typeof UserDetailGenderEnum[keyof typeof UserDetailGenderEnum];
+export const UserDetailIdentifierTypeEnum = {
+    Email: 'EMAIL',
+    Phone: 'PHONE'
+} as const;
+
+export type UserDetailIdentifierTypeEnum = typeof UserDetailIdentifierTypeEnum[keyof typeof UserDetailIdentifierTypeEnum];
+export const UserDetailRoleEnum = {
+    User: 'USER',
+    Staff: 'STAFF',
+    Admin: 'ADMIN'
+} as const;
+
+export type UserDetailRoleEnum = typeof UserDetailRoleEnum[keyof typeof UserDetailRoleEnum];
 
 /**
  * 
@@ -9314,10 +9701,164 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
     return {
         /**
          * 
+         * @summary Get detailed user information (Admin only)
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerAdminGetUserDetail: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('usersControllerAdminGetUserDetail', 'id', id)
+            const localVarPath = `/api/users/admin/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update user information (Admin only)
+         * @param {string} id 
+         * @param {AdminUpdateUserDto} adminUpdateUserDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerAdminUpdateUser: async (id: string, adminUpdateUserDto: AdminUpdateUserDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('usersControllerAdminUpdateUser', 'id', id)
+            // verify required parameter 'adminUpdateUserDto' is not null or undefined
+            assertParamExists('usersControllerAdminUpdateUser', 'adminUpdateUserDto', adminUpdateUserDto)
+            const localVarPath = `/api/users/admin/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminUpdateUserDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Block or unblock a user
+         * @param {string} id 
+         * @param {BlockOrUnblockUserDto} blockOrUnblockUserDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerBlockUser: async (id: string, blockOrUnblockUserDto: BlockOrUnblockUserDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('usersControllerBlockUser', 'id', id)
+            // verify required parameter 'blockOrUnblockUserDto' is not null or undefined
+            assertParamExists('usersControllerBlockUser', 'blockOrUnblockUserDto', blockOrUnblockUserDto)
+            const localVarPath = `/api/users/block-action/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(blockOrUnblockUserDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Soft delete a user (Admin only)
+         * @param {string} id 
+         * @param {DeleteUserDto} deleteUserDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerDeleteUser: async (id: string, deleteUserDto: DeleteUserDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('usersControllerDeleteUser', 'id', id)
+            // verify required parameter 'deleteUserDto' is not null or undefined
+            assertParamExists('usersControllerDeleteUser', 'deleteUserDto', deleteUserDto)
+            const localVarPath = `/api/users/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(deleteUserDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {number} [page] 
          * @param {number} [pageSize] 
          * @param {string} [filters] JSON string of FilterUserDto
-         * @param {string} [sort] JSON string of SortUserDto[]
+         * @param {string} [sort] JSON string of SortUserDto
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -9361,6 +9902,40 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Restore a deleted user (Admin only)
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerRestoreUser: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('usersControllerRestoreUser', 'id', id)
+            const localVarPath = `/api/users/{id}/restore`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -9373,10 +9948,65 @@ export const UsersApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Get detailed user information (Admin only)
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async usersControllerAdminGetUserDetail(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.usersControllerAdminGetUserDetail(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UsersApi.usersControllerAdminGetUserDetail']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Update user information (Admin only)
+         * @param {string} id 
+         * @param {AdminUpdateUserDto} adminUpdateUserDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async usersControllerAdminUpdateUser(id: string, adminUpdateUserDto: AdminUpdateUserDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDetail>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.usersControllerAdminUpdateUser(id, adminUpdateUserDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UsersApi.usersControllerAdminUpdateUser']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Block or unblock a user
+         * @param {string} id 
+         * @param {BlockOrUnblockUserDto} blockOrUnblockUserDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async usersControllerBlockUser(id: string, blockOrUnblockUserDto: BlockOrUnblockUserDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.usersControllerBlockUser(id, blockOrUnblockUserDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UsersApi.usersControllerBlockUser']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Soft delete a user (Admin only)
+         * @param {string} id 
+         * @param {DeleteUserDto} deleteUserDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async usersControllerDeleteUser(id: string, deleteUserDto: DeleteUserDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.usersControllerDeleteUser(id, deleteUserDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UsersApi.usersControllerDeleteUser']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {number} [page] 
          * @param {number} [pageSize] 
          * @param {string} [filters] JSON string of FilterUserDto
-         * @param {string} [sort] JSON string of SortUserDto[]
+         * @param {string} [sort] JSON string of SortUserDto
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -9384,6 +10014,19 @@ export const UsersApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.usersControllerGetUsers(page, pageSize, filters, sort, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UsersApi.usersControllerGetUsers']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Restore a deleted user (Admin only)
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async usersControllerRestoreUser(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.usersControllerRestoreUser(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UsersApi.usersControllerRestoreUser']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -9398,15 +10041,68 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
     return {
         /**
          * 
+         * @summary Get detailed user information (Admin only)
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerAdminGetUserDetail(id: string, options?: RawAxiosRequestConfig): AxiosPromise<UserDetail> {
+            return localVarFp.usersControllerAdminGetUserDetail(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update user information (Admin only)
+         * @param {string} id 
+         * @param {AdminUpdateUserDto} adminUpdateUserDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerAdminUpdateUser(id: string, adminUpdateUserDto: AdminUpdateUserDto, options?: RawAxiosRequestConfig): AxiosPromise<UserDetail> {
+            return localVarFp.usersControllerAdminUpdateUser(id, adminUpdateUserDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Block or unblock a user
+         * @param {string} id 
+         * @param {BlockOrUnblockUserDto} blockOrUnblockUserDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerBlockUser(id: string, blockOrUnblockUserDto: BlockOrUnblockUserDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.usersControllerBlockUser(id, blockOrUnblockUserDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Soft delete a user (Admin only)
+         * @param {string} id 
+         * @param {DeleteUserDto} deleteUserDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerDeleteUser(id: string, deleteUserDto: DeleteUserDto, options?: RawAxiosRequestConfig): AxiosPromise<User> {
+            return localVarFp.usersControllerDeleteUser(id, deleteUserDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {number} [page] 
          * @param {number} [pageSize] 
          * @param {string} [filters] JSON string of FilterUserDto
-         * @param {string} [sort] JSON string of SortUserDto[]
+         * @param {string} [sort] JSON string of SortUserDto
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         usersControllerGetUsers(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig): AxiosPromise<UsersPaginationResultDto> {
             return localVarFp.usersControllerGetUsers(page, pageSize, filters, sort, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Restore a deleted user (Admin only)
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersControllerRestoreUser(id: string, options?: RawAxiosRequestConfig): AxiosPromise<User> {
+            return localVarFp.usersControllerRestoreUser(id, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -9420,16 +10116,79 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
 export class UsersApi extends BaseAPI {
     /**
      * 
+     * @summary Get detailed user information (Admin only)
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public usersControllerAdminGetUserDetail(id: string, options?: RawAxiosRequestConfig) {
+        return UsersApiFp(this.configuration).usersControllerAdminGetUserDetail(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update user information (Admin only)
+     * @param {string} id 
+     * @param {AdminUpdateUserDto} adminUpdateUserDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public usersControllerAdminUpdateUser(id: string, adminUpdateUserDto: AdminUpdateUserDto, options?: RawAxiosRequestConfig) {
+        return UsersApiFp(this.configuration).usersControllerAdminUpdateUser(id, adminUpdateUserDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Block or unblock a user
+     * @param {string} id 
+     * @param {BlockOrUnblockUserDto} blockOrUnblockUserDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public usersControllerBlockUser(id: string, blockOrUnblockUserDto: BlockOrUnblockUserDto, options?: RawAxiosRequestConfig) {
+        return UsersApiFp(this.configuration).usersControllerBlockUser(id, blockOrUnblockUserDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Soft delete a user (Admin only)
+     * @param {string} id 
+     * @param {DeleteUserDto} deleteUserDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public usersControllerDeleteUser(id: string, deleteUserDto: DeleteUserDto, options?: RawAxiosRequestConfig) {
+        return UsersApiFp(this.configuration).usersControllerDeleteUser(id, deleteUserDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {number} [page] 
      * @param {number} [pageSize] 
      * @param {string} [filters] JSON string of FilterUserDto
-     * @param {string} [sort] JSON string of SortUserDto[]
+     * @param {string} [sort] JSON string of SortUserDto
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersApi
      */
     public usersControllerGetUsers(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig) {
         return UsersApiFp(this.configuration).usersControllerGetUsers(page, pageSize, filters, sort, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Restore a deleted user (Admin only)
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public usersControllerRestoreUser(id: string, options?: RawAxiosRequestConfig) {
+        return UsersApiFp(this.configuration).usersControllerRestoreUser(id, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
