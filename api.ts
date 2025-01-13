@@ -2652,6 +2652,12 @@ export interface RoomDetail {
      * @memberof RoomDetail
      */
     'roomPriceHistories'?: Array<RoomPriceHistory>;
+    /**
+     * Whether this room is available for booking
+     * @type {boolean}
+     * @memberof RoomDetail
+     */
+    'is_available': boolean;
 }
 
 export const RoomDetailRoomTypeEnum = {
@@ -3237,12 +3243,6 @@ export interface UpdateHotelRoomDto {
      * @memberof UpdateHotelRoomDto
      */
     'status'?: UpdateHotelRoomDtoStatusEnum;
-    /**
-     * ID of the room detail
-     * @type {string}
-     * @memberof UpdateHotelRoomDto
-     */
-    'detailId'?: string;
 }
 
 export const UpdateHotelRoomDtoStatusEnum = {
@@ -8701,6 +8701,40 @@ export const RoomsApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @summary ADMIN - STAFF Get all rooms by branch ID
+         * @param {string} branchId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomControllerFindManyByBranchId: async (branchId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'branchId' is not null or undefined
+            assertParamExists('roomControllerFindManyByBranchId', 'branchId', branchId)
+            const localVarPath = `/api/rooms/{branchId}`
+                .replace(`{${"branchId"}}`, encodeURIComponent(String(branchId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get a room by id
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -8894,6 +8928,19 @@ export const RoomsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary ADMIN - STAFF Get all rooms by branch ID
+         * @param {string} branchId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async roomControllerFindManyByBranchId(branchId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<HotelRoom>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.roomControllerFindManyByBranchId(branchId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoomsApi.roomControllerFindManyByBranchId']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get a room by id
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -8989,6 +9036,16 @@ export const RoomsApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
+         * @summary ADMIN - STAFF Get all rooms by branch ID
+         * @param {string} branchId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomControllerFindManyByBranchId(branchId: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<HotelRoom>> {
+            return localVarFp.roomControllerFindManyByBranchId(branchId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get a room by id
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -9074,6 +9131,18 @@ export class RoomsApi extends BaseAPI {
      */
     public roomControllerFindMany(page?: number, pageSize?: number, filters?: string, sort?: string, options?: RawAxiosRequestConfig) {
         return RoomsApiFp(this.configuration).roomControllerFindMany(page, pageSize, filters, sort, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary ADMIN - STAFF Get all rooms by branch ID
+     * @param {string} branchId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoomsApi
+     */
+    public roomControllerFindManyByBranchId(branchId: string, options?: RawAxiosRequestConfig) {
+        return RoomsApiFp(this.configuration).roomControllerFindManyByBranchId(branchId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
