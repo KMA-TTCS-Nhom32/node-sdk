@@ -1792,7 +1792,19 @@ export interface HotelRoom {
      * @type {RoomDetail}
      * @memberof HotelRoom
      */
-    'detail': RoomDetail;
+    'detail'?: RoomDetail;
+    /**
+     * List of bookings
+     * @type {Array<Booking>}
+     * @memberof HotelRoom
+     */
+    'bookings'?: Array<Booking>;
+    /**
+     * 
+     * @type {HotelRoomCount}
+     * @memberof HotelRoom
+     */
+    '_count'?: HotelRoomCount;
 }
 
 export const HotelRoomStatusEnum = {
@@ -1804,6 +1816,19 @@ export const HotelRoomStatusEnum = {
 
 export type HotelRoomStatusEnum = typeof HotelRoomStatusEnum[keyof typeof HotelRoomStatusEnum];
 
+/**
+ * Count of bookings
+ * @export
+ * @interface HotelRoomCount
+ */
+export interface HotelRoomCount {
+    /**
+     * 
+     * @type {number}
+     * @memberof HotelRoomCount
+     */
+    'bookings'?: number;
+}
 /**
  * 
  * @export
@@ -1860,6 +1885,19 @@ export interface ImageUploadResponseDto {
      * @memberof ImageUploadResponseDto
      */
     'publicId': string;
+}
+/**
+ * 
+ * @export
+ * @interface ImmediateDeleteRoomsDto
+ */
+export interface ImmediateDeleteRoomsDto {
+    /**
+     * List of room ids to delete
+     * @type {Array<string>}
+     * @memberof ImmediateDeleteRoomsDto
+     */
+    'ids': Array<string>;
 }
 /**
  * 
@@ -8709,7 +8747,7 @@ export const RoomsApiAxiosParamCreator = function (configuration?: Configuration
         roomControllerFindManyByBranchId: async (branchId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'branchId' is not null or undefined
             assertParamExists('roomControllerFindManyByBranchId', 'branchId', branchId)
-            const localVarPath = `/api/rooms/{branchId}`
+            const localVarPath = `/api/rooms/in-branch/{branchId}`
                 .replace(`{${"branchId"}}`, encodeURIComponent(String(branchId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -8761,6 +8799,42 @@ export const RoomsApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary ADMIN - Delete rooms permanently
+         * @param {ImmediateDeleteRoomsDto} immediateDeleteRoomsDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomControllerPermanentDelete: async (immediateDeleteRoomsDto: ImmediateDeleteRoomsDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'immediateDeleteRoomsDto' is not null or undefined
+            assertParamExists('roomControllerPermanentDelete', 'immediateDeleteRoomsDto', immediateDeleteRoomsDto)
+            const localVarPath = `/api/rooms/permanent-delete`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(immediateDeleteRoomsDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -8954,6 +9028,19 @@ export const RoomsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary ADMIN - Delete rooms permanently
+         * @param {ImmediateDeleteRoomsDto} immediateDeleteRoomsDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async roomControllerPermanentDelete(immediateDeleteRoomsDto: ImmediateDeleteRoomsDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.roomControllerPermanentDelete(immediateDeleteRoomsDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['RoomsApi.roomControllerPermanentDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Soft delete a room
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -9056,6 +9143,16 @@ export const RoomsApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
+         * @summary ADMIN - Delete rooms permanently
+         * @param {ImmediateDeleteRoomsDto} immediateDeleteRoomsDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        roomControllerPermanentDelete(immediateDeleteRoomsDto: ImmediateDeleteRoomsDto, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.roomControllerPermanentDelete(immediateDeleteRoomsDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Soft delete a room
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -9155,6 +9252,18 @@ export class RoomsApi extends BaseAPI {
      */
     public roomControllerFindOne(id: string, options?: RawAxiosRequestConfig) {
         return RoomsApiFp(this.configuration).roomControllerFindOne(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary ADMIN - Delete rooms permanently
+     * @param {ImmediateDeleteRoomsDto} immediateDeleteRoomsDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RoomsApi
+     */
+    public roomControllerPermanentDelete(immediateDeleteRoomsDto: ImmediateDeleteRoomsDto, options?: RawAxiosRequestConfig) {
+        return RoomsApiFp(this.configuration).roomControllerPermanentDelete(immediateDeleteRoomsDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
