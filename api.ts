@@ -1974,10 +1974,10 @@ export interface HotelRoom {
     'bookings'?: Array<Booking>;
     /**
      * 
-     * @type {HotelRoomCount}
+     * @type {UserCount}
      * @memberof HotelRoom
      */
-    '_count'?: HotelRoomCount;
+    '_count'?: UserCount;
 }
 
 export const HotelRoomStatusEnum = {
@@ -1989,19 +1989,6 @@ export const HotelRoomStatusEnum = {
 
 export type HotelRoomStatusEnum = typeof HotelRoomStatusEnum[keyof typeof HotelRoomStatusEnum];
 
-/**
- * Count of bookings
- * @export
- * @interface HotelRoomCount
- */
-export interface HotelRoomCount {
-    /**
-     * 
-     * @type {number}
-     * @memberof HotelRoomCount
-     */
-    'bookings'?: number;
-}
 /**
  * 
  * @export
@@ -3824,6 +3811,18 @@ export interface User {
      * @memberof User
      */
     'role': UserRoleEnum;
+    /**
+     * Branch details where user works
+     * @type {Branch}
+     * @memberof User
+     */
+    'working_at'?: Branch;
+    /**
+     * 
+     * @type {UserCount}
+     * @memberof User
+     */
+    '_count'?: UserCount;
 }
 
 export const UserGenderEnum = {
@@ -3846,6 +3845,19 @@ export const UserRoleEnum = {
 
 export type UserRoleEnum = typeof UserRoleEnum[keyof typeof UserRoleEnum];
 
+/**
+ * Count of bookings
+ * @export
+ * @interface UserCount
+ */
+export interface UserCount {
+    /**
+     * 
+     * @type {number}
+     * @memberof UserCount
+     */
+    'bookings'?: number;
+}
 /**
  * 
  * @export
@@ -3949,6 +3961,18 @@ export interface UserDetail {
      */
     'role': UserDetailRoleEnum;
     /**
+     * Branch details where user works
+     * @type {Branch}
+     * @memberof UserDetail
+     */
+    'working_at'?: Branch;
+    /**
+     * 
+     * @type {UserCount}
+     * @memberof UserDetail
+     */
+    '_count'?: UserCount;
+    /**
      * Date when user was blocked
      * @type {string}
      * @memberof UserDetail
@@ -3984,12 +4008,6 @@ export interface UserDetail {
      * @memberof UserDetail
      */
     'branchId'?: string;
-    /**
-     * Branch details where user works
-     * @type {Branch}
-     * @memberof UserDetail
-     */
-    'working_at'?: Branch;
     /**
      * User bookings history
      * @type {Array<Booking>}
