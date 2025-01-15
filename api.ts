@@ -1783,6 +1783,36 @@ export interface FilterRoomDetailDto {
      * @memberof FilterRoomDetailDto
      */
     'maxPrice'?: object;
+    /**
+     * Filter by start date
+     * @type {string}
+     * @memberof FilterRoomDetailDto
+     */
+    'startDate'?: string;
+    /**
+     * Filter by end date
+     * @type {string}
+     * @memberof FilterRoomDetailDto
+     */
+    'endDate'?: string;
+    /**
+     * Filter by start time
+     * @type {string}
+     * @memberof FilterRoomDetailDto
+     */
+    'startTime'?: string;
+    /**
+     * Filter by end time
+     * @type {string}
+     * @memberof FilterRoomDetailDto
+     */
+    'endTime'?: string;
+    /**
+     * Filter by booking type
+     * @type {string}
+     * @memberof FilterRoomDetailDto
+     */
+    'bookingType'?: FilterRoomDetailDtoBookingTypeEnum;
 }
 
 export const FilterRoomDetailDtoRoomTypeEnum = {
@@ -1800,6 +1830,13 @@ export const FilterRoomDetailDtoBedTypeEnum = {
 } as const;
 
 export type FilterRoomDetailDtoBedTypeEnum = typeof FilterRoomDetailDtoBedTypeEnum[keyof typeof FilterRoomDetailDtoBedTypeEnum];
+export const FilterRoomDetailDtoBookingTypeEnum = {
+    Hourly: 'HOURLY',
+    Nightly: 'NIGHTLY',
+    Daily: 'DAILY'
+} as const;
+
+export type FilterRoomDetailDtoBookingTypeEnum = typeof FilterRoomDetailDtoBookingTypeEnum[keyof typeof FilterRoomDetailDtoBookingTypeEnum];
 
 /**
  * 
