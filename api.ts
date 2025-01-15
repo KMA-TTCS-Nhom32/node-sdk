@@ -1813,6 +1813,18 @@ export interface FilterRoomDetailDto {
      * @memberof FilterRoomDetailDto
      */
     'bookingType'?: FilterRoomDetailDtoBookingTypeEnum;
+    /**
+     * Filter by number of adults
+     * @type {number}
+     * @memberof FilterRoomDetailDto
+     */
+    'adults'?: number;
+    /**
+     * Filter by number of children
+     * @type {number}
+     * @memberof FilterRoomDetailDto
+     */
+    'children'?: number;
 }
 
 export const FilterRoomDetailDtoRoomTypeEnum = {
