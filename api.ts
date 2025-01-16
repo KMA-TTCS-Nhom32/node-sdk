@@ -794,6 +794,25 @@ export interface BranchesPaginationResultDto {
 /**
  * 
  * @export
+ * @interface CancelPaymentRequestDto
+ */
+export interface CancelPaymentRequestDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CancelPaymentRequestDto
+     */
+    'paymentLinkId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CancelPaymentRequestDto
+     */
+    'cancelReason': string;
+}
+/**
+ * 
+ * @export
  * @interface ChangePasswordDto
  */
 export interface ChangePasswordDto {
@@ -815,6 +834,37 @@ export interface ChangePasswordDto {
      * @memberof ChangePasswordDto
      */
     'confirmPassword': string;
+}
+/**
+ * 
+ * @export
+ * @interface ConfirmPaymentWebhookDto
+ */
+export interface ConfirmPaymentWebhookDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof ConfirmPaymentWebhookDto
+     */
+    'code': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConfirmPaymentWebhookDto
+     */
+    'desc': string;
+    /**
+     * 
+     * @type {object}
+     * @memberof ConfirmPaymentWebhookDto
+     */
+    'data': object;
+    /**
+     * 
+     * @type {string}
+     * @memberof ConfirmPaymentWebhookDto
+     */
+    'signature': string;
 }
 /**
  * 
@@ -892,6 +942,18 @@ export interface CreateBookingAtHotelDto {
      * @memberof CreateBookingAtHotelDto
      */
     'end_time': string;
+    /**
+     * Name of the guest
+     * @type {string}
+     * @memberof CreateBookingAtHotelDto
+     */
+    'name'?: string;
+    /**
+     * Phone number of the guest
+     * @type {string}
+     * @memberof CreateBookingAtHotelDto
+     */
+    'phone'?: string;
     /**
      * Number of guests
      * @type {number}
@@ -986,6 +1048,18 @@ export interface CreateBookingOnlineDto {
      * @memberof CreateBookingOnlineDto
      */
     'end_time': string;
+    /**
+     * Name of the guest
+     * @type {string}
+     * @memberof CreateBookingOnlineDto
+     */
+    'name'?: string;
+    /**
+     * Phone number of the guest
+     * @type {string}
+     * @memberof CreateBookingOnlineDto
+     */
+    'phone'?: string;
     /**
      * Number of guests
      * @type {number}
@@ -1174,6 +1248,73 @@ export const CreateHotelRoomDtoStatusEnum = {
 
 export type CreateHotelRoomDtoStatusEnum = typeof CreateHotelRoomDtoStatusEnum[keyof typeof CreateHotelRoomDtoStatusEnum];
 
+/**
+ * 
+ * @export
+ * @interface CreatePaymentRequestDto
+ */
+export interface CreatePaymentRequestDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreatePaymentRequestDto
+     */
+    'orderCode': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreatePaymentRequestDto
+     */
+    'amount': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreatePaymentRequestDto
+     */
+    'description': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreatePaymentRequestDto
+     */
+    'cancelUrl': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreatePaymentRequestDto
+     */
+    'returnUrl': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreatePaymentRequestDto
+     */
+    'buyerName'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreatePaymentRequestDto
+     */
+    'buyerEmail'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreatePaymentRequestDto
+     */
+    'buyerPhone'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreatePaymentRequestDto
+     */
+    'buyerAddress'?: string;
+    /**
+     * 
+     * @type {Array<RoomDetail>}
+     * @memberof CreatePaymentRequestDto
+     */
+    'items'?: Array<RoomDetail>;
+}
 /**
  * 
  * @export
@@ -1784,13 +1925,13 @@ export interface FilterRoomDetailDto {
      */
     'maxPrice'?: object;
     /**
-     * Filter by start date
+     * Filter by start date (DD-MM-YYYY)
      * @type {string}
      * @memberof FilterRoomDetailDto
      */
     'startDate'?: string;
     /**
-     * Filter by end date
+     * Filter by end date (DD-MM-YYYY)
      * @type {string}
      * @memberof FilterRoomDetailDto
      */
@@ -2228,6 +2369,110 @@ export interface NearBy {
      * @memberof NearBy
      */
     'distance': string;
+}
+/**
+ * 
+ * @export
+ * @interface PaymentResponseData
+ */
+export interface PaymentResponseData {
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentResponseData
+     */
+    'bin': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentResponseData
+     */
+    'accountNumber': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentResponseData
+     */
+    'accountName': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PaymentResponseData
+     */
+    'amount': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentResponseData
+     */
+    'description': string;
+    /**
+     * 
+     * @type {object}
+     * @memberof PaymentResponseData
+     */
+    'orderCode': object;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentResponseData
+     */
+    'curency': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentResponseData
+     */
+    'paymentLinkId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentResponseData
+     */
+    'status': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentResponseData
+     */
+    'checkoutUrl': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentResponseData
+     */
+    'qrCode': string;
+}
+/**
+ * 
+ * @export
+ * @interface PaymentResponseDto
+ */
+export interface PaymentResponseDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentResponseDto
+     */
+    'code': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentResponseDto
+     */
+    'desc': string;
+    /**
+     * 
+     * @type {PaymentResponseData}
+     * @memberof PaymentResponseDto
+     */
+    'data': PaymentResponseData;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaymentResponseDto
+     */
+    'signature': string;
 }
 /**
  * 
@@ -5816,6 +6061,40 @@ export const BookingApiAxiosParamCreator = function (configuration?: Configurati
     return {
         /**
          * 
+         * @summary Cancel a booking
+         * @param {string} bookingId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bookingControllerCancelBooking: async (bookingId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'bookingId' is not null or undefined
+            assertParamExists('bookingControllerCancelBooking', 'bookingId', bookingId)
+            const localVarPath = `/api/booking/cancel/{bookingId}`
+                .replace(`{${"bookingId"}}`, encodeURIComponent(String(bookingId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Create a new booking directly at the hotel
          * @param {CreateBookingAtHotelDto} createBookingAtHotelDto 
          * @param {*} [options] Override http request option.
@@ -6063,6 +6342,19 @@ export const BookingApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Cancel a booking
+         * @param {string} bookingId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async bookingControllerCancelBooking(bookingId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Booking>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.bookingControllerCancelBooking(bookingId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BookingApi.bookingControllerCancelBooking']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Create a new booking directly at the hotel
          * @param {CreateBookingAtHotelDto} createBookingAtHotelDto 
          * @param {*} [options] Override http request option.
@@ -6156,6 +6448,16 @@ export const BookingApiFactory = function (configuration?: Configuration, basePa
     return {
         /**
          * 
+         * @summary Cancel a booking
+         * @param {string} bookingId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bookingControllerCancelBooking(bookingId: string, options?: RawAxiosRequestConfig): AxiosPromise<Booking> {
+            return localVarFp.bookingControllerCancelBooking(bookingId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Create a new booking directly at the hotel
          * @param {CreateBookingAtHotelDto} createBookingAtHotelDto 
          * @param {*} [options] Override http request option.
@@ -6229,6 +6531,18 @@ export const BookingApiFactory = function (configuration?: Configuration, basePa
  * @extends {BaseAPI}
  */
 export class BookingApi extends BaseAPI {
+    /**
+     * 
+     * @summary Cancel a booking
+     * @param {string} bookingId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BookingApi
+     */
+    public bookingControllerCancelBooking(bookingId: string, options?: RawAxiosRequestConfig) {
+        return BookingApiFp(this.configuration).bookingControllerCancelBooking(bookingId, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Create a new booking directly at the hotel
@@ -7542,6 +7856,327 @@ export class POEditorApi extends BaseAPI {
      */
     public poeditorControllerGetTranslations(getTranslationsRequestDto: GetTranslationsRequestDto, options?: RawAxiosRequestConfig) {
         return POEditorApiFp(this.configuration).poeditorControllerGetTranslations(getTranslationsRequestDto, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * PayOSApi - axios parameter creator
+ * @export
+ */
+export const PayOSApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Cancel a payment link
+         * @param {CancelPaymentRequestDto} cancelPaymentRequestDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        payosControllerCancelPayment: async (cancelPaymentRequestDto: CancelPaymentRequestDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'cancelPaymentRequestDto' is not null or undefined
+            assertParamExists('payosControllerCancelPayment', 'cancelPaymentRequestDto', cancelPaymentRequestDto)
+            const localVarPath = `/api/payos/cancel-payment`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(cancelPaymentRequestDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a new payment request
+         * @param {CreatePaymentRequestDto} createPaymentRequestDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        payosControllerCreatePaymentRequest: async (createPaymentRequestDto: CreatePaymentRequestDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createPaymentRequestDto' is not null or undefined
+            assertParamExists('payosControllerCreatePaymentRequest', 'createPaymentRequestDto', createPaymentRequestDto)
+            const localVarPath = `/api/payos/payment-request`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createPaymentRequestDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get payment status
+         * @param {string} paymentLinkId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        payosControllerGetPaymentStatus: async (paymentLinkId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'paymentLinkId' is not null or undefined
+            assertParamExists('payosControllerGetPaymentStatus', 'paymentLinkId', paymentLinkId)
+            const localVarPath = `/api/payos/payment-status/{paymentLinkId}`
+                .replace(`{${"paymentLinkId"}}`, encodeURIComponent(String(paymentLinkId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Handle payment confirmation webhook
+         * @param {ConfirmPaymentWebhookDto} confirmPaymentWebhookDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        payosControllerHandleWebhook: async (confirmPaymentWebhookDto: ConfirmPaymentWebhookDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'confirmPaymentWebhookDto' is not null or undefined
+            assertParamExists('payosControllerHandleWebhook', 'confirmPaymentWebhookDto', confirmPaymentWebhookDto)
+            const localVarPath = `/api/payos/webhook`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(confirmPaymentWebhookDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * PayOSApi - functional programming interface
+ * @export
+ */
+export const PayOSApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PayOSApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Cancel a payment link
+         * @param {CancelPaymentRequestDto} cancelPaymentRequestDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async payosControllerCancelPayment(cancelPaymentRequestDto: CancelPaymentRequestDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.payosControllerCancelPayment(cancelPaymentRequestDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PayOSApi.payosControllerCancelPayment']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Create a new payment request
+         * @param {CreatePaymentRequestDto} createPaymentRequestDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async payosControllerCreatePaymentRequest(createPaymentRequestDto: CreatePaymentRequestDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.payosControllerCreatePaymentRequest(createPaymentRequestDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PayOSApi.payosControllerCreatePaymentRequest']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get payment status
+         * @param {string} paymentLinkId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async payosControllerGetPaymentStatus(paymentLinkId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.payosControllerGetPaymentStatus(paymentLinkId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PayOSApi.payosControllerGetPaymentStatus']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Handle payment confirmation webhook
+         * @param {ConfirmPaymentWebhookDto} confirmPaymentWebhookDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async payosControllerHandleWebhook(confirmPaymentWebhookDto: ConfirmPaymentWebhookDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<boolean>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.payosControllerHandleWebhook(confirmPaymentWebhookDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PayOSApi.payosControllerHandleWebhook']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * PayOSApi - factory interface
+ * @export
+ */
+export const PayOSApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PayOSApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Cancel a payment link
+         * @param {CancelPaymentRequestDto} cancelPaymentRequestDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        payosControllerCancelPayment(cancelPaymentRequestDto: CancelPaymentRequestDto, options?: RawAxiosRequestConfig): AxiosPromise<PaymentResponseDto> {
+            return localVarFp.payosControllerCancelPayment(cancelPaymentRequestDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a new payment request
+         * @param {CreatePaymentRequestDto} createPaymentRequestDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        payosControllerCreatePaymentRequest(createPaymentRequestDto: CreatePaymentRequestDto, options?: RawAxiosRequestConfig): AxiosPromise<PaymentResponseDto> {
+            return localVarFp.payosControllerCreatePaymentRequest(createPaymentRequestDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get payment status
+         * @param {string} paymentLinkId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        payosControllerGetPaymentStatus(paymentLinkId: string, options?: RawAxiosRequestConfig): AxiosPromise<PaymentResponseDto> {
+            return localVarFp.payosControllerGetPaymentStatus(paymentLinkId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Handle payment confirmation webhook
+         * @param {ConfirmPaymentWebhookDto} confirmPaymentWebhookDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        payosControllerHandleWebhook(confirmPaymentWebhookDto: ConfirmPaymentWebhookDto, options?: RawAxiosRequestConfig): AxiosPromise<boolean> {
+            return localVarFp.payosControllerHandleWebhook(confirmPaymentWebhookDto, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * PayOSApi - object-oriented interface
+ * @export
+ * @class PayOSApi
+ * @extends {BaseAPI}
+ */
+export class PayOSApi extends BaseAPI {
+    /**
+     * 
+     * @summary Cancel a payment link
+     * @param {CancelPaymentRequestDto} cancelPaymentRequestDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PayOSApi
+     */
+    public payosControllerCancelPayment(cancelPaymentRequestDto: CancelPaymentRequestDto, options?: RawAxiosRequestConfig) {
+        return PayOSApiFp(this.configuration).payosControllerCancelPayment(cancelPaymentRequestDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a new payment request
+     * @param {CreatePaymentRequestDto} createPaymentRequestDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PayOSApi
+     */
+    public payosControllerCreatePaymentRequest(createPaymentRequestDto: CreatePaymentRequestDto, options?: RawAxiosRequestConfig) {
+        return PayOSApiFp(this.configuration).payosControllerCreatePaymentRequest(createPaymentRequestDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get payment status
+     * @param {string} paymentLinkId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PayOSApi
+     */
+    public payosControllerGetPaymentStatus(paymentLinkId: string, options?: RawAxiosRequestConfig) {
+        return PayOSApiFp(this.configuration).payosControllerGetPaymentStatus(paymentLinkId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Handle payment confirmation webhook
+     * @param {ConfirmPaymentWebhookDto} confirmPaymentWebhookDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PayOSApi
+     */
+    public payosControllerHandleWebhook(confirmPaymentWebhookDto: ConfirmPaymentWebhookDto, options?: RawAxiosRequestConfig) {
+        return PayOSApiFp(this.configuration).payosControllerHandleWebhook(confirmPaymentWebhookDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
