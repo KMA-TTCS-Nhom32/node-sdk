@@ -2734,10 +2734,10 @@ export interface QueryMyBookingsDto {
     'pageSize'?: number;
     /**
      * Filter my bookings
-     * @type {FilterMyBookingsDto}
+     * @type {string}
      * @memberof QueryMyBookingsDto
      */
-    'filters'?: FilterMyBookingsDto;
+    'filters'?: string;
 }
 /**
  * 
@@ -6915,11 +6915,11 @@ export const BookingApiAxiosParamCreator = function (configuration?: Configurati
          * @summary Get all my bookings with pagination and filters
          * @param {number} [page] 
          * @param {number} [pageSize] 
-         * @param {FilterMyBookingsDto} [filters] Filter my bookings
+         * @param {string} [filters] Filter my bookings
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        bookingControllerGetMyBookings: async (page?: number, pageSize?: number, filters?: FilterMyBookingsDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        bookingControllerGetMyBookings: async (page?: number, pageSize?: number, filters?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/booking/my-bookings`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6941,9 +6941,7 @@ export const BookingApiAxiosParamCreator = function (configuration?: Configurati
             }
 
             if (filters !== undefined) {
-                for (const [key, value] of Object.entries(filters)) {
-                    localVarQueryParameter[key] = value;
-                }
+                localVarQueryParameter['filters'] = filters;
             }
 
 
@@ -7111,11 +7109,11 @@ export const BookingApiFp = function(configuration?: Configuration) {
          * @summary Get all my bookings with pagination and filters
          * @param {number} [page] 
          * @param {number} [pageSize] 
-         * @param {FilterMyBookingsDto} [filters] Filter my bookings
+         * @param {string} [filters] Filter my bookings
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async bookingControllerGetMyBookings(page?: number, pageSize?: number, filters?: FilterMyBookingsDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BookingsPaginationResultDto>> {
+        async bookingControllerGetMyBookings(page?: number, pageSize?: number, filters?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BookingsPaginationResultDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.bookingControllerGetMyBookings(page, pageSize, filters, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BookingApi.bookingControllerGetMyBookings']?.[localVarOperationServerIndex]?.url;
@@ -7216,11 +7214,11 @@ export const BookingApiFactory = function (configuration?: Configuration, basePa
          * @summary Get all my bookings with pagination and filters
          * @param {number} [page] 
          * @param {number} [pageSize] 
-         * @param {FilterMyBookingsDto} [filters] Filter my bookings
+         * @param {string} [filters] Filter my bookings
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        bookingControllerGetMyBookings(page?: number, pageSize?: number, filters?: FilterMyBookingsDto, options?: RawAxiosRequestConfig): AxiosPromise<BookingsPaginationResultDto> {
+        bookingControllerGetMyBookings(page?: number, pageSize?: number, filters?: string, options?: RawAxiosRequestConfig): AxiosPromise<BookingsPaginationResultDto> {
             return localVarFp.bookingControllerGetMyBookings(page, pageSize, filters, options).then((request) => request(axios, basePath));
         },
         /**
@@ -7322,12 +7320,12 @@ export class BookingApi extends BaseAPI {
      * @summary Get all my bookings with pagination and filters
      * @param {number} [page] 
      * @param {number} [pageSize] 
-     * @param {FilterMyBookingsDto} [filters] Filter my bookings
+     * @param {string} [filters] Filter my bookings
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BookingApi
      */
-    public bookingControllerGetMyBookings(page?: number, pageSize?: number, filters?: FilterMyBookingsDto, options?: RawAxiosRequestConfig) {
+    public bookingControllerGetMyBookings(page?: number, pageSize?: number, filters?: string, options?: RawAxiosRequestConfig) {
         return BookingApiFp(this.configuration).bookingControllerGetMyBookings(page, pageSize, filters, options).then((request) => request(this.axios, this.basePath));
     }
 
