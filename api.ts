@@ -2090,6 +2090,52 @@ export type FilterUserDtoRolesEnum = typeof FilterUserDtoRolesEnum[keyof typeof 
 /**
  * 
  * @export
+ * @interface GetAnalyticsQueryDto
+ */
+export interface GetAnalyticsQueryDto {
+    /**
+     * Branch ID to get analytics for
+     * @type {string}
+     * @memberof GetAnalyticsQueryDto
+     */
+    'branchId'?: string;
+    /**
+     * Start date for analytics (YYYY-MM-DD)
+     * @type {string}
+     * @memberof GetAnalyticsQueryDto
+     */
+    'startDate'?: string;
+    /**
+     * End date for analytics (YYYY-MM-DD)
+     * @type {string}
+     * @memberof GetAnalyticsQueryDto
+     */
+    'endDate'?: string;
+    /**
+     * Period type for analytics
+     * @type {string}
+     * @memberof GetAnalyticsQueryDto
+     */
+    'periodType'?: GetAnalyticsQueryDtoPeriodTypeEnum;
+    /**
+     * Number of months to analyze
+     * @type {number}
+     * @memberof GetAnalyticsQueryDto
+     */
+    'months'?: number;
+}
+
+export const GetAnalyticsQueryDtoPeriodTypeEnum = {
+    Daily: 'DAILY',
+    Monthly: 'MONTHLY',
+    Yearly: 'YEARLY'
+} as const;
+
+export type GetAnalyticsQueryDtoPeriodTypeEnum = typeof GetAnalyticsQueryDtoPeriodTypeEnum[keyof typeof GetAnalyticsQueryDtoPeriodTypeEnum];
+
+/**
+ * 
+ * @export
  * @interface GetTranslationsRequestDto
  */
 export interface GetTranslationsRequestDto {
