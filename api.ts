@@ -162,6 +162,43 @@ export type AmenityTypeEnum = typeof AmenityTypeEnum[keyof typeof AmenityTypeEnu
 /**
  * 
  * @export
+ * @interface AnalyticsSummaryDto
+ */
+export interface AnalyticsSummaryDto {
+    /**
+     * 
+     * @type {RevenueTimelineDto}
+     * @memberof AnalyticsSummaryDto
+     */
+    'revenue': RevenueTimelineDto;
+    /**
+     * Average occupancy rate percentage
+     * @type {number}
+     * @memberof AnalyticsSummaryDto
+     */
+    'occupancyRate': number;
+    /**
+     * Overall cancellation rate percentage
+     * @type {number}
+     * @memberof AnalyticsSummaryDto
+     */
+    'cancellationRate': number;
+    /**
+     * Performance metrics by room type
+     * @type {Array<RoomPerformanceDto>}
+     * @memberof AnalyticsSummaryDto
+     */
+    'roomPerformance': Array<RoomPerformanceDto>;
+    /**
+     * Additional booking statistics
+     * @type {object}
+     * @memberof AnalyticsSummaryDto
+     */
+    'bookingStats'?: object;
+}
+/**
+ * 
+ * @export
  * @interface BlockActivity
  */
 export interface BlockActivity {
@@ -790,6 +827,19 @@ export interface BranchesPaginationResultDto {
      * @memberof BranchesPaginationResultDto
      */
     'meta': UsersPaginationResultDtoMeta;
+}
+/**
+ * 
+ * @export
+ * @interface CancelBookingDto
+ */
+export interface CancelBookingDto {
+    /**
+     * Reason for canceling the booking
+     * @type {string}
+     * @memberof CancelBookingDto
+     */
+    'cancel_reason': string;
 }
 /**
  * 
@@ -2373,6 +2423,37 @@ export interface NearBy {
 /**
  * 
  * @export
+ * @interface OccupancyRateResponseDto
+ */
+export interface OccupancyRateResponseDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof OccupancyRateResponseDto
+     */
+    'rate': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OccupancyRateResponseDto
+     */
+    'totalRooms': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OccupancyRateResponseDto
+     */
+    'occupiedRooms': number;
+    /**
+     * 
+     * @type {object}
+     * @memberof OccupancyRateResponseDto
+     */
+    'byRoomType': object;
+}
+/**
+ * 
+ * @export
  * @interface Province
  */
 export interface Province {
@@ -2862,6 +2943,71 @@ export interface ResponseStatus {
 /**
  * 
  * @export
+ * @interface RevenueByRoomTypeDto
+ */
+export interface RevenueByRoomTypeDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof RevenueByRoomTypeDto
+     */
+    'roomType': RevenueByRoomTypeDtoRoomTypeEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof RevenueByRoomTypeDto
+     */
+    'revenue': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RevenueByRoomTypeDto
+     */
+    'bookingsCount': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RevenueByRoomTypeDto
+     */
+    'percentageOfTotal': number;
+}
+
+export const RevenueByRoomTypeDtoRoomTypeEnum = {
+    Standard: 'STANDARD',
+    Superior: 'SUPERIOR',
+    Deluxe: 'DELUXE'
+} as const;
+
+export type RevenueByRoomTypeDtoRoomTypeEnum = typeof RevenueByRoomTypeDtoRoomTypeEnum[keyof typeof RevenueByRoomTypeDtoRoomTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface RevenueTimelineDto
+ */
+export interface RevenueTimelineDto {
+    /**
+     * 
+     * @type {object}
+     * @memberof RevenueTimelineDto
+     */
+    'monthlyRevenue': object;
+    /**
+     * 
+     * @type {Array<RevenueByRoomTypeDto>}
+     * @memberof RevenueTimelineDto
+     */
+    'byRoomType': Array<RevenueByRoomTypeDto>;
+    /**
+     * 
+     * @type {number}
+     * @memberof RevenueTimelineDto
+     */
+    'totalRevenue': number;
+}
+/**
+ * 
+ * @export
  * @interface RevokeSessionResponseDto
  */
 export interface RevokeSessionResponseDto {
@@ -3102,6 +3248,64 @@ export interface RoomDetailPaginationResultDto {
      */
     'meta': UsersPaginationResultDtoMeta;
 }
+/**
+ * 
+ * @export
+ * @interface RoomPerformanceDto
+ */
+export interface RoomPerformanceDto {
+    /**
+     * 
+     * @type {string}
+     * @memberof RoomPerformanceDto
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RoomPerformanceDto
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RoomPerformanceDto
+     */
+    'room_type': RoomPerformanceDtoRoomTypeEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof RoomPerformanceDto
+     */
+    'bookings_count': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RoomPerformanceDto
+     */
+    'total_revenue': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RoomPerformanceDto
+     */
+    'average_occupancy': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RoomPerformanceDto
+     */
+    'cancellation_rate': number;
+}
+
+export const RoomPerformanceDtoRoomTypeEnum = {
+    Standard: 'STANDARD',
+    Superior: 'SUPERIOR',
+    Deluxe: 'DELUXE'
+} as const;
+
+export type RoomPerformanceDtoRoomTypeEnum = typeof RoomPerformanceDtoRoomTypeEnum[keyof typeof RoomPerformanceDtoRoomTypeEnum];
+
 /**
  * 
  * @export
@@ -3527,6 +3731,32 @@ export const UpdateAmenityDtoTypeEnum = {
 } as const;
 
 export type UpdateAmenityDtoTypeEnum = typeof UpdateAmenityDtoTypeEnum[keyof typeof UpdateAmenityDtoTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface UpdateBookingStatusDto
+ */
+export interface UpdateBookingStatusDto {
+    /**
+     * Booking status
+     * @type {string}
+     * @memberof UpdateBookingStatusDto
+     */
+    'status': UpdateBookingStatusDtoStatusEnum;
+}
+
+export const UpdateBookingStatusDtoStatusEnum = {
+    Pending: 'PENDING',
+    WaitingForCheckIn: 'WAITING_FOR_CHECK_IN',
+    CheckedIn: 'CHECKED_IN',
+    Cancelled: 'CANCELLED',
+    Completed: 'COMPLETED',
+    Refunded: 'REFUNDED',
+    Rejected: 'REJECTED'
+} as const;
+
+export type UpdateBookingStatusDtoStatusEnum = typeof UpdateBookingStatusDtoStatusEnum[keyof typeof UpdateBookingStatusDtoStatusEnum];
 
 /**
  * 
@@ -4849,6 +5079,489 @@ export class AmenitiesApi extends BaseAPI {
 
 
 /**
+ * AnalyticsApi - axios parameter creator
+ * @export
+ */
+export const AnalyticsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Get analytics summary for a branch
+         * @param {string} [branchId] Branch ID to get analytics for
+         * @param {string} [startDate] Start date for analytics (YYYY-MM-DD)
+         * @param {string} [endDate] End date for analytics (YYYY-MM-DD)
+         * @param {AnalyticsControllerGetAnalyticsSummaryPeriodTypeEnum} [periodType] Period type for analytics
+         * @param {number} [months] Number of months to analyze
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        analyticsControllerGetAnalyticsSummary: async (branchId?: string, startDate?: string, endDate?: string, periodType?: AnalyticsControllerGetAnalyticsSummaryPeriodTypeEnum, months?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/analytics/summary`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (branchId !== undefined) {
+                localVarQueryParameter['branchId'] = branchId;
+            }
+
+            if (startDate !== undefined) {
+                localVarQueryParameter['startDate'] = startDate;
+            }
+
+            if (endDate !== undefined) {
+                localVarQueryParameter['endDate'] = endDate;
+            }
+
+            if (periodType !== undefined) {
+                localVarQueryParameter['periodType'] = periodType;
+            }
+
+            if (months !== undefined) {
+                localVarQueryParameter['months'] = months;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get occupancy rate analytics
+         * @param {string} [branchId] Branch ID to get analytics for
+         * @param {string} [startDate] Start date for analytics (YYYY-MM-DD)
+         * @param {string} [endDate] End date for analytics (YYYY-MM-DD)
+         * @param {AnalyticsControllerGetOccupancyRatePeriodTypeEnum} [periodType] Period type for analytics
+         * @param {number} [months] Number of months to analyze
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        analyticsControllerGetOccupancyRate: async (branchId?: string, startDate?: string, endDate?: string, periodType?: AnalyticsControllerGetOccupancyRatePeriodTypeEnum, months?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/analytics/occupancy`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (branchId !== undefined) {
+                localVarQueryParameter['branchId'] = branchId;
+            }
+
+            if (startDate !== undefined) {
+                localVarQueryParameter['startDate'] = startDate;
+            }
+
+            if (endDate !== undefined) {
+                localVarQueryParameter['endDate'] = endDate;
+            }
+
+            if (periodType !== undefined) {
+                localVarQueryParameter['periodType'] = periodType;
+            }
+
+            if (months !== undefined) {
+                localVarQueryParameter['months'] = months;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get revenue analytics
+         * @param {string} [branchId] Branch ID to get analytics for
+         * @param {string} [startDate] Start date for analytics (YYYY-MM-DD)
+         * @param {string} [endDate] End date for analytics (YYYY-MM-DD)
+         * @param {AnalyticsControllerGetRevenueAnalyticsPeriodTypeEnum} [periodType] Period type for analytics
+         * @param {number} [months] Number of months to analyze
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        analyticsControllerGetRevenueAnalytics: async (branchId?: string, startDate?: string, endDate?: string, periodType?: AnalyticsControllerGetRevenueAnalyticsPeriodTypeEnum, months?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/analytics/revenue`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (branchId !== undefined) {
+                localVarQueryParameter['branchId'] = branchId;
+            }
+
+            if (startDate !== undefined) {
+                localVarQueryParameter['startDate'] = startDate;
+            }
+
+            if (endDate !== undefined) {
+                localVarQueryParameter['endDate'] = endDate;
+            }
+
+            if (periodType !== undefined) {
+                localVarQueryParameter['periodType'] = periodType;
+            }
+
+            if (months !== undefined) {
+                localVarQueryParameter['months'] = months;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get room performance analytics
+         * @param {string} [branchId] Branch ID to get analytics for
+         * @param {string} [startDate] Start date for analytics (YYYY-MM-DD)
+         * @param {string} [endDate] End date for analytics (YYYY-MM-DD)
+         * @param {AnalyticsControllerGetRoomPerformancePeriodTypeEnum} [periodType] Period type for analytics
+         * @param {number} [months] Number of months to analyze
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        analyticsControllerGetRoomPerformance: async (branchId?: string, startDate?: string, endDate?: string, periodType?: AnalyticsControllerGetRoomPerformancePeriodTypeEnum, months?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/analytics/room-performance`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (branchId !== undefined) {
+                localVarQueryParameter['branchId'] = branchId;
+            }
+
+            if (startDate !== undefined) {
+                localVarQueryParameter['startDate'] = startDate;
+            }
+
+            if (endDate !== undefined) {
+                localVarQueryParameter['endDate'] = endDate;
+            }
+
+            if (periodType !== undefined) {
+                localVarQueryParameter['periodType'] = periodType;
+            }
+
+            if (months !== undefined) {
+                localVarQueryParameter['months'] = months;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AnalyticsApi - functional programming interface
+ * @export
+ */
+export const AnalyticsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AnalyticsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Get analytics summary for a branch
+         * @param {string} [branchId] Branch ID to get analytics for
+         * @param {string} [startDate] Start date for analytics (YYYY-MM-DD)
+         * @param {string} [endDate] End date for analytics (YYYY-MM-DD)
+         * @param {AnalyticsControllerGetAnalyticsSummaryPeriodTypeEnum} [periodType] Period type for analytics
+         * @param {number} [months] Number of months to analyze
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async analyticsControllerGetAnalyticsSummary(branchId?: string, startDate?: string, endDate?: string, periodType?: AnalyticsControllerGetAnalyticsSummaryPeriodTypeEnum, months?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnalyticsSummaryDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.analyticsControllerGetAnalyticsSummary(branchId, startDate, endDate, periodType, months, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AnalyticsApi.analyticsControllerGetAnalyticsSummary']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get occupancy rate analytics
+         * @param {string} [branchId] Branch ID to get analytics for
+         * @param {string} [startDate] Start date for analytics (YYYY-MM-DD)
+         * @param {string} [endDate] End date for analytics (YYYY-MM-DD)
+         * @param {AnalyticsControllerGetOccupancyRatePeriodTypeEnum} [periodType] Period type for analytics
+         * @param {number} [months] Number of months to analyze
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async analyticsControllerGetOccupancyRate(branchId?: string, startDate?: string, endDate?: string, periodType?: AnalyticsControllerGetOccupancyRatePeriodTypeEnum, months?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OccupancyRateResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.analyticsControllerGetOccupancyRate(branchId, startDate, endDate, periodType, months, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AnalyticsApi.analyticsControllerGetOccupancyRate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get revenue analytics
+         * @param {string} [branchId] Branch ID to get analytics for
+         * @param {string} [startDate] Start date for analytics (YYYY-MM-DD)
+         * @param {string} [endDate] End date for analytics (YYYY-MM-DD)
+         * @param {AnalyticsControllerGetRevenueAnalyticsPeriodTypeEnum} [periodType] Period type for analytics
+         * @param {number} [months] Number of months to analyze
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async analyticsControllerGetRevenueAnalytics(branchId?: string, startDate?: string, endDate?: string, periodType?: AnalyticsControllerGetRevenueAnalyticsPeriodTypeEnum, months?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RevenueTimelineDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.analyticsControllerGetRevenueAnalytics(branchId, startDate, endDate, periodType, months, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AnalyticsApi.analyticsControllerGetRevenueAnalytics']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get room performance analytics
+         * @param {string} [branchId] Branch ID to get analytics for
+         * @param {string} [startDate] Start date for analytics (YYYY-MM-DD)
+         * @param {string} [endDate] End date for analytics (YYYY-MM-DD)
+         * @param {AnalyticsControllerGetRoomPerformancePeriodTypeEnum} [periodType] Period type for analytics
+         * @param {number} [months] Number of months to analyze
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async analyticsControllerGetRoomPerformance(branchId?: string, startDate?: string, endDate?: string, periodType?: AnalyticsControllerGetRoomPerformancePeriodTypeEnum, months?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RoomPerformanceDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.analyticsControllerGetRoomPerformance(branchId, startDate, endDate, periodType, months, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AnalyticsApi.analyticsControllerGetRoomPerformance']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AnalyticsApi - factory interface
+ * @export
+ */
+export const AnalyticsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AnalyticsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Get analytics summary for a branch
+         * @param {string} [branchId] Branch ID to get analytics for
+         * @param {string} [startDate] Start date for analytics (YYYY-MM-DD)
+         * @param {string} [endDate] End date for analytics (YYYY-MM-DD)
+         * @param {AnalyticsControllerGetAnalyticsSummaryPeriodTypeEnum} [periodType] Period type for analytics
+         * @param {number} [months] Number of months to analyze
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        analyticsControllerGetAnalyticsSummary(branchId?: string, startDate?: string, endDate?: string, periodType?: AnalyticsControllerGetAnalyticsSummaryPeriodTypeEnum, months?: number, options?: RawAxiosRequestConfig): AxiosPromise<AnalyticsSummaryDto> {
+            return localVarFp.analyticsControllerGetAnalyticsSummary(branchId, startDate, endDate, periodType, months, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get occupancy rate analytics
+         * @param {string} [branchId] Branch ID to get analytics for
+         * @param {string} [startDate] Start date for analytics (YYYY-MM-DD)
+         * @param {string} [endDate] End date for analytics (YYYY-MM-DD)
+         * @param {AnalyticsControllerGetOccupancyRatePeriodTypeEnum} [periodType] Period type for analytics
+         * @param {number} [months] Number of months to analyze
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        analyticsControllerGetOccupancyRate(branchId?: string, startDate?: string, endDate?: string, periodType?: AnalyticsControllerGetOccupancyRatePeriodTypeEnum, months?: number, options?: RawAxiosRequestConfig): AxiosPromise<OccupancyRateResponseDto> {
+            return localVarFp.analyticsControllerGetOccupancyRate(branchId, startDate, endDate, periodType, months, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get revenue analytics
+         * @param {string} [branchId] Branch ID to get analytics for
+         * @param {string} [startDate] Start date for analytics (YYYY-MM-DD)
+         * @param {string} [endDate] End date for analytics (YYYY-MM-DD)
+         * @param {AnalyticsControllerGetRevenueAnalyticsPeriodTypeEnum} [periodType] Period type for analytics
+         * @param {number} [months] Number of months to analyze
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        analyticsControllerGetRevenueAnalytics(branchId?: string, startDate?: string, endDate?: string, periodType?: AnalyticsControllerGetRevenueAnalyticsPeriodTypeEnum, months?: number, options?: RawAxiosRequestConfig): AxiosPromise<RevenueTimelineDto> {
+            return localVarFp.analyticsControllerGetRevenueAnalytics(branchId, startDate, endDate, periodType, months, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get room performance analytics
+         * @param {string} [branchId] Branch ID to get analytics for
+         * @param {string} [startDate] Start date for analytics (YYYY-MM-DD)
+         * @param {string} [endDate] End date for analytics (YYYY-MM-DD)
+         * @param {AnalyticsControllerGetRoomPerformancePeriodTypeEnum} [periodType] Period type for analytics
+         * @param {number} [months] Number of months to analyze
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        analyticsControllerGetRoomPerformance(branchId?: string, startDate?: string, endDate?: string, periodType?: AnalyticsControllerGetRoomPerformancePeriodTypeEnum, months?: number, options?: RawAxiosRequestConfig): AxiosPromise<Array<RoomPerformanceDto>> {
+            return localVarFp.analyticsControllerGetRoomPerformance(branchId, startDate, endDate, periodType, months, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * AnalyticsApi - object-oriented interface
+ * @export
+ * @class AnalyticsApi
+ * @extends {BaseAPI}
+ */
+export class AnalyticsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Get analytics summary for a branch
+     * @param {string} [branchId] Branch ID to get analytics for
+     * @param {string} [startDate] Start date for analytics (YYYY-MM-DD)
+     * @param {string} [endDate] End date for analytics (YYYY-MM-DD)
+     * @param {AnalyticsControllerGetAnalyticsSummaryPeriodTypeEnum} [periodType] Period type for analytics
+     * @param {number} [months] Number of months to analyze
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AnalyticsApi
+     */
+    public analyticsControllerGetAnalyticsSummary(branchId?: string, startDate?: string, endDate?: string, periodType?: AnalyticsControllerGetAnalyticsSummaryPeriodTypeEnum, months?: number, options?: RawAxiosRequestConfig) {
+        return AnalyticsApiFp(this.configuration).analyticsControllerGetAnalyticsSummary(branchId, startDate, endDate, periodType, months, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get occupancy rate analytics
+     * @param {string} [branchId] Branch ID to get analytics for
+     * @param {string} [startDate] Start date for analytics (YYYY-MM-DD)
+     * @param {string} [endDate] End date for analytics (YYYY-MM-DD)
+     * @param {AnalyticsControllerGetOccupancyRatePeriodTypeEnum} [periodType] Period type for analytics
+     * @param {number} [months] Number of months to analyze
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AnalyticsApi
+     */
+    public analyticsControllerGetOccupancyRate(branchId?: string, startDate?: string, endDate?: string, periodType?: AnalyticsControllerGetOccupancyRatePeriodTypeEnum, months?: number, options?: RawAxiosRequestConfig) {
+        return AnalyticsApiFp(this.configuration).analyticsControllerGetOccupancyRate(branchId, startDate, endDate, periodType, months, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get revenue analytics
+     * @param {string} [branchId] Branch ID to get analytics for
+     * @param {string} [startDate] Start date for analytics (YYYY-MM-DD)
+     * @param {string} [endDate] End date for analytics (YYYY-MM-DD)
+     * @param {AnalyticsControllerGetRevenueAnalyticsPeriodTypeEnum} [periodType] Period type for analytics
+     * @param {number} [months] Number of months to analyze
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AnalyticsApi
+     */
+    public analyticsControllerGetRevenueAnalytics(branchId?: string, startDate?: string, endDate?: string, periodType?: AnalyticsControllerGetRevenueAnalyticsPeriodTypeEnum, months?: number, options?: RawAxiosRequestConfig) {
+        return AnalyticsApiFp(this.configuration).analyticsControllerGetRevenueAnalytics(branchId, startDate, endDate, periodType, months, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get room performance analytics
+     * @param {string} [branchId] Branch ID to get analytics for
+     * @param {string} [startDate] Start date for analytics (YYYY-MM-DD)
+     * @param {string} [endDate] End date for analytics (YYYY-MM-DD)
+     * @param {AnalyticsControllerGetRoomPerformancePeriodTypeEnum} [periodType] Period type for analytics
+     * @param {number} [months] Number of months to analyze
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AnalyticsApi
+     */
+    public analyticsControllerGetRoomPerformance(branchId?: string, startDate?: string, endDate?: string, periodType?: AnalyticsControllerGetRoomPerformancePeriodTypeEnum, months?: number, options?: RawAxiosRequestConfig) {
+        return AnalyticsApiFp(this.configuration).analyticsControllerGetRoomPerformance(branchId, startDate, endDate, periodType, months, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+/**
+ * @export
+ */
+export const AnalyticsControllerGetAnalyticsSummaryPeriodTypeEnum = {
+    Daily: 'DAILY',
+    Monthly: 'MONTHLY',
+    Yearly: 'YEARLY'
+} as const;
+export type AnalyticsControllerGetAnalyticsSummaryPeriodTypeEnum = typeof AnalyticsControllerGetAnalyticsSummaryPeriodTypeEnum[keyof typeof AnalyticsControllerGetAnalyticsSummaryPeriodTypeEnum];
+/**
+ * @export
+ */
+export const AnalyticsControllerGetOccupancyRatePeriodTypeEnum = {
+    Daily: 'DAILY',
+    Monthly: 'MONTHLY',
+    Yearly: 'YEARLY'
+} as const;
+export type AnalyticsControllerGetOccupancyRatePeriodTypeEnum = typeof AnalyticsControllerGetOccupancyRatePeriodTypeEnum[keyof typeof AnalyticsControllerGetOccupancyRatePeriodTypeEnum];
+/**
+ * @export
+ */
+export const AnalyticsControllerGetRevenueAnalyticsPeriodTypeEnum = {
+    Daily: 'DAILY',
+    Monthly: 'MONTHLY',
+    Yearly: 'YEARLY'
+} as const;
+export type AnalyticsControllerGetRevenueAnalyticsPeriodTypeEnum = typeof AnalyticsControllerGetRevenueAnalyticsPeriodTypeEnum[keyof typeof AnalyticsControllerGetRevenueAnalyticsPeriodTypeEnum];
+/**
+ * @export
+ */
+export const AnalyticsControllerGetRoomPerformancePeriodTypeEnum = {
+    Daily: 'DAILY',
+    Monthly: 'MONTHLY',
+    Yearly: 'YEARLY'
+} as const;
+export type AnalyticsControllerGetRoomPerformancePeriodTypeEnum = typeof AnalyticsControllerGetRoomPerformancePeriodTypeEnum[keyof typeof AnalyticsControllerGetRoomPerformancePeriodTypeEnum];
+
+
+/**
  * AppApi - axios parameter creator
  * @export
  */
@@ -5959,12 +6672,15 @@ export const BookingApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary Cancel a booking
          * @param {string} bookingId 
+         * @param {CancelBookingDto} cancelBookingDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        bookingControllerCancelBooking: async (bookingId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        bookingControllerCancelBooking: async (bookingId: string, cancelBookingDto: CancelBookingDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'bookingId' is not null or undefined
             assertParamExists('bookingControllerCancelBooking', 'bookingId', bookingId)
+            // verify required parameter 'cancelBookingDto' is not null or undefined
+            assertParamExists('bookingControllerCancelBooking', 'cancelBookingDto', cancelBookingDto)
             const localVarPath = `/api/booking/cancel/{bookingId}`
                 .replace(`{${"bookingId"}}`, encodeURIComponent(String(bookingId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -5980,9 +6696,12 @@ export const BookingApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(cancelBookingDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6194,14 +6913,47 @@ export const BookingApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary Update booking status
-         * @param {string} bookingId 
+         * @summary Handle payment webhook from PayOS
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        bookingControllerUpdateBookingStatus: async (bookingId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        bookingControllerHandlePaymentWebhook: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/booking/webhook/payment`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update booking status
+         * @param {string} bookingId 
+         * @param {UpdateBookingStatusDto} updateBookingStatusDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bookingControllerUpdateBookingStatus: async (bookingId: string, updateBookingStatusDto: UpdateBookingStatusDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'bookingId' is not null or undefined
             assertParamExists('bookingControllerUpdateBookingStatus', 'bookingId', bookingId)
+            // verify required parameter 'updateBookingStatusDto' is not null or undefined
+            assertParamExists('bookingControllerUpdateBookingStatus', 'updateBookingStatusDto', updateBookingStatusDto)
             const localVarPath = `/api/booking/update-status/{bookingId}`
                 .replace(`{${"bookingId"}}`, encodeURIComponent(String(bookingId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -6217,9 +6969,12 @@ export const BookingApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateBookingStatusDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6240,11 +6995,12 @@ export const BookingApiFp = function(configuration?: Configuration) {
          * 
          * @summary Cancel a booking
          * @param {string} bookingId 
+         * @param {CancelBookingDto} cancelBookingDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async bookingControllerCancelBooking(bookingId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Booking>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.bookingControllerCancelBooking(bookingId, options);
+        async bookingControllerCancelBooking(bookingId: string, cancelBookingDto: CancelBookingDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Booking>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.bookingControllerCancelBooking(bookingId, cancelBookingDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BookingApi.bookingControllerCancelBooking']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -6321,13 +7077,26 @@ export const BookingApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Update booking status
-         * @param {string} bookingId 
+         * @summary Handle payment webhook from PayOS
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async bookingControllerUpdateBookingStatus(bookingId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Booking>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.bookingControllerUpdateBookingStatus(bookingId, options);
+        async bookingControllerHandlePaymentWebhook(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.bookingControllerHandlePaymentWebhook(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BookingApi.bookingControllerHandlePaymentWebhook']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Update booking status
+         * @param {string} bookingId 
+         * @param {UpdateBookingStatusDto} updateBookingStatusDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async bookingControllerUpdateBookingStatus(bookingId: string, updateBookingStatusDto: UpdateBookingStatusDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Booking>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.bookingControllerUpdateBookingStatus(bookingId, updateBookingStatusDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BookingApi.bookingControllerUpdateBookingStatus']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -6346,11 +7115,12 @@ export const BookingApiFactory = function (configuration?: Configuration, basePa
          * 
          * @summary Cancel a booking
          * @param {string} bookingId 
+         * @param {CancelBookingDto} cancelBookingDto 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        bookingControllerCancelBooking(bookingId: string, options?: RawAxiosRequestConfig): AxiosPromise<Booking> {
-            return localVarFp.bookingControllerCancelBooking(bookingId, options).then((request) => request(axios, basePath));
+        bookingControllerCancelBooking(bookingId: string, cancelBookingDto: CancelBookingDto, options?: RawAxiosRequestConfig): AxiosPromise<Booking> {
+            return localVarFp.bookingControllerCancelBooking(bookingId, cancelBookingDto, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6409,13 +7179,23 @@ export const BookingApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @summary Update booking status
-         * @param {string} bookingId 
+         * @summary Handle payment webhook from PayOS
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        bookingControllerUpdateBookingStatus(bookingId: string, options?: RawAxiosRequestConfig): AxiosPromise<Booking> {
-            return localVarFp.bookingControllerUpdateBookingStatus(bookingId, options).then((request) => request(axios, basePath));
+        bookingControllerHandlePaymentWebhook(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.bookingControllerHandlePaymentWebhook(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update booking status
+         * @param {string} bookingId 
+         * @param {UpdateBookingStatusDto} updateBookingStatusDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        bookingControllerUpdateBookingStatus(bookingId: string, updateBookingStatusDto: UpdateBookingStatusDto, options?: RawAxiosRequestConfig): AxiosPromise<Booking> {
+            return localVarFp.bookingControllerUpdateBookingStatus(bookingId, updateBookingStatusDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -6431,12 +7211,13 @@ export class BookingApi extends BaseAPI {
      * 
      * @summary Cancel a booking
      * @param {string} bookingId 
+     * @param {CancelBookingDto} cancelBookingDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BookingApi
      */
-    public bookingControllerCancelBooking(bookingId: string, options?: RawAxiosRequestConfig) {
-        return BookingApiFp(this.configuration).bookingControllerCancelBooking(bookingId, options).then((request) => request(this.axios, this.basePath));
+    public bookingControllerCancelBooking(bookingId: string, cancelBookingDto: CancelBookingDto, options?: RawAxiosRequestConfig) {
+        return BookingApiFp(this.configuration).bookingControllerCancelBooking(bookingId, cancelBookingDto, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6506,14 +7287,26 @@ export class BookingApi extends BaseAPI {
 
     /**
      * 
-     * @summary Update booking status
-     * @param {string} bookingId 
+     * @summary Handle payment webhook from PayOS
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BookingApi
      */
-    public bookingControllerUpdateBookingStatus(bookingId: string, options?: RawAxiosRequestConfig) {
-        return BookingApiFp(this.configuration).bookingControllerUpdateBookingStatus(bookingId, options).then((request) => request(this.axios, this.basePath));
+    public bookingControllerHandlePaymentWebhook(options?: RawAxiosRequestConfig) {
+        return BookingApiFp(this.configuration).bookingControllerHandlePaymentWebhook(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update booking status
+     * @param {string} bookingId 
+     * @param {UpdateBookingStatusDto} updateBookingStatusDto 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BookingApi
+     */
+    public bookingControllerUpdateBookingStatus(bookingId: string, updateBookingStatusDto: UpdateBookingStatusDto, options?: RawAxiosRequestConfig) {
+        return BookingApiFp(this.configuration).bookingControllerUpdateBookingStatus(bookingId, updateBookingStatusDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
