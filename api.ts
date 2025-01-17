@@ -1256,10 +1256,10 @@ export type CreateHotelRoomDtoStatusEnum = typeof CreateHotelRoomDtoStatusEnum[k
 export interface CreatePaymentRequestDto {
     /**
      * 
-     * @type {string}
+     * @type {number}
      * @memberof CreatePaymentRequestDto
      */
-    'orderCode': string;
+    'orderCode': number;
     /**
      * 
      * @type {number}
@@ -2369,110 +2369,6 @@ export interface NearBy {
      * @memberof NearBy
      */
     'distance': string;
-}
-/**
- * 
- * @export
- * @interface PaymentResponseData
- */
-export interface PaymentResponseData {
-    /**
-     * 
-     * @type {string}
-     * @memberof PaymentResponseData
-     */
-    'bin': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PaymentResponseData
-     */
-    'accountNumber': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PaymentResponseData
-     */
-    'accountName': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof PaymentResponseData
-     */
-    'amount': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof PaymentResponseData
-     */
-    'description': string;
-    /**
-     * 
-     * @type {object}
-     * @memberof PaymentResponseData
-     */
-    'orderCode': object;
-    /**
-     * 
-     * @type {string}
-     * @memberof PaymentResponseData
-     */
-    'curency': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PaymentResponseData
-     */
-    'paymentLinkId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PaymentResponseData
-     */
-    'status': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PaymentResponseData
-     */
-    'checkoutUrl': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PaymentResponseData
-     */
-    'qrCode': string;
-}
-/**
- * 
- * @export
- * @interface PaymentResponseDto
- */
-export interface PaymentResponseDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof PaymentResponseDto
-     */
-    'code': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PaymentResponseDto
-     */
-    'desc': string;
-    /**
-     * 
-     * @type {PaymentResponseData}
-     * @memberof PaymentResponseDto
-     */
-    'data': PaymentResponseData;
-    /**
-     * 
-     * @type {string}
-     * @memberof PaymentResponseDto
-     */
-    'signature': string;
 }
 /**
  * 
@@ -8026,7 +7922,7 @@ export const PayOSApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async payosControllerCancelPayment(cancelPaymentRequestDto: CancelPaymentRequestDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentResponseDto>> {
+        async payosControllerCancelPayment(cancelPaymentRequestDto: CancelPaymentRequestDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.payosControllerCancelPayment(cancelPaymentRequestDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PayOSApi.payosControllerCancelPayment']?.[localVarOperationServerIndex]?.url;
@@ -8039,7 +7935,7 @@ export const PayOSApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async payosControllerCreatePaymentRequest(createPaymentRequestDto: CreatePaymentRequestDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentResponseDto>> {
+        async payosControllerCreatePaymentRequest(createPaymentRequestDto: CreatePaymentRequestDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.payosControllerCreatePaymentRequest(createPaymentRequestDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PayOSApi.payosControllerCreatePaymentRequest']?.[localVarOperationServerIndex]?.url;
@@ -8052,7 +7948,7 @@ export const PayOSApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async payosControllerGetPaymentStatus(paymentLinkId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaymentResponseDto>> {
+        async payosControllerGetPaymentStatus(paymentLinkId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.payosControllerGetPaymentStatus(paymentLinkId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PayOSApi.payosControllerGetPaymentStatus']?.[localVarOperationServerIndex]?.url;
@@ -8088,7 +7984,7 @@ export const PayOSApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        payosControllerCancelPayment(cancelPaymentRequestDto: CancelPaymentRequestDto, options?: RawAxiosRequestConfig): AxiosPromise<PaymentResponseDto> {
+        payosControllerCancelPayment(cancelPaymentRequestDto: CancelPaymentRequestDto, options?: RawAxiosRequestConfig): AxiosPromise<object> {
             return localVarFp.payosControllerCancelPayment(cancelPaymentRequestDto, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8098,7 +7994,7 @@ export const PayOSApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        payosControllerCreatePaymentRequest(createPaymentRequestDto: CreatePaymentRequestDto, options?: RawAxiosRequestConfig): AxiosPromise<PaymentResponseDto> {
+        payosControllerCreatePaymentRequest(createPaymentRequestDto: CreatePaymentRequestDto, options?: RawAxiosRequestConfig): AxiosPromise<object> {
             return localVarFp.payosControllerCreatePaymentRequest(createPaymentRequestDto, options).then((request) => request(axios, basePath));
         },
         /**
@@ -8108,7 +8004,7 @@ export const PayOSApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        payosControllerGetPaymentStatus(paymentLinkId: string, options?: RawAxiosRequestConfig): AxiosPromise<PaymentResponseDto> {
+        payosControllerGetPaymentStatus(paymentLinkId: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
             return localVarFp.payosControllerGetPaymentStatus(paymentLinkId, options).then((request) => request(axios, basePath));
         },
         /**
