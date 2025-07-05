@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * VVintage documentation
- * This is VVintage\'s APIs description
+ * AHomeVilla documentation
+ * This is AHomeVilla\'s APIs description
  *
  * The version of the OpenAPI document: 1.0
  * 

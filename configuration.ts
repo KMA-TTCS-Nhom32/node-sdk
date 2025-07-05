@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * VVintage documentation
- * This is VVintage\'s APIs description
+ * AHomeVilla documentation
+ * This is AHomeVilla\'s APIs description
  *
  * The version of the OpenAPI document: 1.0
  * 
@@ -89,7 +89,12 @@ export class Configuration {
         this.accessToken = param.accessToken;
         this.basePath = param.basePath;
         this.serverIndex = param.serverIndex;
-        this.baseOptions = param.baseOptions;
+        this.baseOptions = {
+            ...param.baseOptions,
+            headers: {
+                ...param.baseOptions?.headers,
+            },
+        };
         this.formDataCtor = param.formDataCtor;
     }
 

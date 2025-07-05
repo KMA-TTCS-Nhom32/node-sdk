@@ -1,12 +1,18 @@
 {
   "compilerOptions": {
+    "declaration": true,
+    "target": "ES6",
     "module": "commonjs",
-    "esModuleInterop": true,
-    "target": "ES2021",
+    "noImplicitAny": true,
+    "outDir": "dist",
+    "rootDir": ".",
     "moduleResolution": "node",
-    "sourceMap": true,
-    "outDir": "dist"
+    "typeRoots": [
+      "node_modules/@types"
+    ]
   },
-  "lib": ["ES2021"]
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
 }
-
