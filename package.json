@@ -10,10 +10,11 @@
     "openapi-client",
     "openapi-generator"
   ],
-  "version": "2025.07.06.160841",
+  "version": "2025.07.07.080848",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepare": "npm run build",
+    "build": "tsc && tsc -p tsconfig.esm.json"
   },
   "author": "Son DN <sondn@ahomevilla.team>",
   "license": "UNLICENSED",
