@@ -19,6 +19,9 @@ import type { BranchTranslationDto } from './branch-translation-dto';
 // May contain unused imports in some cases
 // @ts-ignore
 import type { Image } from './image';
+// May contain unused imports in some cases
+// @ts-ignore
+import type { Location } from './location';
 
 /**
  * 
@@ -86,6 +89,12 @@ export interface CreateBranchDto {
      * @memberof CreateBranchDto
      */
     'rating': number;
+    /**
+     * The branch\'s geographical location.
+     * @type {Location}
+     * @memberof CreateBranchDto
+     */
+    'location'?: Location;
     /**
      * Translations for the branch
      * @type {Array<BranchTranslationDto>}

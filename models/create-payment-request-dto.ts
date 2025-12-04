@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { RoomDetail } from './room-detail';
+import type { PaymentItemDto } from './payment-item-dto';
 
 /**
  * 
@@ -79,9 +79,9 @@ export interface CreatePaymentRequestDto {
     'buyerAddress'?: string;
     /**
      * 
-     * @type {Array<RoomDetail>}
+     * @type {Array<PaymentItemDto>}
      * @memberof CreatePaymentRequestDto
      */
-    'items'?: Array<RoomDetail>;
+    'items'?: Array<PaymentItemDto>;
 }
 

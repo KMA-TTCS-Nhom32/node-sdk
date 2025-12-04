@@ -21,6 +21,9 @@ import type { BranchTranslationDto } from './branch-translation-dto';
 import type { Image } from './image';
 // May contain unused imports in some cases
 // @ts-ignore
+import type { Location } from './location';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { NearBy } from './near-by';
 
 /**
@@ -83,6 +86,12 @@ export interface UpdateBranchDto {
      * @memberof UpdateBranchDto
      */
     'address'?: string;
+    /**
+     * The branch\'s geographical location.
+     * @type {Location}
+     * @memberof UpdateBranchDto
+     */
+    'location'?: Location;
     /**
      * The branch\'s rating.
      * @type {number}

@@ -24,6 +24,9 @@ import type { BranchTranslationsInner } from './branch-translations-inner';
 import type { Image } from './image';
 // May contain unused imports in some cases
 // @ts-ignore
+import type { Location } from './location';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { NearBy } from './near-by';
 // May contain unused imports in some cases
 // @ts-ignore
@@ -164,6 +167,12 @@ export interface BranchDetail {
      * @memberof BranchDetail
      */
     'nearBy': Array<NearBy>;
+    /**
+     * Branch\'s geographical location
+     * @type {Location}
+     * @memberof BranchDetail
+     */
+    'location'?: Location;
 }
 
 /**

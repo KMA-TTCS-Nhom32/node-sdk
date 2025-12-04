@@ -21,6 +21,9 @@ import type { BranchTranslationsInner } from './branch-translations-inner';
 import type { Image } from './image';
 // May contain unused imports in some cases
 // @ts-ignore
+import type { Location } from './location';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { Province } from './province';
 
 /**
@@ -137,6 +140,12 @@ export interface Branch {
      * @memberof Branch
      */
     'availableLanguages': Array<BranchAvailableLanguagesEnum>;
+    /**
+     * Branch\'s geographical location
+     * @type {Location}
+     * @memberof Branch
+     */
+    'location'?: Location;
 }
 
 /**
