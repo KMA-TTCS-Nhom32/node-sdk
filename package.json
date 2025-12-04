@@ -10,7 +10,7 @@
     "openapi-client",
     "openapi-generator"
   ],
-  "version": "2025.12.04.170207",
+  "version": "2025.12.04.171535",
   "main": "dist/index.js",
   "scripts": {
     "prepare": "npm run build",
