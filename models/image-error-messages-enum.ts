@@ -17,20 +17,18 @@
 /**
  * 
  * @export
- * @interface Location
+ * @enum {string}
  */
-export interface Location {
-    /**
-     * Latitude of the location
-     * @type {string}
-     * @memberof Location
-     */
-    'latitude': string;
-    /**
-     * Longitude of the location
-     * @type {string}
-     * @memberof Location
-     */
-    'longitude': string;
+
+export enum ImageErrorMessagesEnum {
+    InvalidImageFormat = 'invalidImageFormat',
+    InvalidImageSize = 'invalidImageSize',
+    InvalidImageType = 'invalidImageType',
+    InvalidImageUrl = 'invalidImageUrl',
+    ImageUploadFailed = 'imageUploadFailed',
+    ImageDeleteFailed = 'imageDeleteFailed',
+    ImageNotFound = 'imageNotFound'
 }
+
+
 

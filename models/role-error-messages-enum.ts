@@ -17,20 +17,16 @@
 /**
  * 
  * @export
- * @interface Location
+ * @enum {string}
  */
-export interface Location {
-    /**
-     * Latitude of the location
-     * @type {string}
-     * @memberof Location
-     */
-    'latitude': string;
-    /**
-     * Longitude of the location
-     * @type {string}
-     * @memberof Location
-     */
-    'longitude': string;
+
+export enum RoleErrorMessagesEnum {
+    RoleNotFound = 'roleNotFound',
+    CannotBeAdmin = 'cannotBeAdmin',
+    CannotBeStaff = 'cannotBeStaff',
+    CannotBeCustomer = 'cannotBeCustomer',
+    InvalidRoleChange = 'invalidRoleChange'
 }
+
+
 
