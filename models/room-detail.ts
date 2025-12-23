@@ -18,6 +18,9 @@
 import type { Amenity } from './amenity';
 // May contain unused imports in some cases
 // @ts-ignore
+import type { Branch } from './branch';
+// May contain unused imports in some cases
+// @ts-ignore
 import type { Image } from './image';
 // May contain unused imports in some cases
 // @ts-ignore
@@ -80,6 +83,12 @@ export interface RoomDetail {
      * @memberof RoomDetail
      */
     'branchId': string;
+    /**
+     * Branch where this room is located
+     * @type {Branch}
+     * @memberof RoomDetail
+     */
+    'branch': Branch;
     /**
      * Hotel Room\'s thumbnail image
      * @type {Image}
