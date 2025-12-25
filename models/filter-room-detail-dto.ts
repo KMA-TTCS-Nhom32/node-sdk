@@ -134,6 +134,12 @@ export interface FilterRoomDetailDto {
      * @memberof FilterRoomDetailDto
      */
     'children'?: number;
+    /**
+     * When true (default), excludes room details with no available rooms. Set to false to include all room details (useful for branch detail screen where unavailable rooms are shown as disabled).
+     * @type {boolean}
+     * @memberof FilterRoomDetailDto
+     */
+    'excludeFullyBooked'?: boolean;
 }
 
 /**
