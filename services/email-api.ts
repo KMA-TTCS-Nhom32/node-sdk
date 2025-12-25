@@ -22,6 +22,8 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { EmailHealthResponseDto } from '../models';
+// @ts-ignore
 import type { ResponseWithMessage } from '../models';
 // @ts-ignore
 import type { VerificationEmailDto } from '../models';
@@ -31,6 +33,36 @@ import type { VerificationEmailDto } from '../models';
  */
 export const EmailApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * 
+         * @summary Check email service health status
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        emailControllerCheckHealth: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/email/health`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * 
          * @summary Send verification email
@@ -79,6 +111,18 @@ export const EmailApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Check email service health status
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async emailControllerCheckHealth(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EmailHealthResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.emailControllerCheckHealth(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['EmailApi.emailControllerCheckHealth']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Send verification email
          * @param {VerificationEmailDto} verificationEmailDto 
          * @param {*} [options] Override http request option.
@@ -100,6 +144,15 @@ export const EmailApiFp = function(configuration?: Configuration) {
 export const EmailApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = EmailApiFp(configuration)
     return {
+        /**
+         * 
+         * @summary Check email service health status
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        emailControllerCheckHealth(options?: RawAxiosRequestConfig): AxiosPromise<EmailHealthResponseDto> {
+            return localVarFp.emailControllerCheckHealth(options).then((request) => request(axios, basePath));
+        },
         /**
          * 
          * @summary Send verification email
@@ -134,6 +187,17 @@ export interface EmailApiEmailControllerSendVerificationEmailRequest {
  * @extends {BaseAPI}
  */
 export class EmailApi extends BaseAPI {
+    /**
+     * 
+     * @summary Check email service health status
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EmailApi
+     */
+    public emailControllerCheckHealth(options?: RawAxiosRequestConfig) {
+        return EmailApiFp(this.configuration).emailControllerCheckHealth(options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Send verification email

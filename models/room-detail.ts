@@ -203,6 +203,12 @@ export interface RoomDetail {
      * @memberof RoomDetail
      */
     'roomPriceHistories'?: Array<RoomPriceHistory>;
+    /**
+     * Number of rooms available for the requested time slot (only present when filtering by date/time)
+     * @type {number}
+     * @memberof RoomDetail
+     */
+    'availableRoomsCount'?: number;
 }
 
 /**

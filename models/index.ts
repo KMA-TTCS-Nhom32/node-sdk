@@ -34,6 +34,7 @@ export * from './create-room-promotion-dto';
 export * from './create-user-dto';
 export * from './delete-user-dto';
 export * from './detail-translation-content';
+export * from './email-health-response-dto';
 export * from './exposed-enums-dto';
 export * from './filter-amenity-dto';
 export * from './filter-bookings-dto';

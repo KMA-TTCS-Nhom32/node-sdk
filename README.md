@@ -92,6 +92,7 @@ Class | Method | HTTP request | Description
 *BranchesApi* | [**branchControllerRemove**](docs/BranchesApi.md#branchcontrollerremove) | **DELETE** /api/branches/{id} | Delete a branch
 *BranchesApi* | [**branchControllerRestore**](docs/BranchesApi.md#branchcontrollerrestore) | **POST** /api/branches/{id}/restore | Restore a soft-deleted branch
 *BranchesApi* | [**branchControllerUpdate**](docs/BranchesApi.md#branchcontrollerupdate) | **PATCH** /api/branches/{id} | Update a branch
+*EmailApi* | [**emailControllerCheckHealth**](docs/EmailApi.md#emailcontrollercheckhealth) | **GET** /api/email/health | Check email service health status
 *EmailApi* | [**emailControllerSendVerificationEmail**](docs/EmailApi.md#emailcontrollersendverificationemail) | **POST** /api/email/send-verification | Send verification email
 *ImagesApi* | [**imagesControllerGetImageByPublicId**](docs/ImagesApi.md#imagescontrollergetimagebypublicid) | **GET** /api/images/{publicId} | Get image by public id
 *ImagesApi* | [**imagesControllerUploadIcon**](docs/ImagesApi.md#imagescontrolleruploadicon) | **POST** /api/images/icon | Upload amenity icon
@@ -186,6 +187,7 @@ Class | Method | HTTP request | Description
  - [CreateUserDto](docs/CreateUserDto.md)
  - [DeleteUserDto](docs/DeleteUserDto.md)
  - [DetailTranslationContent](docs/DetailTranslationContent.md)
+ - [EmailHealthResponseDto](docs/EmailHealthResponseDto.md)
  - [ExposedEnumsDto](docs/ExposedEnumsDto.md)
  - [FilterAmenityDto](docs/FilterAmenityDto.md)
  - [FilterBookingsDto](docs/FilterBookingsDto.md)
