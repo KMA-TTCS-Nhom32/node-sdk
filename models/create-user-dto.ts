@@ -21,7 +21,7 @@
  */
 export interface CreateUserDto {
     /**
-     * The user\'s password.
+     * The user\'s password. Must contain uppercase, lowercase, number, and special character.
      * @type {string}
      * @memberof CreateUserDto
      */

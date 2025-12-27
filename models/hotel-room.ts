@@ -109,8 +109,6 @@ export interface HotelRoom {
     */
 export enum HotelRoomStatusEnum {
     Available = 'AVAILABLE',
-    Booked = 'BOOKED',
-    Occupied = 'OCCUPIED',
     Maintenance = 'MAINTENANCE'
 }
 
