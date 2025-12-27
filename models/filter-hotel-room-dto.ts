@@ -44,6 +44,18 @@ export interface FilterHotelRoomDto {
      * @memberof FilterHotelRoomDto
      */
     'detailSlug'?: string;
+    /**
+     * Filter by branch ID
+     * @type {string}
+     * @memberof FilterHotelRoomDto
+     */
+    'branchId'?: string;
+    /**
+     * Filter by branch slug
+     * @type {string}
+     * @memberof FilterHotelRoomDto
+     */
+    'branchSlug'?: string;
 }
 
 /**
