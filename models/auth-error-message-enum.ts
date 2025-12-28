@@ -34,7 +34,8 @@ export enum AuthErrorMessageEnum {
     OtpCodeExpired = 'otpCodeExpired',
     PasswordResetFailed = 'passwordResetFailed',
     OldPasswordMismatch = 'oldPasswordMismatch',
-    CannotUseOldPassword = 'cannotUseOldPassword'
+    CannotUseOldPassword = 'cannotUseOldPassword',
+    AccountLocked = 'accountLocked'
 }
 
 
