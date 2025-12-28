@@ -55,6 +55,8 @@ export interface UpdateHotelRoomDto {
     */
 export enum UpdateHotelRoomDtoStatusEnum {
     Available = 'AVAILABLE',
+    Booked = 'BOOKED',
+    Occupied = 'OCCUPIED',
     Maintenance = 'MAINTENANCE'
 }
 

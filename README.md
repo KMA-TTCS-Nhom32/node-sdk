@@ -75,6 +75,7 @@ Class | Method | HTTP request | Description
 *AuthApi* | [**authControllerRevokeSession**](docs/AuthApi.md#authcontrollerrevokesession) | **POST** /api/auth/sessions/{sessionId}/revoke | Revoke specific session
 *AuthApi* | [**authControllerUpdateProfile**](docs/AuthApi.md#authcontrollerupdateprofile) | **PATCH** /api/auth/profile | Update user profile
 *AuthApi* | [**authControllerVerifyEmail**](docs/AuthApi.md#authcontrollerverifyemail) | **POST** /api/auth/verify-email | Verify email with OTP code
+*AuthApi* | [**authControllerVerifyForgotPasswordOTP**](docs/AuthApi.md#authcontrollerverifyforgotpasswordotp) | **POST** /api/auth/forgot-password/email/verify | Verify OTP code for forgot password
 *BookingApi* | [**bookingControllerCancelBooking**](docs/BookingApi.md#bookingcontrollercancelbooking) | **PATCH** /api/booking/cancel/{bookingId} | Cancel a booking
 *BookingApi* | [**bookingControllerCreateBookingDirectly**](docs/BookingApi.md#bookingcontrollercreatebookingdirectly) | **POST** /api/booking/directly | Create a new booking directly at the hotel
 *BookingApi* | [**bookingControllerCreateBookingOnline**](docs/BookingApi.md#bookingcontrollercreatebookingonline) | **POST** /api/booking | Create a new booking online
@@ -288,6 +289,7 @@ Class | Method | HTTP request | Description
  - [VerifyCodeResponseDto](docs/VerifyCodeResponseDto.md)
  - [VerifyEmailDto](docs/VerifyEmailDto.md)
  - [VerifyEmailOTP](docs/VerifyEmailOTP.md)
+ - [VerifyForgotPasswordOTPDto](docs/VerifyForgotPasswordOTPDto.md)
 
 
 <a id="documentation-for-authorization"></a>

@@ -135,3 +135,4 @@ export * from './verify-code-dto';
 export * from './verify-code-response-dto';
 export * from './verify-email-dto';
 export * from './verify-email-otp';
+export * from './verify-forgot-password-otpdto';

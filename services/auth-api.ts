@@ -51,6 +51,8 @@ import type { UpdateProfileDto } from '../models';
 import type { User } from '../models';
 // @ts-ignore
 import type { VerifyEmailDto } from '../models';
+// @ts-ignore
+import type { VerifyForgotPasswordOTPDto } from '../models';
 /**
  * AuthApi - axios parameter creator
  * @export
@@ -544,6 +546,42 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Verify OTP code for forgot password
+         * @param {VerifyForgotPasswordOTPDto} verifyForgotPasswordOTPDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerVerifyForgotPasswordOTP: async (verifyForgotPasswordOTPDto: VerifyForgotPasswordOTPDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'verifyForgotPasswordOTPDto' is not null or undefined
+            assertParamExists('authControllerVerifyForgotPasswordOTP', 'verifyForgotPasswordOTPDto', verifyForgotPasswordOTPDto)
+            const localVarPath = `/api/auth/forgot-password/email/verify`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(verifyForgotPasswordOTPDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -732,6 +770,19 @@ export const AuthApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['AuthApi.authControllerVerifyEmail']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @summary Verify OTP code for forgot password
+         * @param {VerifyForgotPasswordOTPDto} verifyForgotPasswordOTPDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authControllerVerifyForgotPasswordOTP(verifyForgotPasswordOTPDto: VerifyForgotPasswordOTPDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerVerifyForgotPasswordOTP(verifyForgotPasswordOTPDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AuthApi.authControllerVerifyForgotPasswordOTP']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -876,6 +927,16 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
          */
         authControllerVerifyEmail(requestParameters: AuthApiAuthControllerVerifyEmailRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.authControllerVerifyEmail(requestParameters.verifyEmailDto, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Verify OTP code for forgot password
+         * @param {AuthApiAuthControllerVerifyForgotPasswordOTPRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerVerifyForgotPasswordOTP(requestParameters: AuthApiAuthControllerVerifyForgotPasswordOTPRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.authControllerVerifyForgotPasswordOTP(requestParameters.verifyForgotPasswordOTPDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1039,6 +1100,20 @@ export interface AuthApiAuthControllerVerifyEmailRequest {
      * @memberof AuthApiAuthControllerVerifyEmail
      */
     readonly verifyEmailDto: VerifyEmailDto
+}
+
+/**
+ * Request parameters for authControllerVerifyForgotPasswordOTP operation in AuthApi.
+ * @export
+ * @interface AuthApiAuthControllerVerifyForgotPasswordOTPRequest
+ */
+export interface AuthApiAuthControllerVerifyForgotPasswordOTPRequest {
+    /**
+     * 
+     * @type {VerifyForgotPasswordOTPDto}
+     * @memberof AuthApiAuthControllerVerifyForgotPasswordOTP
+     */
+    readonly verifyForgotPasswordOTPDto: VerifyForgotPasswordOTPDto
 }
 
 /**
@@ -1209,6 +1284,18 @@ export class AuthApi extends BaseAPI {
      */
     public authControllerVerifyEmail(requestParameters: AuthApiAuthControllerVerifyEmailRequest, options?: RawAxiosRequestConfig) {
         return AuthApiFp(this.configuration).authControllerVerifyEmail(requestParameters.verifyEmailDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Verify OTP code for forgot password
+     * @param {AuthApiAuthControllerVerifyForgotPasswordOTPRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authControllerVerifyForgotPasswordOTP(requestParameters: AuthApiAuthControllerVerifyForgotPasswordOTPRequest, options?: RawAxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authControllerVerifyForgotPasswordOTP(requestParameters.verifyForgotPasswordOTPDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

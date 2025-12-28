@@ -29,7 +29,12 @@ export enum AuthErrorMessageEnum {
     EmailNotVerified = 'emailNotVerified',
     PhoneNotVerified = 'phoneNotVerified',
     UserAlreadyExists = 'userAlreadyExists',
-    SentEmailFailed = 'sentEmailFailed'
+    SentEmailFailed = 'sentEmailFailed',
+    InvalidOtpCode = 'invalidOTPCode',
+    OtpCodeExpired = 'otpCodeExpired',
+    PasswordResetFailed = 'passwordResetFailed',
+    OldPasswordMismatch = 'oldPasswordMismatch',
+    CannotUseOldPassword = 'cannotUseOldPassword'
 }
 
 

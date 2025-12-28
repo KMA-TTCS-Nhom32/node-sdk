@@ -61,6 +61,8 @@ export interface CreateHotelRoomDto {
     */
 export enum CreateHotelRoomDtoStatusEnum {
     Available = 'AVAILABLE',
+    Booked = 'BOOKED',
+    Occupied = 'OCCUPIED',
     Maintenance = 'MAINTENANCE'
 }
 

@@ -64,6 +64,8 @@ export interface FilterHotelRoomDto {
     */
 export enum FilterHotelRoomDtoStatusEnum {
     Available = 'AVAILABLE',
+    Booked = 'BOOKED',
+    Occupied = 'OCCUPIED',
     Maintenance = 'MAINTENANCE'
 }
 
